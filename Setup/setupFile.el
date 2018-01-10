@@ -78,7 +78,8 @@
       ;;
       ;; How to publish
       ;;
-      (setq my-publish-dir my-project-root)
+      ;;  (setq my-publish-dir my-project-root)
+      (setq my-publish-dir "~/Temp/Publish")
       
       (setq org-publish-project-alist
             `(
@@ -90,9 +91,10 @@
                :publishing-function org-html-publish-to-html
                :htmlize-source t
                :org-html-head-include-default-style nil
-               :exclude "Setup*"
+               :exclude "Setup*\\|sitemap.org"
                :makeindex t
                :auto-sitemap t
+               :sitemap-title "My Project Template"
                )
 
               ;; ("PPack_Tangle"

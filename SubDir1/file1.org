@@ -1,0 +1,11 @@
+#+SETUPFILE: ../Setup/setupFile-1.org
+#+TITLE: For testing purpose
+
+* Introduction
+
+Please, note header:
+
+#+BEGIN_EXAMPLE
+,#+SETUPFILE: ../Setup/setupFile-1.org
+,#+TITLE: For testing purpose
+#+END_EXAMPLE
