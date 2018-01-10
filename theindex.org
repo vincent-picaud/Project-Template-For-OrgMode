@@ -1,7 +1,5 @@
 #+SETUPFILE: Setup/setupFile.org
-#+TITLE: Your project sitemap
-
-#+INCLUDE: "sitemap.org"
+#+TITLE: Index
 
 #+INCLUDE: "theindex.inc"
 
