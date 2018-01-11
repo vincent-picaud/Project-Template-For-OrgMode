@@ -1,33 +1,20 @@
 #+SETUPFILE: Setup/setupFile.org
 #+TITLE: Emacs code 
 
-* The =.dir-locals.el= file
-#+INDEX: my-project-root!.dir-locals.el
+* What is it?
 
-The =.dir-locals.el= file can be used as usual, however it must exists. Here we use an empty one.
+This package is a tool to quickly generate a project structure which
+is [[https://orgmode.org/][OrgMode]] ready. We provide a bash script =createOrgProject.sh
+PROJECTNAME= that populate the =PROJECTNAME/= directory with all the
+required files.
 
-#+BEGIN_SRC emacs-lisp :eval never :tangle yes :tangle ".dir-locals.el"
-;; Must exist because this file is used to find my-project-root
-;;
-;; Here contains nothing (), however you can fill it with
-;; your usual stuff.
-()
-#+END_SRC
+#+BEGIN_EXAMPLE
+TODO
+#+END_EXAMPLE
 
-its role is to define the =my-project-root=. 
+To use the project (template) simply add this function to your Emacs =init.el= 
 
-We minimize the work done in =.dir-locals.el= as some packages like
-=magit= refresh it beafore and after commit. Instead we define a
-special function =my-project-configuration= that trigger project
-configuration on-demand. The advantage is that we control when we want
-to refresh our project configuration, the inconvenient is that we have
-to do it /manually/.
-
-* The =my-project-configuration= function
-#+INDEX: init.el!my-project-configuration
-
-The =my-project-configuration= function is define as follow:
-
+#+NAME: my-project-configuration
 #+BEGIN_SRC emacs-lisp 
 (defun my-project-configuration ()
   "Find my-project-root as parent directory of the closest .dir-locals.el file, 
@@ -45,166 +32,8 @@ then load my-project-root/Setup/setupFile.el project configuration file "
       (error "Project root dir not found (missing .dir-locals.el file)"))))
 #+END_SRC
 
-#+RESULTS:
-: my-project-configuration
+Its role is to found project root (the closest .dir-locals.el file)
+and to load the project configuration =Setup/setupFile.el=. 
 
-It must be included in your =init.el= file.
+* Quick starter
 
-It searches for the root =.dir-locals.el= file then load the
-=project_root/Setup/setupFile.el= file.  If =.dir-locals.el= or
-=project_root/Setup/setupFile.el= is missing the function prints an error
-message.
-
-* Default =setupFile.el= file
-
-The a typical =setupFile.el= file is defined as follow:
-
-#+BEGIN_SRC emacs-lisp :tangle yes :tangle "Setup/setupFile.el"
-  (if my-project-root
-      ;; Configuration
-      (progn
-        (message "Configuring %s " my-project-root)
-        ;;
-        ;; Local bibliography
-        ;;
-        (setq my-bibtex-filename 
-              (concat my-project-root "Bibliography/bibliography.bib"))
-        (if (file-exists-p my-bibtex-filename)
-            ;; If bibliography.bib exists 
-            (setq reftex-default-bibliography  `(,my-bibtex-filename)
-                  
-                  bibtex-completion-bibliography my-bibtex-filename
-                  bibtex-completion-library-path (file-name-directory my-bibtex-filename)
-                  bibtex-completion-notes-path (file-name-directory my-bibtex-filename)
-                  
-                  org-ref-default-bibliography  `(,my-bibtex-filename)
-                  org-ref-pdf-directory (file-name-directory my-bibtex-filename)
-                  )
-          ;; otherwise unbound meaningless my-bibtex-filename
-          (makunbound 'my-bibtex-filename)
-          )
-        ;;
-        ;; Agenda files
-        ;;
-        (setq org-agenda-files
-              (mapcar 'abbreviate-file-name
-                      (split-string
-                       (shell-command-to-string (format "find %s -name \"*.org\"" my-project-root))
-                       "\n")))
-        ;;
-        ;; My my-workInProgress-filename and its associated captures
-        ;;
-        (setq my-workInProgress-filename (concat my-project-root "workInProgress.org"))
-
-        (when (file-exists-p my-workInProgress-filename)
-          (setq org-capture-templates `(
-                                        ("t" "Todo" entry (file+headline ,my-workInProgress-filename "Project TODO")
-                                         "* TODO %^{Title?} %^G\n:PROPERTIES:\n:Created: %U\n:END:\n%?"
-                                         :empty-lines 1  
-                                         :create t
-                                         )
-                                        
-                                        ("T" "Todo with file link" entry (file+headline ,my-workInProgress-filename "Project TODO")
-                                         "* TODO %^{Title|%f} %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n[[%l][In file %f]]:\n\n#+BEGIN_EXAMPLE\n%i\n#+END_EXAMPLE\n\n%?"
-                                         :empty-lines 1  
-                                         :create t
-                                         )
-                                        
-                                        ("j" "Journal" entry (file+olp+datetree ,my-workInProgress-filename "Project journal")
-                                         "* %^{Title} %^G\n\n%?"
-                                         :empty-lines 1  
-                                         :create t
-                                         )
-
-                                        ("J" "Journal with file link" entry (file+olp+datetree ,my-workInProgress-filename "Project journal")
-                                         "* %^{Title|%f} %^G\n\n[[%l][In file %f]]:\n\n#+BEGIN_EXAMPLE\n%i\n#+END_EXAMPLE\n\n%?"
-                                         :empty-lines 1  
-                                         :create t
-                                         )
-                                          ; CAVEAT: emacs must run in server mode for org-protocol
-                                        ("L" "Protocol Link" entry (file+headline ,my-workInProgress-filename "W3 Links")
-                                         "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
-                                         :empty-lines 1  
-                                         :create t
-                                         )
-                                        
-                                        ("p" "Protocol" entry (file+headline ,my-workInProgress-filename "W3 Links")
-                                         "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n#+BEGIN_EXAMPLE\n%i\n#+END_EXAMPLE\n\n%?"
-                                         :empty-lines 1  
-                                         :create t
-                                         )
-                                        )))
-        ;;
-        ;; How to publish
-        ;;
-        ;;  (setq my-publish-dir my-project-root)
-        (setq my-publish-dir "~/Temp/Publish")
-        
-        (setq org-publish-project-alist
-              `(
-                ("DefaultProject_Org"
-                 :base-directory ,my-project-root
-                 :base-extension "org"
-                 :recursive t
-                 :publishing-directory ,my-publish-dir
-                 :publishing-function org-html-publish-to-html
-                 :htmlize-source t
-                 :org-html-head-include-default-style nil
-                 :exclude "Setup*\\|sitemap.org"
-                 :makeindex t
-                 :auto-sitemap t
-                 :sitemap-title "My Project Template"
-                 )
-
-                ;; ("PPack_Tangle"
-                ;;  :base-directory ,my-project-root
-                ;;  :base-extension "org"
-                ;;  :recursive t
-                ;;  :publishing-directory ,my-publish-dir
-                ;;  :publishing-function org-babel-tangle-publish
-                ;;  :exclude ".*bazel-.*"
-                ;;  )
-
-                ("DefaultProject_Data"
-                 :base-directory ,my-project-root
-                 :base-extension "nb\\|css\\|?pp\\|png"
-                 :exclude "bazel-*"
-                 :recursive t
-                 :publishing-directory ,my-publish-dir
-                 :publishing-function org-publish-attachment
-                 :exclude ".*bazel-.*"
-                 )
-
-                ;; Main
-                ("DefaultProject"
-                 :components (
-                              "DefaultProject_Org" 
-                              ;;"DefaultProject_Tangle"
-                              "DefaultProject_Data")
-                 )
-                )
-              )
-        ) ; progn
-    ;; else
-    (error "Project root undefined")
-    )
-#+END_SRC
-
-
-*Note:* solutions to search for agenda files can be:
-
-#+BEGIN_SRC emacs-lisp 
-(setq org-agenda-files
-      (mapcar 'abbreviate-file-name
-	      (split-string
-	       (shell-command-to-string "find ~/org -name \"*.org\"")
-	       "\n")))
-#+END_SRC
-
-
-#+BEGIN_SRC emacs-lisp 
-(load-library "find-lisp")
-(setq org-agenda-files (find-lisp-find-files my-project-root "\.org$"))
-#+END_SRC
-
-I have chosen the "find" one, it is not pure lisp but it as the advantage of not requiring the find-lisp library.
