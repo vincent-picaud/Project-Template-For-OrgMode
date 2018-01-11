@@ -55,11 +55,12 @@ then load my-project-root/Setup/setupFile.el project configuration file "
   =project_root/Setup/setupFile.el= is missing the function prints an error
   message.
 
-* Default =setupFile.el= file
+* =Setup/= directory
+** Default =setupFile.el= file
 
-  The a typical =setupFile.el= file is defined as follow:
+   The a typical =setupFile.el= file is defined as follow:
 
-  #+BEGIN_SRC emacs-lisp :tangle yes :tangle "../Setup/setupFile.el"
+   #+BEGIN_SRC emacs-lisp :tangle yes :tangle "../Setup/setupFile.el"
 (if my-project-root
     ;; Configuration
     (progn
@@ -213,5 +214,54 @@ then load my-project-root/Setup/setupFile.el project configuration file "
   ;; else
   (error "Project root undefined")
   )
-  #+END_SRC
+   #+END_SRC
 
+** =Setup/setupFile-X.org=
+
+#+NAMES: setupFile.org 
+#+BEGIN_SRC org :tangle yes :tangle "../Setup/setupFile.org" :tangle-mode (identity #o444)
+,#+SETUPFILE: options.org
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
+,#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
+,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:theindex.html 
+#+END_SRC
+
+#+NAMES: setupFile-1.org 
+#+BEGIN_SRC org :tangle yes :tangle "../Setup/setupFile-1.org" :tangle-mode (identity #o444)
+,#+SETUPFILE: options.org
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
+,#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
+,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../theindex.html 
+#+END_SRC
+
+#+NAMES: setupFile-2.org 
+#+BEGIN_SRC org :tangle yes :tangle "../Setup/setupFile-2.org" :tangle-mode (identity #o444)
+,#+SETUPFILE: options.org
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
+,#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
+,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../theindex.html 
+#+END_SRC
+
+#+NAMES: setupFile-3.org 
+#+BEGIN_SRC org :tangle yes :tangle "../Setup/setupFile-3.org" :tangle-mode (identity #o444)
+,#+SETUPFILE: options.org
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
+,#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
+,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../../theindex.html 
+#+END_SRC
+
+#+NAMES: setupFile-4.org 
+#+BEGIN_SRC org :tangle yes :tangle "../Setup/setupFile-4.org" :tangle-mode (identity #o444)
+,#+SETUPFILE: options.org
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
+,#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
+,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../../../theindex.html 
+#+END_SRC
+
+** =Setup/options.org=
+
+#+NAMES: options.org 
+#+BEGIN_SRC org :tangle yes :tangle "../Setup/options.org"
+,#+OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:nil -:t f:t *:t tex:t d:t tags:not-in-toc
+,#+PROPERTY: header-args :comments link :mkdirp yes
+#+END_SRC
