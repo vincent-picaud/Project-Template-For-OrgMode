@@ -169,7 +169,7 @@ then load my-project-root/Setup/setupFile.el project configuration file "
 
       (setq org-publish-project-alist
 	    `(
-	      ("Org_Files"
+	      (,(concat my-project-name "_Org")
 	       :base-directory ,my-project-root
 	       :base-extension "org"
 	       :recursive t
@@ -192,7 +192,7 @@ then load my-project-root/Setup/setupFile.el project configuration file "
 	      ;;  :exclude ".*bazel-.*"
 	      ;;  )
 
-	      ("Data_Files"
+	      (,(concat my-project-name "_Data")
 	       :base-directory ,my-project-root
 	       :base-extension "nb\\|?pp\\|png"
 	       :recursive t
@@ -203,9 +203,9 @@ then load my-project-root/Setup/setupFile.el project configuration file "
 
 	      ;; Main
 	      (,my-project-name
-	       :components ("Org_Files"
+	       :components (,(concat my-project-name "_Org")
 			    ;;"DefaultProject_Tangle"
-			    "Data_Files")
+			    ,(concat my-project-name "_Data"))
 	       )
 	      )
 	    )
