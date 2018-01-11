@@ -37,3 +37,18 @@ and to load the project configuration =Setup/setupFile.el=.
 
 * Quick starter
 
+#+BEGIN_SRC 
+createOrgProject.sh MyProject
+#+END_SRC
+
+#+BEGIN_SRC 
+emacs  MyProject/theindex.org &
+#+END_SRC
+(attention do not forget to define the [[my-project-configuration][my-project-configuration]] function)
+
+Then you can Publish it: 
+ - M-x my-project-configuration
+ - C-c C-e P p
+-> then firefox theindex.html
+
+Add a note or a bibliographical item.

@@ -1,4 +1,65 @@
-;; [[file:~/GitHub/Project-Template-For-OrgMode/doc/doc.org::*Default%20=setupFile.el=%20file][Default =setupFile.el= file:1]]
+#+SETUPFILE: ../Setup/setupFile-1.org
+#+TITLE: Internal documentation
+
+* The =.dir-locals.el= file
+  #+INDEX: my-project-root!.dir-locals.el
+
+  The =.dir-locals.el= file can be used as usual, however it must exists. Here we use an empty one.
+
+  #+BEGIN_SRC emacs-lisp :eval never :tangle yes :tangle "../.dir-locals.el"
+;; Must exist because this file is used to find my-project-root
+;;
+;; Here contains nothing (), however you can fill it with
+;; your usual stuff.
+()
+  #+END_SRC
+
+  its role is to define the =my-project-root=. 
+
+  We minimize the work done in =.dir-locals.el= as some packages like
+  =magit= refresh it beafore and after commit. Instead we define a
+  special function =my-project-configuration= that trigger project
+  configuration on-demand. The advantage is that we control when we want
+  to refresh our project configuration, the inconvenient is that we have
+  to do it /manually/.
+
+* The =my-project-configuration= function
+  #+INDEX: init.el!my-project-configuration
+
+  The =my-project-configuration= function is define as follow:
+
+  #+BEGIN_SRC emacs-lisp 
+(defun my-project-configuration ()
+  "Find my-project-root as parent directory of the closest .dir-locals.el file, 
+then load my-project-root/Setup/setupFile.el project configuration file "
+  (interactive)
+  (let ((enable-local-variables :all))
+    (setq my-project-root (let ((d (dir-locals-find-file ".")))
+			    (when d (file-name-directory (if (stringp d) d (car d))))))
+
+    (if my-project-root
+	(let ((my-project-setup-file (concat my-project-root "Setup/setupFile.el")))
+	  (if (file-exists-p my-project-setup-file)
+	      (load my-project-setup-file nil t t nil)
+	    (error "Project %s setup file not found" my-project-setup-file)))
+      (error "Project root dir not found (missing .dir-locals.el file)"))))
+  #+END_SRC
+
+  #+RESULTS:
+  : my-project-configuration
+
+  It must be included in your =init.el= file.
+
+  It searches for the root =.dir-locals.el= file then load the
+  =project_root/Setup/setupFile.el= file.  If =.dir-locals.el= or
+  =project_root/Setup/setupFile.el= is missing the function prints an error
+  message.
+
+* Default =setupFile.el= file
+
+  The a typical =setupFile.el= file is defined as follow:
+
+  #+BEGIN_SRC emacs-lisp :tangle yes :tangle "../Setup/setupFile.el"
 (if my-project-root
     ;; Configuration
     (progn
@@ -152,4 +213,5 @@
   ;; else
   (error "Project root undefined")
   )
-;; Default =setupFile.el= file:1 ends here
+  #+END_SRC
+
