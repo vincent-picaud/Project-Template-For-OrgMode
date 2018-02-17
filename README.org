@@ -3,14 +3,17 @@
 
 * What is it?
 
-This package is a tool to quickly generate a project structure which
-is [[https://orgmode.org/][OrgMode]] ready. We provide a bash script =createOrgProject.sh
+This package is a tool to quickly generate a project structure to be
+used with OrgMode. We provide a bash script =createOrgProject.sh
 PROJECTNAME= that populate the =PROJECTNAME/= directory with all the
 required files.
 
+
+The generated =PROJECTNAME/= directory structure is:
 #+BEGIN_EXAMPLE
 TODO
 #+END_EXAMPLE
+
 
 To use the project (template) simply add this function to your Emacs =init.el= 
 
@@ -35,6 +38,34 @@ then load my-project-root/Setup/setupFile.el project configuration file "
 Its role is to found project root (the closest .dir-locals.el file)
 and to load the project configuration =Setup/setupFile.el=. 
 
+* The script
+
+#+BEGIN_SRC bash :tangle create_orgMode_project :shebang #!/bin/bash
+set -e
+
+force=0
+projectname=""
+
+#if [ ("$1" == "")||("$#" -ge 2) ]; then
+if [ "$1" == "" ]; then
+    echo "Usage: $(basename $0) projectname -f"
+    echo "> create a directory ./projectname/ and populate it"
+    echo "> use -f to force overwriting"
+    exit 0
+fi
+
+while [ "$1" != "" ]; do
+    case $1 in
+        -f )       force=1
+                   ;;
+        * )        projectname=$1
+    esac
+    shift
+done
+
+echo "force $force project $projectname"
+
+#+END_SRC
 * Quick starter
 
 #+BEGIN_SRC 
