@@ -43,29 +43,36 @@ and to load the project configuration =Setup/setupFile.el=.
 #+BEGIN_SRC bash :tangle create_orgMode_project :shebang #!/bin/bash
 set -e
 
+error=0
 force=0
 projectname=""
 
 #if [ ("$1" == "")||("$#" -ge 2) ]; then
-if [ "$1" == "" ]; then
-    echo "Usage: $(basename $0) projectname -f"
-    echo "> create a directory ./projectname/ and populate it"
-    echo "> use -f to force overwriting"
-    exit 0
-fi
 
 while [ "$1" != "" ]; do
     case $1 in
         -f )       force=1
+	;;
+	-* )       error=1
                    ;;
-        * )        projectname=$1
+        * )        if [ "$projectname" == "" ]; then 
+	projectname=$1 
+	else 
+	error=1 
+	fi 
     esac
     shift
 done
 
-echo "force $force project $projectname"
+if [ $error == 1 ]; then
+    echo "Usage: $(basename $0) projectname -f"
+    echo ""
+    echo " Create a directory ./projectname/ and populate it with some configuration files"
+    echo " By default never overwrite files, use -f to force overwriting"
+    exit 0
+fi
 
-echo
+echo "error $error force $force project $projectname"
 #+END_SRC
 * Quick starter
 
