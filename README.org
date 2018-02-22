@@ -90,6 +90,22 @@ mkdir -p "$project_dir/Setup"
 
 #----------------
 
+current_file="$project_dir/Setup/options.org"
+
+if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
+    echo "Creates file      $current_file" 
+    more > "$current_file" <<'//MY_CODE_STREAM' 
+
+#+OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:nil -:t f:t *:t tex:t d:t tags:not-in-toc
+#+PROPERTY: header-args :comments link :mkdirp yes
+//MY_CODE_STREAM
+else 
+    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
+    exit 1
+fi
+
+#----------------
+
 current_file="$project_dir/Setup/setupFile.org"
 
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
