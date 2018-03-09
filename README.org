@@ -74,6 +74,8 @@ if [ $error == 1 ]; then
     exit 0
 fi
 
+project_name=$(basename "$project_dir")
+
 ##########################
 # Creates root directory #
 ##########################
@@ -372,6 +374,10 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
   (error "Project root undefined")
     )
 //MY_CODE_STREAM
+#
+# replace project name 
+#
+sed -i "s/My_Project_Name/$project_name/g" "$current_file"
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
     exit 1
