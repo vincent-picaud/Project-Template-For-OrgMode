@@ -1,0 +1,11 @@
+
+#+OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc
+#+PROPERTY: header-args :comments link :mkdirp yes
+
+# Listing and bibliography config 
+#+LATEX_HEADER: \usepackage{minted}    
+#+LATEX_HEADER: \usepackage{fontspec}
+#+LATEX_HEADER: \setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
+#+LATEX_HEADER: \usepackage{verbatim} 
+#+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
+

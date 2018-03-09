@@ -1,19 +1,44 @@
 #+SETUPFILE: Setup/setupFile.org
-#+TITLE: Emacs code 
+#+TITLE: Org Emacs Project Template
 
 * What is it?
 
-This package is a tool to quickly generate a project structure to be
-used with OrgMode. We provide a bash script =createOrgProject.sh
-PROJECTNAME= that populate the =PROJECTNAME/= directory with all the
-required files.
+Defines a =create_orgMode_project= bash script to quickly generate an OrgMode project structure.
 
+#+BEGIN_SRC 
+createOrgProject.sh MyProject
+#+END_SRC
 
-The generated =PROJECTNAME/= directory structure is:
-#+BEGIN_EXAMPLE
-TODO
-#+END_EXAMPLE
+The generated =MyProject/= directory structure is:
 
+#+BEGIN_SRC bash :results output drawer :exports results
+orgTree.sh -I "README.org"
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
++ MyProject/
+	+ Setup/
+		+ [[file:.//MyProject/Setup/options.org][options]]
+		+ [[file:.//MyProject/Setup/setupFile-1.org][setupFile-1]]
+		+ [[file:.//MyProject/Setup/setupFile-2.org][setupFile-2]]
+		+ [[file:.//MyProject/Setup/setupFile-3.org][setupFile-3]]
+		+ [[file:.//MyProject/Setup/setupFile-4.org][setupFile-4]]
+		+ [[file:.//MyProject/Setup/setupFile.org][setupFile]]
+	+ [[file:.//MyProject/theindex.org][theindex]]
+	+ [[file:.//MyProject/workInProgress.org][workInProgress]]
+:END:
+
+** Features
+
+- org publish configuration 
+- bibliography file with its configuration 
+- pdf export configuration luaTeX + biber + minted (utf8 support)
+- org templates (also org protocol) configuration 
+
+* Quick starter
+
+** Emacs =init.el= configuration
 
 To use the project (template) simply add this function to your Emacs =init.el= 
 
@@ -38,9 +63,63 @@ then load my-project-root/Setup/setupFile.el project configuration file "
 Its role is to found project root (the closest .dir-locals.el file)
 and to load the project configuration =Setup/setupFile.el=. 
 
-* The script
+** New project creation 
 
-#+BEGIN_SRC bash :tangle create_orgMode_project :shebang #!/bin/bash
+Use the provided shell script:
+
+#+BEGIN_SRC 
+createOrgProject.sh MyProject
+#+END_SRC
+
+Please note that by default, this script will *never* overwrite
+anything. If to want to overwrite, use the =-f= option.
+
+Once that the script has been run you can use Emacs as usual:
+#+BEGIN_SRC 
+emacs MyProject/theindex.org &
+#+END_SRC
+
+(attention do not forget to define the [[my-project-configuration][my-project-configuration]] function)
+
+Then you can publish your project with: 
+ - *M-x my-project-configuration*
+ - *C-c C-e P p*
+
+Then use a web-browser, to visit the generated pages:
+#+BEGIN_SRC 
+firefox   MyProject/theindex.html
+#+END_SRC
+
+* How it works?
+  
+  The =.dir-locals.el= file can be used as usual, however it must exists. The =create_orgMode_project= script creates this default one:
+
+  #+BEGIN_SRC emacs-lisp :eval never :tangle yes :tangle "../.dir-locals.el"
+;; Must exist because this file is used to find my-project-root
+;;
+;; Here contains nothing (), however you can fill it with
+;; your usual stuff.
+()
+  #+END_SRC
+
+  its role is to define the =my-project-root=. 
+
+  We minimize the work done in =.dir-locals.el= as some packages like
+  =magit= refresh it before and after commit. Instead we define a
+  special function =my-project-configuration= that trigger project
+  configuration on-demand. The advantage is that you have full control
+  when you want to refresh your project configuration, the
+  inconvenient is that we have to do it /manually/.
+
+  When you call *M-x my-project-configuration*, the function retrieve
+  project root from =.dir-locals.el=, then load the project
+  configuration =Setup/setupFile.el=. 
+
+ That's all.
+
+* Complete listing of the =create_orgMode_project= script 
+
+#+BEGIN_SRC bash :tangle create_orgMode_project :shebang #!/bin/bash :exports code :eval never
 #################
 # Parse command #
 #################
@@ -472,22 +551,3 @@ else
     exit 1
 fi
 #+END_SRC
-
-
-* Quick starter
-
-#+BEGIN_SRC 
-createOrgProject.sh MyProject
-#+END_SRC
-
-#+BEGIN_SRC 
-emacs  MyProject/theindex.org &
-#+END_SRC
-(attention do not forget to define the [[my-project-configuration][my-project-configuration]] function)
-
-Then you can Publish it: 
- - M-x my-project-configuration
- - C-c C-e P p
--> then firefox theindex.html
-
-Add a note or a bibliographical item.

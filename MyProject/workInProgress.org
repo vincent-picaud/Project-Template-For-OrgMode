@@ -1,0 +1,6 @@
+#+SETUPFILE: Setup/setupFile.org
+#+TITLE: Work in Progress
+
+* Journal
+* Project TODO
+* W3 Links
