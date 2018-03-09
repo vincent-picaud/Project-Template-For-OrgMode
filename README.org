@@ -96,8 +96,16 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM' 
 
-#+OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:nil -:t f:t *:t tex:t d:t tags:not-in-toc
+#+OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc
 #+PROPERTY: header-args :comments link :mkdirp yes
+
+# Listing and bibliography config 
+#+LATEX_HEADER: \usepackage{minted}    
+#+LATEX_HEADER: \usepackage{fontspec}
+#+LATEX_HEADER: \setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
+#+LATEX_HEADER: \usepackage{verbatim} 
+#+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
+
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
@@ -200,6 +208,20 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     ;; Configuration
     (progn
       (message "Configuring %s " my-project-root)
+      ;;
+      ;; PDF Export config 
+      ;;
+      (setq org-image-actual-width (/ (display-pixel-width) 4))
+
+      ;; uses the minted package instead of the listings one
+      (setq org-latex-listings 'minted)
+      
+      ;; defines how to generate the pdf file using lualatex + biber
+      (setq org-latex-pdf-process
+      '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+      "biber %b"
+      "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+      "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
       ;;
       ;; Local bibliography
       ;;
