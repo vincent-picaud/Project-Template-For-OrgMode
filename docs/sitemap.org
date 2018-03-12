@@ -1,0 +1,4 @@
+#+TITLE: docs
+
+- [[file:workInProgress.org][Work in Progress]]
+- [[file:theindex.org][theindex]]
