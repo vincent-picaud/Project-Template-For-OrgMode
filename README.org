@@ -542,7 +542,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 ,#+SETUPFILE: Setup/setupFile.org
 ,#+TITLE: Work in Progress
 
-,* Journal
+,* Project Journal
 ,* Project TODO
 ,* W3 Links
 //MY_CODE_STREAM
