@@ -1,5 +1,4 @@
 #!/bin/bash
-# [[file:~/GitHub/Project-Template-For-OrgMode/README.org::*The%20script][The script:1]]
 #################
 # Parse command #
 #################
@@ -228,7 +227,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 		("T"
 		 "Todo with file link" entry (file+headline ,my-workInProgress-filename "Project TODO")
 		 "* TODO %^{Title|%f} [/] %^G\n:PROPERTIES:\n:Created: \
-		 %U\n:END:\n\n[[%l][In file %f]]:\n\n#+BEGIN_EXAMPLE\n%i\n#+END_EXAMPLE\n\n - [ ] %?"
+		 %U\n:END:\n\n[[%l][In file %f]]:\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n - [ ] %?"
 		 :empty-lines 1  
 		 :create t
 		)
@@ -241,7 +240,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 
 		("J" 
 		"Journal with file link" entry (file+olp+datetree ,my-workInProgress-filename "Project journal")
-		 "* %^{Title|%f} %^G\n\n[[%l][In file %f]]:\n\n#+BEGIN_EXAMPLE\n%i\n#+END_EXAMPLE\n\n%?"
+		 "* %^{Title|%f} %^G\n\n[[%l][In file %f]]:\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
 		 :empty-lines 1  
 		 :create t
 		)
@@ -268,7 +267,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 		("p" 
 		"Protocol" entry (file+headline ,my-workInProgress-filename "W3 Links")
 		 "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
-		 %^G\n:PROPERTIES:\n:Created: %U\n:END:\n#+BEGIN_EXAMPLE\n%i\n#+END_EXAMPLE\n\n%?"
+		 %^G\n:PROPERTIES:\n:Created: %U\n:END:\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
 		 :empty-lines 1  
 		 :create t
 		)
@@ -422,7 +421,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 #+SETUPFILE: Setup/setupFile.org
 #+TITLE: Work in Progress
 
-* Journal
+* Project Journal
 * Project TODO
 * W3 Links
 //MY_CODE_STREAM
@@ -430,4 +429,3 @@ else
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
     exit 1
 fi
-# The script:1 ends here
