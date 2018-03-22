@@ -217,7 +217,19 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
       (when (file-exists-p my-workInProgress-filename)
 	(setq org-capture-templates
 	      `(
-		("t"
+	      ;; Personal template (adapt them for your setting)
+	      ;; ("A"
+	      ;;  "Agenda/Meeting" entry (file+headline "~/GitLab/PVBibliography/agenda.org" "Agenda")
+	      ;; "* %^{Title?} %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n %?"
+	      ;; :empty-lines 1  
+	      ;; :create t
+	      ;; )
+	      ;;
+	      ;; ("L" "Log Time" entry (file+datetree "~/GitLab/PVBibliography/activity.org" "Activity")
+	      ;; "* %U - %^{Activity}  :TIME:"
+	      ;; )
+	      
+	      ("t"
 		 "Todo" entry (file+headline ,my-workInProgress-filename "Project TODO")
 		 "* TODO %^{Title?} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n - [ ] %?"
 		 :empty-lines 1  
@@ -244,17 +256,8 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 		 :empty-lines 1  
 		 :create t
 		)
-		;; CAVEAT: emacs must run in server mode for org-protocol
-		;; One must use this function:
 		;;
-		;; (defun transform-square-brackets-to-round-ones(string-to-transform)
-		;;   "Transforms [ into ( and ] into ), other chars left unchanged."
-		;;   (concat 
-		;;   (mapcar #'(lambda (c) (if (equal c ?[) ?\( (if (equal c ?]) ?\) c))) string-to-transform))
-		;;   )
-		;;
-		;; See: https://github.com/sprig/org-capture-extension#set-up-handlers-in-emacs
-		;; for further details
+		;; See: https://github.com/sprig/org-capture-extension for further details
 		;;
 		("L" 
 		"Protocol Link" entry (file+headline ,my-workInProgress-filename "W3 Links")
@@ -273,9 +276,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 		)
 		)))
       ;;
-      ;; How to publish
-      ;;
-      ;; Note: you can publish somewhere else, for instance:
+      ;; You can publish in another place:
       ;;
       ;; (setq my-publish-dir "~/Temp/Publish")
       ;;
@@ -301,7 +302,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 	       :sitemap-title ,my-project-name 
 	      )
 
-	      ;; ("PPack_Tangle"
+	      ;; (,(concat my-project-name "_Tangle")
 	      ;;  :base-directory ,my-project-root
 	      ;;  :base-extension "org"
 	      ;;  :recursive t
@@ -322,7 +323,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 	      ;; Main
 	      (,my-project-name
 	       :components (,(concat my-project-name "_Org")
-			    ;;"DefaultProject_Tangle"
+	                    ;; ,(concat my-project-name "_Tangle")
 			    ,(concat my-project-name "_Data"))
 	      )
 	      )
