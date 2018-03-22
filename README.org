@@ -6,7 +6,7 @@
 Defines a =create_orgMode_project= bash script to quickly generate an OrgMode project structure.
 
 #+BEGIN_SRC 
-createOrgProject.sh MyProject
+createOrgProject MyProject
 #+END_SRC
 
 The generated =MyProject/= directory structure is:
@@ -68,7 +68,7 @@ and to load the project configuration =Setup/setupFile.el=.
 Use the provided shell script:
 
 #+BEGIN_SRC 
-createOrgProject.sh MyProject
+createorgproject MyProject
 #+END_SRC
 
 Please note that by default, this script will *never* overwrite
