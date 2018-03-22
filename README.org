@@ -117,6 +117,11 @@ firefox   MyProject/theindex.html
 
  That's all.
 
+* TODO [0/1]
+- [ ] check latex inline + dvipng (must use dvilualatex instead of
+  default latex command, this is the =org-preview-latex-process-alist=
+  variable to customize)
+
 * Complete listing of the =create_orgMode_project= script 
 
 #+BEGIN_SRC bash :tangle create_orgMode_project :shebang #!/bin/bash :exports code :eval never
