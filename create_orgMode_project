@@ -65,6 +65,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 #+LATEX_HEADER: \setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
 #+LATEX_HEADER: \usepackage{verbatim} 
 #+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
+#+LATEX_HEADER: \hypersetup{colorlinks=true}
 
 //MY_CODE_STREAM
 else 
@@ -225,7 +226,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 	      ;; :create t
 	      ;; )
 	      ;;
-	      ;; ("L" "Log Time" entry (file+datetree "~/GitLab/PVBibliography/activity.org" "Activity")
+	      ;; ("K" "Log Time" entry (file+datetree "~/GitLab/PVBibliography/activity.org" "Activity")
 	      ;; "* %U - %^{Activity}  :TIME:"
 	      ;; )
 	      
