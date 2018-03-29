@@ -207,7 +207,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
       (setq org-agenda-files
 	    (mapcar 'abbreviate-file-name
 		    (split-string
-		     (shell-command-to-string (format "find %s -name \"*.org\"" my-project-root))
+		     (shell-command-to-string (format "find %s -name \"*.org\" ! -name \"sitemap.org\"  ! -name \"theindex.org\" ! -path \"./Setup/*\"" my-project-root))
 		     "\n")))
       ;;
       ;; My my-workInProgress-filename and its associated captures
