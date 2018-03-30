@@ -41,7 +41,7 @@
       (setq org-agenda-files
 	    (mapcar 'abbreviate-file-name
 		    (split-string
-		     (shell-command-to-string (format "find %s -name \"*.org\"" my-project-root))
+		     (shell-command-to-string (format "find %s -name \"*.org\" ! -name \"sitemap.org\"  ! -name \"theindex.org\" ! -path \"./Setup/*\"" my-project-root))
 		     "\n")))
       ;;
       ;; My my-workInProgress-filename and its associated captures
@@ -51,7 +51,19 @@
       (when (file-exists-p my-workInProgress-filename)
 	(setq org-capture-templates
 	      `(
-		("t"
+	      ;; Personal template (adapt them for your setting)
+	      ;; ("A"
+	      ;;  "Agenda/Meeting" entry (file+headline "~/GitLab/PVBibliography/agenda.org" "Agenda")
+	      ;; "* %^{Title?} %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n %?"
+	      ;; :empty-lines 1  
+	      ;; :create t
+	      ;; )
+	      ;;
+	      ;; ("K" "Log Time" entry (file+datetree "~/GitLab/PVBibliography/activity.org" "Activity")
+	      ;; "* %U - %^{Activity}  :TIME:"
+	      ;; )
+	      
+	      ("t"
 		 "Todo" entry (file+headline ,my-workInProgress-filename "Project TODO")
 		 "* TODO %^{Title?} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n - [ ] %?"
 		 :empty-lines 1  
@@ -61,7 +73,7 @@
 		("T"
 		 "Todo with file link" entry (file+headline ,my-workInProgress-filename "Project TODO")
 		 "* TODO %^{Title|%f} [/] %^G\n:PROPERTIES:\n:Created: \
-		 %U\n:END:\n\n[[%l][In file %f]]:\n\n#+BEGIN_EXAMPLE\n%i\n#+END_EXAMPLE\n\n - [ ] %?"
+		 %U\n:END:\n\n[[%l][In file %f]]:\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n - [ ] %?"
 		 :empty-lines 1  
 		 :create t
 		)
@@ -74,21 +86,12 @@
 
 		("J" 
 		"Journal with file link" entry (file+olp+datetree ,my-workInProgress-filename "Project journal")
-		 "* %^{Title|%f} %^G\n\n[[%l][In file %f]]:\n\n#+BEGIN_EXAMPLE\n%i\n#+END_EXAMPLE\n\n%?"
+		 "* %^{Title|%f} %^G\n\n[[%l][In file %f]]:\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
 		 :empty-lines 1  
 		 :create t
 		)
-		;; CAVEAT: emacs must run in server mode for org-protocol
-		;; One must use this function:
 		;;
-		;; (defun transform-square-brackets-to-round-ones(string-to-transform)
-		;;   "Transforms [ into ( and ] into ), other chars left unchanged."
-		;;   (concat 
-		;;   (mapcar #'(lambda (c) (if (equal c ?[) ?\( (if (equal c ?]) ?\) c))) string-to-transform))
-		;;   )
-		;;
-		;; See: https://github.com/sprig/org-capture-extension#set-up-handlers-in-emacs
-		;; for further details
+		;; See: https://github.com/sprig/org-capture-extension for further details
 		;;
 		("L" 
 		"Protocol Link" entry (file+headline ,my-workInProgress-filename "W3 Links")
@@ -101,21 +104,20 @@
 		("p" 
 		"Protocol" entry (file+headline ,my-workInProgress-filename "W3 Links")
 		 "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
-		 %^G\n:PROPERTIES:\n:Created: %U\n:END:\n#+BEGIN_EXAMPLE\n%i\n#+END_EXAMPLE\n\n%?"
+		 %^G\n:PROPERTIES:\n:Created: %U\n:END:\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
 		 :empty-lines 1  
 		 :create t
 		)
 		)))
       ;;
-      ;; How to publish
-      ;;
-      ;; Note: you can publish somewhere else, for instance:
+      ;; You can publish in another place:
       ;;
       ;; (setq my-publish-dir "~/Temp/Publish")
       ;;
       ;; by default we publish in-place 
       ;; (advantage: C-c C-e h h directly update the published page)
-      (setq my-publish-dir my-project-root)
+      (setq my-publish-dir "../docs")
+	    ;; (setq my-publish-dir ../docs my-project-root)
 
       (setq my-project-name "MyProject")
 
@@ -135,7 +137,7 @@
 	       :sitemap-title ,my-project-name 
 	      )
 
-	      ;; ("PPack_Tangle"
+	      ;; (,(concat my-project-name "_Tangle")
 	      ;;  :base-directory ,my-project-root
 	      ;;  :base-extension "org"
 	      ;;  :recursive t
@@ -156,7 +158,7 @@
 	      ;; Main
 	      (,my-project-name
 	       :components (,(concat my-project-name "_Org")
-			    ;;"DefaultProject_Tangle"
+	                    ;; ,(concat my-project-name "_Tangle")
 			    ,(concat my-project-name "_Data"))
 	      )
 	      )
