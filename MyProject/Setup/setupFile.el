@@ -17,6 +17,10 @@
       "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
       "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
       ;;
+      ;; Working Bibliography with HTML export requires ox-bibtex
+      ;;
+      (require 'ox-bibtex)
+      ;;
       ;; Local bibliography
       ;;
       (setq my-bibtex-filename 

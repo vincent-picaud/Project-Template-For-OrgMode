@@ -64,6 +64,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 #+LATEX_HEADER: \usepackage{minted}    
 #+LATEX_HEADER: \usepackage{fontspec}
 #+LATEX_HEADER: \setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
+# verbatim provides "comment" env. (use with bibliography to skip some Org exported code)
 #+LATEX_HEADER: \usepackage{verbatim} 
 #+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
 #+LATEX_HEADER: \hypersetup{colorlinks=true}
@@ -184,6 +185,10 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
       "biber %b"
       "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
       "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+      ;;
+      ;; Working Bibliography with HTML export requires ox-bibtex
+      ;;
+      (require 'ox-bibtex)
       ;;
       ;; Local bibliography
       ;;
