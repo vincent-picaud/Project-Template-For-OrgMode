@@ -17,6 +17,8 @@ orgTree.sh -I "README.org"
 #+RESULTS:
 :RESULTS:
 + MyProject/
+	+ [[file:.//MyProject/index.org][index]]
+	+ [[file:.//MyProject/index_preamble.org][index_preamble]]
 	+ Setup/
 		+ [[file:.//MyProject/Setup/options.org][options]]
 		+ [[file:.//MyProject/Setup/setupFile-1.org][setupFile-1]]
@@ -211,7 +213,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 ,#+SETUPFILE: options.org
 ,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
 ,#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
-,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:theindex.html
+,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:index.html
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
@@ -228,7 +230,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 ,#+SETUPFILE: options.org
 ,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
 ,#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
-,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../theindex.html
+,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../index.html
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
@@ -245,7 +247,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 ,#+SETUPFILE: options.org
 ,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
 ,#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
-,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../theindex.html
+,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../index.html
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
@@ -262,7 +264,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 ,#+SETUPFILE: options.org
 ,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
 ,#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
-,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../../theindex.html
+,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../../index.html
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
@@ -279,7 +281,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 ,#+SETUPFILE: options.org
 ,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
 ,#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
-,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../../../theindex.html
+,#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../../../index.html
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 

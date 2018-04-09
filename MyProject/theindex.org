@@ -1,5 +1,5 @@
 #+SETUPFILE: ./Setup/setupFile.org
 #+TITLE: MyProject Index
 
-
-
+* Index 
+#+INCLUDE: "theindex.inc"
