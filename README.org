@@ -77,19 +77,21 @@ anything. If to want to overwrite, use the =-f= option.
 
 Once that the script has been run you can use Emacs as usual:
 #+BEGIN_SRC bash :eval never
-emacs MyProject/index.org &
+emacs MyProject/page_example.org &
 #+END_SRC
 
 (attention do not forget to define the [[my-project-configuration][my-project-configuration]] function)
 
 Then you can publish your project with: 
  - *M-x my-project-configuration*
- - *C-c C-e P x* then choose MyProject
+ - *C-c C-e P p* 
 
 Then use a web-browser, to visit the generated pages:
 #+BEGIN_SRC bash :eval never
 firefox   MyProject/index.html
 #+END_SRC
+
+*Note:* you can also try *C-c C-e l o* to check PDF exports.
 
 * How it works?
   
@@ -578,6 +580,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 \setminted[]{
   bgcolor=bg,
   breaklines=true,
+  breakanywhere=true,
   mathescape,
   fontsize=\footnotesize}
 ,#+END_EXPORT

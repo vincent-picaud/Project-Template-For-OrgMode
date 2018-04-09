@@ -3,6 +3,7 @@
 
 * Sitemap
 
+- [[file:page_example.org][Example page]]
 - [[file:workInProgress.org][Work in Progress]]
 - [[file:theindex.org][theindex]]
 

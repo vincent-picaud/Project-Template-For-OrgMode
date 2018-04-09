@@ -6,6 +6,7 @@
 \setminted[]{
   bgcolor=bg,
   breaklines=true,
+  breakanywhere=true,
   mathescape,
   fontsize=\footnotesize}
 #+END_EXPORT
@@ -23,12 +24,12 @@ int foo() {
 
 A bibliographical reference: cite:dominik16_org_mode_ref_manual
 
-
-
+* Bibliography
 
 #+BEGIN_EXPORT latex
 \printbibliography
 #+END_EXPORT
+
 #+BEGIN_EXPORT latex
 \begin{comment}
 #+END_EXPORT
