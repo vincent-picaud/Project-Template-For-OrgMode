@@ -55,7 +55,6 @@ current_file="$project_dir/Setup/options.org"
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM' 
-
 #+OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc
 #+PROPERTY: header-args :comments link :mkdirp yes
 #+HTML_HEAD_EXTRA: <style type="text/css"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style>
@@ -68,7 +67,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 #+LATEX_HEADER: \usepackage{verbatim} 
 #+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
 #+LATEX_HEADER: \hypersetup{colorlinks=true}
-
+#+LATEX_HEADER: \addbibresource{Bibliography/bibliography.bib}
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
@@ -431,6 +430,60 @@ else
     exit 1
 fi
 
+#----------------
+
+current_file="$project_dir/page_example.org"
+
+if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
+    echo "Creates file      $current_file" 
+    more > "$current_file" <<'//MY_CODE_STREAM'
+#+SETUPFILE: ./Setup/setupFile.org
+#+TITLE: Example page
+
+#+BEGIN_EXPORT latex
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+\setminted[]{
+  bgcolor=bg,
+  breaklines=true,
+  mathescape,
+  fontsize=\footnotesize}
+#+END_EXPORT
+
+* A section
+
+#+BEGIN_SRC c++
+class Foo {
+};
+
+int foo() {
+  return 0
+}
+#+END_SRC
+
+A bibliographical reference: cite:dominik16_org_mode_ref_manual
+
+* Bibliography
+
+#+BEGIN_EXPORT latex
+\printbibliography
+#+END_EXPORT
+
+#+BEGIN_EXPORT latex
+\begin{comment}
+#+END_EXPORT
+#+BIBLIOGRAPHY: ./Bibliography/bibliography plain 
+#+BEGIN_EXPORT latex
+\end{comment}
+#+END_EXPORT
+//MY_CODE_STREAM
+#
+# replace project name 
+#
+sed -i "s/My_Project_Name/$project_name/g" "$current_file"
+else 
+    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
+    exit 1
+fi
 #----------------
 
 current_file="$project_dir/.dir-locals.el"
