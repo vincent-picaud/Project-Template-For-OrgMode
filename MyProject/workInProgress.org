@@ -4,3 +4,4 @@
 * Project Journal
 * Project TODO
 * W3 Links
+#+INDEX: W3 link!An index example

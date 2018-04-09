@@ -210,7 +210,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
       (setq org-agenda-files
 	    (mapcar 'abbreviate-file-name
 		    (split-string
-		     (shell-command-to-string (format "find %s -name \"*.org\" ! -name \"sitemap.org\"  ! -name \"theindex.org\" ! -path \"./Setup/*\"" my-project-root))
+		     (shell-command-to-string (format "find %s -name \"*.org\" ! -name \"index.org\"  ! -path \"./Setup/*\"" my-project-root))
 		     "\n")))
       ;;
       ;; My my-workInProgress-filename and its associated captures
@@ -288,7 +288,15 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
       (setq my-publish-dir my-project-root)
 
       (setq my-project-name "My_Project_Name")
-
+   
+      (defun my-org-publish-sitemap (title list)
+	"Create my own index.org instead of the default one"
+	(concat	"#+INCLUDE: \"index_preamble.org\"\n"
+		"#+OPTIONS: toc:nil\n\n"
+		"* Sitemap\n\n"
+		(org-list-to-org list)
+		"\n\n"))
+  
       (setq org-publish-project-alist
 	    `(
 	      (,(concat my-project-name "_Org")
@@ -297,12 +305,15 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 	       :recursive t
 	       :publishing-directory ,my-publish-dir
 	       :publishing-function org-html-publish-to-html
+	       :sitemap-function my-org-publish-sitemap
 	       :htmlize-source t
 	       :org-html-head-include-default-style nil
-	       :exclude "Setup*\\|sitemap.org"
+	       :exclude "Setup*\\|index_preamble.org" 
+	       ;; Generates theindex.org + inc files
 	       :makeindex t
+	       ;; Creates index.org, calls my-org-publish-sitemap to fill it
 	       :auto-sitemap t
-	       :sitemap-title ,my-project-name 
+	       :sitemap-filename "index.org"
 	      )
 
 	      ;; (,(concat my-project-name "_Tangle")
@@ -374,24 +385,47 @@ else
 fi
 
 ##############################################
-# Creates remaining file (theindex.org, ...) #
+# Creates remaining files (index_preamble.org, ...) #
 ##############################################
+
+current_file="$project_dir/index_preamble.org"
+
+if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
+    echo "Creates file      $current_file" 
+    more > "$current_file" <<'//MY_CODE_STREAM'
+#+SETUPFILE: ./Setup/setupFile.org
+#+TITLE: My_Project_Name
+
+* Introduction
+
+This is your project sitemap, you can put here anything you want.
+//MY_CODE_STREAM
+#
+# replace project name 
+#
+sed -i "s/My_Project_Name/$project_name/g" "$current_file"
+else 
+    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
+    exit 1
+fi
+
+#----------------
 
 current_file="$project_dir/theindex.org"
 
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM'
-#+SETUPFILE: Setup/setupFile.org
+#+SETUPFILE: ./Setup/setupFile.org
+#+TITLE: My_Project_Name Index
 
-* Sitemap
-
-#+INCLUDE: "sitemap.org"
-
-* Index
-
+* Index 
 #+INCLUDE: "theindex.inc"
 //MY_CODE_STREAM
+#
+# replace project name 
+#
+sed -i "s/My_Project_Name/$project_name/g" "$current_file"
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
     exit 1
@@ -428,6 +462,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 * Project Journal
 * Project TODO
 * W3 Links
+#+INDEX: W3 link!An index example
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 

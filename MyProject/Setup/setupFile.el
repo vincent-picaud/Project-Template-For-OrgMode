@@ -41,7 +41,7 @@
       (setq org-agenda-files
 	    (mapcar 'abbreviate-file-name
 		    (split-string
-		     (shell-command-to-string (format "find %s -name \"*.org\" ! -name \"sitemap.org\"  ! -name \"theindex.org\" ! -path \"./Setup/*\"" my-project-root))
+		     (shell-command-to-string (format "find %s -name \"*.org\" ! -name \"index.org\"  ! -path \"./Setup/*\"" my-project-root))
 		     "\n")))
       ;;
       ;; My my-workInProgress-filename and its associated captures
@@ -116,11 +116,18 @@
       ;;
       ;; by default we publish in-place 
       ;; (advantage: C-c C-e h h directly update the published page)
-      (setq my-publish-dir "../docs")
-	    ;; (setq my-publish-dir ../docs my-project-root)
+      (setq my-publish-dir my-project-root)
 
       (setq my-project-name "MyProject")
-
+   
+      (defun my-org-publish-sitemap (title list)
+	"Create my own index.org instead of the default one"
+	(concat	"#+INCLUDE: \"index_preamble.org\"\n"
+		"#+OPTIONS: toc:nil\n\n"
+		"* Sitemap\n\n"
+		(org-list-to-org list)
+		"\n\n"))
+  
       (setq org-publish-project-alist
 	    `(
 	      (,(concat my-project-name "_Org")
@@ -129,12 +136,15 @@
 	       :recursive t
 	       :publishing-directory ,my-publish-dir
 	       :publishing-function org-html-publish-to-html
+	       :sitemap-function my-org-publish-sitemap
 	       :htmlize-source t
 	       :org-html-head-include-default-style nil
-	       :exclude "Setup*\\|sitemap.org"
+	       :exclude "Setup*\\|index_preamble.org" 
+	       ;; Generates theindex.org + inc files
 	       :makeindex t
+	       ;; Creates index.org, calls my-org-publish-sitemap to fill it
 	       :auto-sitemap t
-	       :sitemap-title ,my-project-name 
+	       :sitemap-filename "index.org"
 	      )
 
 	      ;; (,(concat my-project-name "_Tangle")

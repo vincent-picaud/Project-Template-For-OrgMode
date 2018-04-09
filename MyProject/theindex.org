@@ -1,9 +1,5 @@
-#+SETUPFILE: Setup/setupFile.org
+#+SETUPFILE: ./Setup/setupFile.org
+#+TITLE: MyProject Index
 
-* Sitemap
 
-#+INCLUDE: "sitemap.org"
 
-* Index
-
-#+INCLUDE: "theindex.inc"
