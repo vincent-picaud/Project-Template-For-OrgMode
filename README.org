@@ -32,7 +32,9 @@ orgTree.sh -I "README.org"
 
 You can have a look at the generated [[https://vincent-picaud.github.io/Project-Template-For-OrgMode/][GitHub doc]] but like it can not
 load the =css= style file it is much more instructive to clone this
-repository and browse it locally
+repository and browse it locally.
+
+You can also use Org to generate PDF files like [[https://github.com/vincent-picaud/Project-Template-For-OrgMode/tree/master/docs/page_example.pdf][page_example.pdf]].
 
 #+BEGIN_SRC bash 
 git clone https://github.com/vincent-picaud/Project-Template-For-OrgMode.git
