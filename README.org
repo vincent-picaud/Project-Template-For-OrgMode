@@ -30,7 +30,18 @@ orgTree.sh -I "README.org"
 	+ [[file:.//MyProject/workInProgress.org][workInProgress]]
 :END:
 
+You can have a look at the generated [[https://vincent-picaud.github.io/Project-Template-For-OrgMode/][GitHub doc]] but like it can not
+load the =css= style file it is much more instructive to clone this
+repository and browse it locally
+
+#+BEGIN_SRC bash 
+git clone https://github.com/vincent-picaud/Project-Template-For-OrgMode.git
+firefox docs/index.html 
+#+END_SRC
+
 ** Features
+
+The framework provides some functionalities like:
 
 - org publish configuration 
 - bibliography file with its configuration 
@@ -63,6 +74,12 @@ then load my-project-root/Setup/setupFile.el project configuration file "
 
 Its role is to found project root (the closest .dir-locals.el file)
 and to load the project configuration =Setup/setupFile.el=. 
+
+*Note:* if you want to use bibliography during HTML export you will also need [[https://github.com/yyr/org-mode/blob/master/contrib/lisp/ox-bibtex.el][ox-bibtex.el]]:
+
+#+BEGIN_SRC emacs-lisp :eval never
+(require 'ox-bibtex)
+#+END_SRC 
 
 ** New project creation 
 
