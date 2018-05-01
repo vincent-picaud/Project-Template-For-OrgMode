@@ -31,7 +31,8 @@ A bibliographical reference: cite:dominik16_org_mode_ref_manual
 #+BEGIN_EXPORT latex
 \begin{comment}
 #+END_EXPORT
-#+BIBLIOGRAPHY: ./Bibliography/bibliography plain 
+# Important: the limit:t option limits bib to cited documents
+#+BIBLIOGRAPHY: ./Bibliography/bibliography plain limit:t
 #+BEGIN_EXPORT latex
 \end{comment}
 #+END_EXPORT
