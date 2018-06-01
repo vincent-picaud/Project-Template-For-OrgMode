@@ -2,3 +2,6 @@
 /sitemap.org
 
 /README.html
+docs/_minted-page_example/*
+/docs/page_example.bbl
+/docs/page_example.tex
