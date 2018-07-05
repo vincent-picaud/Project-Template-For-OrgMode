@@ -197,7 +197,9 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
       (if (file-exists-p my-bibtex-filename)
 	  ;; If bibliography.bib exists 
 	  (setq reftex-default-bibliography  `(,my-bibtex-filename)
-		
+	        bibtex-completion-notes-extension "-notes.org"
+		bibtex-completion-notes-template-multiple-files "#+SETUPFILE: ../Setup/setupFile-1.org\n#+TITLE: Notes on: ${author-or-editor} (${year}): ${title}\n#+INTERLEAVE_PDF: ${=key=}.pdf\n\n* Personal Notes\n"
+
 		bibtex-completion-bibliography my-bibtex-filename
 		bibtex-completion-library-path (file-name-directory my-bibtex-filename)
 		bibtex-completion-notes-path (file-name-directory my-bibtex-filename)
@@ -207,7 +209,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 	  )
 	;; otherwise unbound meaningless my-bibtex-filename
 	(makunbound 'my-bibtex-filename)
-	)
+    )
       ;;
       ;; Agenda files
       ;;
@@ -241,7 +243,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 		 "* TODO %^{Title?} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n - [ ] %?"
 		 :empty-lines 1  
 		 :create t
-		)
+	      )
 		
 		("T"
 		 "Todo with file link" entry (file+headline ,my-workInProgress-filename "Project TODO")
@@ -351,10 +353,10 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
   (error "Project root undefined")
     )
 //MY_CODE_STREAM
-#
-# replace project name 
-#
-sed -i "s/My_Project_Name/$project_name/g" "$current_file"
+    #
+    # replace project name 
+    #
+    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
     exit 1
@@ -404,10 +406,10 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 
 This is your project sitemap, you can put here anything you want.
 //MY_CODE_STREAM
-#
-# replace project name 
-#
-sed -i "s/My_Project_Name/$project_name/g" "$current_file"
+    #
+    # replace project name 
+    #
+    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
     exit 1
@@ -426,10 +428,10 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 * Index 
 #+INCLUDE: "theindex.inc"
 //MY_CODE_STREAM
-#
-# replace project name 
-#
-sed -i "s/My_Project_Name/$project_name/g" "$current_file"
+    #
+    # replace project name 
+    #
+    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
     exit 1
@@ -483,10 +485,10 @@ A bibliographical reference: cite:dominik16_org_mode_ref_manual
 \end{comment}
 #+END_EXPORT
 //MY_CODE_STREAM
-#
-# replace project name 
-#
-sed -i "s/My_Project_Name/$project_name/g" "$current_file"
+    #
+    # replace project name 
+    #
+    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
     exit 1
