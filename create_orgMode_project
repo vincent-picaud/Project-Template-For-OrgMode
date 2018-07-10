@@ -68,7 +68,6 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 #+LATEX_HEADER: \usepackage{verbatim} 
 #+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
 #+LATEX_HEADER: \hypersetup{colorlinks=true}
-#+LATEX_HEADER: \addbibresource{Bibliography/bibliography.bib}
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
@@ -86,6 +85,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
 #+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
 #+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:index.html
+#+LATEX_HEADER: \addbibresource{Bibliography/bibliography.bib}
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
@@ -103,6 +103,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
 #+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
 #+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../index.html
+#+LATEX_HEADER: \addbibresource{../Bibliography/bibliography.bib}
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
@@ -120,6 +121,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
 #+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
 #+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../index.html
+#+LATEX_HEADER: \addbibresource{../../Bibliography/bibliography.bib}
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
@@ -137,6 +139,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
 #+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
 #+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../../index.html
+#+LATEX_HEADER: \addbibresource{../../../Bibliography/bibliography.bib}
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
@@ -154,6 +157,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
 #+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
 #+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../../../index.html
+#+LATEX_HEADER: \addbibresource{../../../../Bibliography/bibliography.bib}
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
