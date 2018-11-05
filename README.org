@@ -351,7 +351,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 	  ;; If bibliography.bib exists 
 	  (setq reftex-default-bibliography  `(,my-bibtex-filename)
 	        bibtex-completion-notes-extension "-notes.org"
-		bibtex-completion-notes-template-multiple-files "#+SETUPFILE: ../Setup/setupFile-1.org\n#+TITLE: Notes on: ${author-or-editor} (${year}): ${title}\n#+INTERLEAVE_PDF: ${=key=}.pdf\n\n* Personal Notes\n"
+		bibtex-completion-notes-template-multiple-files "#+SETUPFILE: ../Setup/setupFile-1.org\n#+TITLE: ${author-or-editor} (${year}): ${title}\n\n* Personal Notes\n  :PROPERTIES:\n  :NOTER_DOCUMENT: ~/AnnotatedPDF/${=key=}.pdf\n  :END:\n\n[[file:~/AnnotatedPDF/${=key=}.pdf][${title}]]\n"
 
 		bibtex-completion-bibliography my-bibtex-filename
 		bibtex-completion-library-path (file-name-directory my-bibtex-filename)
