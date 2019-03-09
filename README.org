@@ -59,23 +59,23 @@ To use the project (template) simply add this function to your Emacs =init.el=
 #+NAME: my-project-configuration
 #+BEGIN_SRC emacs-lisp 
 (defun my-project-configuration ()
-  "Find my-project-root as parent directory of the closest .dir-locals.el file, 
-then load my-project-root/Setup/setupFile.el project configuration file "
+  "Set my-project-root as root project directory and load
+my-project-root/Setup/setupFile.el project configuration file "
   (interactive)
-  (let ((enable-local-variables :all))
-    (setq my-project-root (let ((d (dir-locals-find-file ".")))
-			    (when d (file-name-directory (if (stringp d) d (car d))))))
+  (setq my-project-root (car (project-roots (project-current))))
 
-    (if my-project-root
-	(let ((my-project-setup-file (concat my-project-root "Setup/setupFile.el")))
-	  (if (file-exists-p my-project-setup-file)
-	      (load my-project-setup-file nil t t nil)
-	    (error "Project %s setup file not found" my-project-setup-file)))
-      (error "Project root dir not found (missing .dir-locals.el file)"))))
+  (if my-project-root
+      (let ((my-project-setup-file (concat my-project-root "Setup/setupFile.el")))
+	(if (file-exists-p my-project-setup-file)
+	    (load my-project-setup-file nil t t nil)
+	  (error "Project %s setup file not found" my-project-setup-file)))
+    (error "Project root dir not found (missing .git ?)")))
+
 #+END_SRC
 
-Its role is to found project root (the closest .dir-locals.el file)
-and to load the project configuration =Setup/setupFile.el=. 
+Its role is to found the project root (= the directory containing the
+.git directory) and to load the project configuration
+=Setup/setupFile.el=.
 
 *Note:* if you want to use bibliography during HTML export you will also need [[https://github.com/yyr/org-mode/blob/master/contrib/lisp/ox-bibtex.el][ox-bibtex.el]]:
 
@@ -99,54 +99,17 @@ Once that the script has been run you can use Emacs as usual:
 emacs MyProject/page_example.org &
 #+END_SRC
 
-(attention do not forget to define the [[my-project-configuration][my-project-configuration]] function)
+Then load your project configuration *M-x my-project-configuration*
 
-Then you can publish your project with: 
- - *M-x my-project-configuration*
- - *C-c C-e P p* 
-
-Then use a web-browser, to visit the generated pages:
+Then you can do whatever you want, for instance publish your project
+with *C-c C-e P p* and visit the generated pages:
 #+BEGIN_SRC bash :eval never
-firefox   MyProject/index.html
+firefox  MyProject/index.html
 #+END_SRC
 
 *Note:* you can also try *C-c C-e l o* to check PDF exports.
 
-* How it works?
-  
-  The =.dir-locals.el= file can be used as usual, however it must exists. The =create_orgMode_project= script creates this default one:
-
-  #+BEGIN_SRC emacs-lisp :eval never :tangle yes :tangle "../.dir-locals.el"
-;; Must exist because this file is used to find my-project-root
-;;
-;; Here contains nothing (), however you can fill it with
-;; your usual stuff.
-()
-  #+END_SRC
-
-  its role is to define the =my-project-root=. 
-
-  We minimize the work done in =.dir-locals.el= as some packages like
-  =magit= refresh it before and after commit. Instead we define a
-  special function =my-project-configuration= that trigger project
-  configuration on-demand. The advantage is that you have full control
-  when you want to refresh your project configuration, the
-  inconvenient is that we have to do it /manually/.
-
-  When you call *M-x my-project-configuration*, the function retrieve
-  project root from =.dir-locals.el=, then load the project
-  configuration =Setup/setupFile.el=. 
-
- That's all.
-
-* TODO [0/1]
-- [ ] check latex inline + dvipng (must use dvilualatex instead of
-  default latex command, this is the =org-preview-latex-process-alist=
-  variable to customize)
-
-* Complete listing of the =create_orgMode_project= script 
-
-#+BEGIN_SRC bash :tangle yes :tangle create_orgMode_project :shebang "#!/bin/bash" :exports code :eval never
+#+BEGIN_SRC bash :tangle yes :tangle create_orgMode_project :shebang "#!/bin/bash" :exports none :eval never
 
 #################
 # Parse command #
@@ -646,24 +609,6 @@ else
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
     exit 1
 fi
-#----------------
-
-current_file="$project_dir/.dir-locals.el"
-
-if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
-    echo "Creates file      $current_file" 
-    more > "$current_file" <<'//MY_CODE_STREAM'
-;; Must exist because this file is used to find my-project-root
-;;
-;; Here contains nothing (), however you can fill it with
-;; your usual stuff.
-()
-//MY_CODE_STREAM
-else 
-    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
-    exit 1
-fi
-
 #----------------
 
 current_file="$project_dir/workInProgress.org"

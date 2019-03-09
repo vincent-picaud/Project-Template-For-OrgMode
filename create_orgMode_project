@@ -499,24 +499,6 @@ else
 fi
 #----------------
 
-current_file="$project_dir/.dir-locals.el"
-
-if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
-    echo "Creates file      $current_file" 
-    more > "$current_file" <<'//MY_CODE_STREAM'
-;; Must exist because this file is used to find my-project-root
-;;
-;; Here contains nothing (), however you can fill it with
-;; your usual stuff.
-()
-//MY_CODE_STREAM
-else 
-    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
-    exit 1
-fi
-
-#----------------
-
 current_file="$project_dir/workInProgress.org"
 
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
