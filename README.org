@@ -1,5 +1,12 @@
 #+TITLE: Org Emacs Project Template
 
+* Table of contents                                           :TOC:no:export:
+- [[#what-is-it][What is it?]]
+  - [[#features][Features]]
+- [[#quick-starter][Quick starter]]
+  - [[#emacs-initel-configuration][Emacs =init.el= configuration]]
+  - [[#new-project-creation][New project creation]]
+
 * What is it?
 
 Defines a =create_orgMode_project= bash script to quickly generate an OrgMode project structure.
