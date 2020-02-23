@@ -176,6 +176,13 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     (progn
       (message "Configuring %s " my-project-root)
       ;;
+      ;; If org-journal is available, configure it
+      ;; https://github.com/bastibe/org-journal
+      ;;
+      (when (require 'org-journal nil 'noerror)
+        (customize-set-variable 'org-journal-dir (concat my-project-root "journal/"))
+	(customize-set-variable 'org-journal-date-format "%A, %d %B %Y"))
+      ;;
       ;; PDF Export config 
       ;;
       (setq org-image-actual-width (/ (display-pixel-width) 4))
