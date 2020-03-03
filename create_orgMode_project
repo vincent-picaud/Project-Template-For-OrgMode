@@ -225,13 +225,12 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
       ;;
       ;; My my-workInProgress-filename and its associated captures
       ;;
-      (setq my-workInProgress-filename (concat my-project-root "workInProgress.org"))
+      (setq my-www-links-filename (concat my-project-root "www_links.org"))
       (setq my-journal-filename (concat my-project-root "journal.org"))
       (setq my-todo-filename (concat my-project-root "todo.org"))
 
-      (when (file-exists-p my-workInProgress-filename)
-	(setq org-capture-templates
-	      `(
+      (setq org-capture-templates
+      	      `(
 	      ;; Personal template (adapt them for your setting)
 	      ;; ("A"
 	      ;;  "Agenda/Meeting" entry (file+headline "~/GitLab/PVBibliography/agenda.org" "Agenda")
@@ -249,44 +248,33 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 		 "* TODO %^{Title?} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n - [ ] %?"
 		 :empty-lines 1  
 		 :create t
-		 )
+		)
 		
 		("T"
 		 "Todo with file link" entry (file+olp+datetree ,my-todo-filename)
 		 "* TODO %^{Title|%f} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\nBack link: %a\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n - [ ] %?"
 		 :empty-lines 1  
 		 :create t
-		 )
+		)
 		
 		("j" "Journal" entry (file+olp+datetree ,my-journal-filename)
 		 "* %^{Title} %^G\n\n%?"
 		 :empty-lines 1  
 		 :create t
-		 )
+		)
 
 		("J" 
 		"Journal with file link" entry (file+olp+datetree ,my-journal-filename)
 		 "* %^{Title|%f} %^G\n\nBack link: %a\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
 		 :empty-lines 1  
 		 :create t
-		 )
-		;;
-		;; See: https://github.com/sprig/org-capture-extension for further details
-		;;
-		("L" 
-		 "Protocol Link" entry (file+headline ,my-workInProgress-filename "W3 Links")
-		 "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
-		%^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
-		 :empty-lines 1  
-		 :create t
-		 )
-
+		)
 
 		;;
 		;; See: https://github.com/sprig/org-capture-extension for further details
 		;;
 		("L" 
-		"Protocol Link" entry (file+headline ,my-workInProgress-filename "W3 Links")
+		"Protocol Link" entry (file ,my-www-links-filename)
 		"* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
 		%^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
 		:empty-lines 1  
@@ -294,13 +282,13 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 		)
 		
 		("p" 
-		"Protocol" entry (file+headline ,my-workInProgress-filename "W3 Links")
+		"Protocol" entry (file ,my-www-links-filename)
 		 "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
 		 %^G\n:PROPERTIES:\n:Created: %U\n:END:\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
 		 :empty-lines 1  
 		 :create t
 		)
-		)))
+		))
       ;;
       ;; You can publish in another place:
       ;;
@@ -543,18 +531,13 @@ fi
 
 #----------------
 
-current_file="$project_dir/workInProgress.org"
+current_file="$project_dir/www_links.org"
 
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM'
 #+SETUPFILE: Setup/setupFile.org
-#+TITLE: Work in Progress
-
-* Project Journal
-* Project TODO
-* W3 Links
-#+INDEX: W3 link!An index example
+#+TITLE: WWW links
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
