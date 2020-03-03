@@ -295,13 +295,6 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     (progn
       (message "Configuring %s " my-project-root)
       ;;
-      ;; If org-journal is available, configure it
-      ;; https://github.com/bastibe/org-journal
-      ;;
-      (when (require 'org-journal nil 'noerror)
-        (customize-set-variable 'org-journal-dir (concat my-project-root "journal/"))
-	(customize-set-variable 'org-journal-date-format "%A, %d %B %Y"))
-      ;;
       ;; PDF Export config 
       ;;
       (setq org-image-actual-width (/ (display-pixel-width) 4))
@@ -352,6 +345,8 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
       ;; My my-workInProgress-filename and its associated captures
       ;;
       (setq my-workInProgress-filename (concat my-project-root "workInProgress.org"))
+      (setq my-journal-filename (concat my-project-root "journal.org"))
+      (setq my-todo-filename (concat my-project-root "todo.org"))
 
       (when (file-exists-p my-workInProgress-filename)
 	(setq org-capture-templates
@@ -367,34 +362,45 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 	      ;; ("K" "Log Time" entry (file+datetree "~/GitLab/PVBibliography/activity.org" "Activity")
 	      ;; "* %U - %^{Activity}  :TIME:"
 	      ;; )
-	      
-	      ("t"
-		 "Todo" entry (file+headline ,my-workInProgress-filename "Project TODO")
+
+		("t"
+		 "Todo" entry (file+olp+datetree ,my-todo-filename)
 		 "* TODO %^{Title?} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n - [ ] %?"
 		 :empty-lines 1  
 		 :create t
-	      )
+		 )
 		
 		("T"
-		 "Todo with file link" entry (file+headline ,my-workInProgress-filename "Project TODO")
-		 "* TODO %^{Title|%f} [/] %^G\n:PROPERTIES:\n:Created: \
-		 %U\n:END:\n\n[[%l][In file %f]]:\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n - [ ] %?"
+		 "Todo with file link" entry (file+olp+datetree ,my-todo-filename)
+		 "* TODO %^{Title|%f} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\nBack link: %a\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n - [ ] %?"
 		 :empty-lines 1  
 		 :create t
-		)
+		 )
 		
-		("j" "Journal" entry (file+olp+datetree ,my-workInProgress-filename "Project Journal")
+		("j" "Journal" entry (file+olp+datetree ,my-journal-filename)
 		 "* %^{Title} %^G\n\n%?"
 		 :empty-lines 1  
 		 :create t
-		)
+		 )
 
 		("J" 
-		"Journal with file link" entry (file+olp+datetree ,my-workInProgress-filename "Project journal")
-		 "* %^{Title|%f} %^G\n\n[[%l][In file %f]]:\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
+		"Journal with file link" entry (file+olp+datetree ,my-journal-filename)
+		 "* %^{Title|%f} %^G\n\nBack link: %a\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
 		 :empty-lines 1  
 		 :create t
-		)
+		 )
+		;;
+		;; See: https://github.com/sprig/org-capture-extension for further details
+		;;
+		("L" 
+		 "Protocol Link" entry (file+headline ,my-workInProgress-filename "W3 Links")
+		 "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
+		%^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
+		 :empty-lines 1  
+		 :create t
+		 )
+
+
 		;;
 		;; See: https://github.com/sprig/org-capture-extension for further details
 		;;
@@ -623,6 +629,37 @@ else
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
     exit 1
 fi
+
+#----------------
+
+current_file="$project_dir/todo.org"
+
+if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
+    echo "Creates file      $current_file" 
+    more > "$current_file" <<'//MY_CODE_STREAM'
+,#+SETUPFILE: Setup/setupFile.org
+,#+TITLE: TODO list
+//MY_CODE_STREAM
+else 
+    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
+    exit 1
+fi
+
+#----------------
+
+current_file="$project_dir/journal.org"
+
+if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
+    echo "Creates file      $current_file" 
+    more > "$current_file" <<'//MY_CODE_STREAM'
+,#+SETUPFILE: Setup/setupFile.org
+,#+TITLE: Journal
+//MY_CODE_STREAM
+else 
+    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
+    exit 1
+fi
+
 #----------------
 
 current_file="$project_dir/workInProgress.org"
