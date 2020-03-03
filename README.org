@@ -1,6 +1,6 @@
 #+TITLE: Org Emacs Project Template
 
-* Table of contents                                           :TOC:no:export:
+* Table of contents                                           :TOC:noexport:
 - [[#what-is-it][What is it?]]
   - [[#features][Features]]
 - [[#quick-starter][Quick starter]]
@@ -61,7 +61,10 @@ The framework provides some functionalities like:
 
 ** Emacs =init.el= configuration
 
-To use the project (template) simply add this function to your Emacs =init.el= 
+To use the project (template) simply run this code. 
+
+*Note:* if you want to use this configure in a regular basis, simply add
+this function to your Emacs =init.el=
 
 #+NAME: my-project-configuration
 #+BEGIN_SRC emacs-lisp 
@@ -84,7 +87,8 @@ Its role is to found the project root (= the directory containing the
 .git directory) and to load the project configuration
 =Setup/setupFile.el=.
 
-*Note:* if you want to use bibliography during HTML export you will also need [[https://github.com/yyr/org-mode/blob/master/contrib/lisp/ox-bibtex.el][ox-bibtex.el]]:
+*Note:* if you want to use bibliography during HTML export you will also
+need [[https://github.com/yyr/org-mode/blob/master/contrib/lisp/ox-bibtex.el][ox-bibtex.el]]:
 
 #+BEGIN_SRC emacs-lisp :eval never
 (require 'ox-bibtex)
@@ -100,6 +104,15 @@ createorgproject MyProject
 
 Please note that by default, this script will *never* overwrite
 anything. If to want to overwrite, use the =-f= option.
+
+*Important:* if you just created a fresh new project be sure that there
+is a =.git= directory as it is used to locate the project root. If you
+simply want to do a quick test you can do
+#+BEGIN_SRC bash :eval never
+cd MyProject
+echo >> .git
+#+END_SRC
+as an alternative.
 
 Once that the script has been run you can use Emacs as usual:
 #+BEGIN_SRC bash :eval never
