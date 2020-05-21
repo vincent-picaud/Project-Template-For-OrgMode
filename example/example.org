@@ -1,2 +1,2 @@
-#+SETUPFILE: setup/setup.org 
+#+SETUPFILE: ../setup/options.org
 #+TITLE: example
