@@ -23,39 +23,6 @@
 createOrgProject MyProject
   #+END_SRC
 
-  The generated =MyProject/= directory structure is:
-
-  #+BEGIN_SRC bash :results output drawer :exports results
-orgTree.sh docs -I "README.org"
-  #+END_SRC
-
-  #+RESULTS:
-  :RESULTS:
-  + [[file:docs/index.org][index]]
-  + [[file:docs/index_preamble.org][index_preamble]]
-  + [[file:docs/page_example.org][page_example]]
-  + Setup/
-    + [[file:docs/Setup/options.org][options]]
-    + [[file:docs/Setup/setupFile-1.org][setupFile-1]]
-    + [[file:docs/Setup/setupFile-2.org][setupFile-2]]
-    + [[file:docs/Setup/setupFile-3.org][setupFile-3]]
-    + [[file:docs/Setup/setupFile-4.org][setupFile-4]]
-    + [[file:docs/Setup/setupFile.org][setupFile]]
-  + [[file:docs/theindex.org][theindex]]
-  + [[file:docs/workInProgress.org][workInProgress]]
-  :END:
-
-  You can have a look at the generated [[https://vincent-picaud.github.io/Project-Template-For-OrgMode/][GitHub doc]] but like it can not
-  load the =css= style file it is much more instructive to clone this
-  repository and browse it locally.
-
-  You can also use Org to generate PDF files like [[https://github.com/vincent-picaud/Project-Template-For-OrgMode/tree/master/docs/page_example.pdf][page_example.pdf]].
-
-  #+BEGIN_SRC bash 
-git clone https://github.com/vincent-picaud/Project-Template-For-OrgMode.git
-firefox docs/index.html 
-  #+END_SRC
-
 ** Features
 
    The framework provides some functionalities like:
@@ -204,6 +171,17 @@ firefox  MyProject/index.html
 (setq my-publish-dir (concat my-project-root "doc"))
 (setq my-project-name "MyProject")
 
+(defun my-org-publish-sitemap (title list)
+  "Create my own index.org instead of the default one"
+  (concat	"#+INCLUDE: \"setup/index_preamble.org\"\n"
+		"#+OPTIONS: toc:nil\n\n"
+		"#+TITLE: "
+		title
+		"\n"
+		"* My Sitemap\n\n"
+		(org-list-to-org list)
+		"\n\n"))
+
 (setq org-publish-project-alist
       `(
 	(,(concat my-project-name "_Org")
@@ -212,10 +190,10 @@ firefox  MyProject/index.html
 	 :recursive t
 	 :publishing-directory ,my-publish-dir
 	 :publishing-function org-html-publish-to-html
-					;	 :sitemap-function my-org-publish-sitemap
+	 :sitemap-function my-org-publish-sitemap
 	 :htmlize-source t
 					;	 :org-html-head-include-default-style nil
-	 :exclude "Setup*\\|index_preamble.org" 
+	 :exclude "setup/*"
 	 ;; Generates theindex.org + inc files
 	 :makeindex t
 	 ;; Creates index.org, calls my-org-publish-sitemap to fill it

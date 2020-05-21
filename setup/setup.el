@@ -9,6 +9,17 @@
       (setq my-publish-dir (concat my-project-root "doc"))
       (setq my-project-name "MyProject")
       
+      (defun my-org-publish-sitemap (title list)
+        "Create my own index.org instead of the default one"
+        (concat	"#+INCLUDE: \"setup/index_preamble.org\"\n"
+      		"#+OPTIONS: toc:nil\n\n"
+      		"#+TITLE: "
+      		title
+      		"\n"
+      		"* My Sitemap\n\n"
+      		(org-list-to-org list)
+      		"\n\n"))
+      
       (setq org-publish-project-alist
             `(
       	(,(concat my-project-name "_Org")
@@ -17,10 +28,10 @@
       	 :recursive t
       	 :publishing-directory ,my-publish-dir
       	 :publishing-function org-html-publish-to-html
-      					;	 :sitemap-function my-org-publish-sitemap
+      	 :sitemap-function my-org-publish-sitemap
       	 :htmlize-source t
       					;	 :org-html-head-include-default-style nil
-      	 :exclude "Setup*\\|index_preamble.org" 
+      	 :exclude "setup/*"
       	 ;; Generates theindex.org + inc files
       	 :makeindex t
       	 ;; Creates index.org, calls my-org-publish-sitemap to fill it
