@@ -1,10 +1,10 @@
 (if my-project-root
     ;; Configuration
     (progn
+      (message (format "Configuring %s" my-project-root))
       (setq org-agenda-files
-            (mapcar 'abbreviate-file-name
-      	      (split-string
-      	       (shell-command-to-string (format "find %s -name \"*.org\" ! -name \"index.org\"  ! -name \"agenda.org\"  ! -path \"./setup/*\" ! -path \"./docs/*\"" my-project-root))
-      	       "\n")))
+            (split-string
+             (shell-command-to-string (format "cd %s; find -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root))
+             ))
       )
   )

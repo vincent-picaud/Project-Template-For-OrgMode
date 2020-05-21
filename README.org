@@ -142,7 +142,8 @@ firefox  MyProject/index.html
 
 * Project structure
   :PROPERTIES:
-  :header-args: :tangle-mode (identity #o444) :mkdirp yes
+  #  :header-args: :tangle-mode (identity #o444) :mkdirp yes
+  :header-args: :mkdirp yes
   :END:
 
 ** =setup/=
@@ -181,15 +182,20 @@ firefox  MyProject/index.html
     function. At this point there is only one variable =my-project-root=
     containing the project root.
 
+    Print a message 
+    #+HEADER: :noweb-ref setup/setup.el
+    #+BEGIN_SRC emacs-lisp
+(message (format "Configuring %s" my-project-root))
+    #+END_SRC
+
     The first task is to find project's org mode files. 
 
     #+HEADER: :noweb-ref setup/setup.el
     #+BEGIN_SRC emacs-lisp
 (setq org-agenda-files
-      (mapcar 'abbreviate-file-name
-	      (split-string
-	       (shell-command-to-string (format "find %s -name \"*.org\" ! -name \"index.org\"  ! -name \"agenda.org\"  ! -path \"./setup/*\" ! -path \"./docs/*\"" my-project-root))
-	       "\n")))
+      (split-string
+       (shell-command-to-string (format "cd %s; find -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root))
+       ))
     #+END_SRC
 
   
