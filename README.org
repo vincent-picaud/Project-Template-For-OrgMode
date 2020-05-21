@@ -7,7 +7,7 @@
 - [[#what-is-it][What is it?]]
   - [[#features][Features]]
 - [[#quick-starter][Quick starter]]
-  - [[#emacs-initel-configuration][Emacs =init.el= configuration]]
+  - [[#my-new-project-configuration-emacs-initel-configuration][=my-new-project-configuration= Emacs =init.el= configuration]]
   - [[#new-project-creation][New project creation]]
 - [[#project-structure][Project structure]]
   - [[#setup][=setup/=]]
@@ -67,7 +67,7 @@ firefox docs/index.html
 
 * Quick starter
 
-** Emacs =init.el= configuration
+** =my-new-project-configuration= Emacs =init.el= configuration
 
    To use the project (template) simply run this code. 
 
@@ -76,20 +76,23 @@ firefox docs/index.html
 
    #+NAME: my-project-configuration
    #+BEGIN_SRC emacs-lisp 
-(defun my-project-configuration ()
+(defun my-new-project-configuration ()
   "Set my-project-root as root project directory and load
-my-project-root/Setup/setupFile.el project configuration file "
+my-project-root/setup/setup.el project configuration file "
   (interactive)
   (setq my-project-root (car (project-roots (project-current))))
 
   (if my-project-root
-      (let ((my-project-setup-file (concat my-project-root "Setup/setupFile.el")))
+      (let ((my-project-setup-file (concat my-project-root "setup/setup.el")))
 	(if (file-exists-p my-project-setup-file)
 	    (load my-project-setup-file nil t t nil)
 	  (error "Project %s setup file not found" my-project-setup-file)))
     (error "Project root dir not found (missing .git ?)")))
 
    #+END_SRC
+
+   #+RESULTS: my-project-configuration
+   : my-new-project-configuration
 
    Its role is to found the project root (= the directory containing the
    .git directory) and to load the project configuration
@@ -143,7 +146,7 @@ firefox  MyProject/index.html
   :END:
 
 ** =setup/=
-#+INDEX:directory!setup
+   #+INDEX:directory!setup
 
    This directory contains the configuration.
 
@@ -174,28 +177,58 @@ firefox  MyProject/index.html
 *** =setup.el= 
     #+INDEX: file!setup/setup.el
 
-    #+HEADER: :noweb-ref setup.el
-    #+BEGIN_SRC emacs-lisp :tangle yes :tangle setup/setup.el
-toto
+    This file contains code executed by the =my-project-configuration=
+    function. At this point there is only one variable =my-project-root=
+    containing the project root.
+
+    The first task is to find project's org mode files. 
+
+    #+HEADER: :noweb-ref setup/setup.el
+    #+BEGIN_SRC emacs-lisp
+(setq org-agenda-files
+      (mapcar 'abbreviate-file-name
+	      (split-string
+	       (shell-command-to-string (format "find %s -name \"*.org\" ! -name \"index.org\"  ! -name \"agenda.org\"  ! -path \"./setup/*\" ! -path \"./docs/*\"" my-project-root))
+	       "\n")))
+    #+END_SRC
+
+  
+    #+BEGIN_SRC emacs-lisp :exports none :noweb yes :tangle yes :tangle setup/setup.el
+(if my-project-root
+    ;; Configuration
+    (progn
+      <<setup/setup.el>>
+      )
+  )
     #+END_SRC
 
 
+
 ** =example=
-#+INDEX:directory!example
+   #+INDEX:directory!example
 
-This is a page demo to check it works
+   This is a page demo to check it works
 
-- [ ] https://emacs.stackexchange.com/q/58633/13563 another possibility is to use yasnippet
+   - [ ] https://emacs.stackexchange.com/q/58633/13563 another possibility is to use yasnippet
 
-#+HEADER: :noweb-ref example/example.org
-#+BEGIN_SRC org 
+   #+HEADER: :noweb-ref example/example.org
+   #+BEGIN_SRC org 
 ,#+SETUPFILE: ../setup/options.org
 ,#+TITLE: example 
-#+END_SRC
 
-#+BEGIN_SRC org :exports none :noweb yes :tangle yes :tangle example/example.org
+,#+BEGIN_SRC cpp 
+#include <iostream>
+int main()
+{
+  std::cout << "Hello world!" << std:endl;
+  return 0;
+}
+,#+END_SRC
+   #+END_SRC
+
+   #+BEGIN_SRC org :exports none :noweb yes :tangle yes :tangle example/example.org
 <<example/example.org>>
-#+END_SRC
+   #+END_SRC
 
 
 * ~create_orgMode_project~ script (old) :noexport:

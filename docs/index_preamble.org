@@ -1,6 +1,0 @@
-#+SETUPFILE: ./Setup/setupFile.org
-#+TITLE: MyProject
-
-* Introduction
-
-This is your project sitemap, you can put here anything you want.
