@@ -3,7 +3,7 @@
 #+HTML_HEAD_EXTRA: <style type="text/css"> pre {background:#EEEEEE; padding: 3px 13px}    </style>
 #+TITLE: Org Emacs Project Template
 
-* Table of contents                                           :TOC:noexport:
+* Table of contents                                           :TOC_4:noexport:
 - [[#what-is-it][What is it?]]
   - [[#features][Features]]
 - [[#quick-starter][Quick starter]]
@@ -11,6 +11,9 @@
   - [[#new-project-creation][New project creation]]
 - [[#project-structure][Project structure]]
   - [[#org_setup][=org_setup/=]]
+    - [[#setuporg][=setup.org=]]
+    - [[#setupel][=setup.el=]]
+  - [[#example][=example=]]
 
 * What is it?
 
@@ -143,6 +146,29 @@ firefox  MyProject/index.html
 
    This directory contains the configuration.
 
+*** =setup.org= 
+    #+INDEX: file!setup.org
+ 
+    This are the org mode options:
+
+    #+HEADER: :noweb-ref setup.org
+    #+BEGIN_SRC emacs-lisp 
+,#+OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc
+,#+PROPERTY: header-args :comments link :mkdirp yes
+    #+END_SRC
+
+    This allows gray background
+    #+HEADER: :noweb-ref setup.org
+    #+BEGIN_SRC emacs-lisp 
+,#+HTML_HEAD_EXTRA: <style type="text/css"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style>
+,#+HTML_HEAD_EXTRA: <style type="text/css"> pre {background:#EEEEEE; padding: 3px 13px}    </style>
+    #+END_SRC
+
+    #+BEGIN_SRC emacs-lisp :exports none :noweb yes :tangle yes :tangle setup/setup.org
+<<setup.org>>
+    #+END_SRC
+
+
 *** =setup.el= 
     #+INDEX: file!setup.el
 
@@ -152,6 +178,20 @@ toto
     #+END_SRC
 
 
+** =example=
+#+INDEX:directory!example
+
+This is a page demo to check it works
+
+#+HEADER: :noweb-ref example/example.org
+#+BEGIN_SRC org 
+,#+SETUPFILE: setup/setup.org 
+,#+TITLE: example 
+#+END_SRC
+
+#+BEGIN_SRC org :exports none :noweb yes :tangle yes :tangle example/example.org
+<<example/example.org>>
+#+END_SRC
 
 
 * ~create_orgMode_project~ script (old) :noexport:
