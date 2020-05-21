@@ -1,3 +1,6 @@
+#+OPTIONS: H:5 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc
+#+HTML_HEAD_EXTRA: <style type="text/css"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style>
+#+HTML_HEAD_EXTRA: <style type="text/css"> pre {background:#EEEEEE; padding: 3px 13px}    </style>
 #+TITLE: Org Emacs Project Template
 
 * Table of contents                                           :TOC:noexport:
@@ -6,68 +9,70 @@
 - [[#quick-starter][Quick starter]]
   - [[#emacs-initel-configuration][Emacs =init.el= configuration]]
   - [[#new-project-creation][New project creation]]
+- [[#project-structure][Project structure]]
+  - [[#org_setup][=org_setup/=]]
 
 * What is it?
 
-Defines a =create_orgMode_project= bash script to quickly generate an OrgMode project structure.
+  Defines a =create_orgMode_project= bash script to quickly generate an OrgMode project structure.
 
-#+BEGIN_SRC bash :eval never
+  #+BEGIN_SRC bash :eval never
 createOrgProject MyProject
-#+END_SRC
+  #+END_SRC
 
-The generated =MyProject/= directory structure is:
+  The generated =MyProject/= directory structure is:
 
-#+BEGIN_SRC bash :results output drawer :exports results
-orgTree.sh -I "README.org"
-#+END_SRC
+  #+BEGIN_SRC bash :results output drawer :exports results
+orgTree.sh docs -I "README.org"
+  #+END_SRC
 
-#+RESULTS:
-:RESULTS:
-+ MyProject/
-	+ [[file:.//MyProject/index.org][index]]
-	+ [[file:.//MyProject/index_preamble.org][index_preamble]]
-	+ Setup/
-		+ [[file:.//MyProject/Setup/options.org][options]]
-		+ [[file:.//MyProject/Setup/setupFile-1.org][setupFile-1]]
-		+ [[file:.//MyProject/Setup/setupFile-2.org][setupFile-2]]
-		+ [[file:.//MyProject/Setup/setupFile-3.org][setupFile-3]]
-		+ [[file:.//MyProject/Setup/setupFile-4.org][setupFile-4]]
-		+ [[file:.//MyProject/Setup/setupFile.org][setupFile]]
-	+ [[file:.//MyProject/theindex.org][theindex]]
-	+ [[file:.//MyProject/workInProgress.org][workInProgress]]
-:END:
+  #+RESULTS:
+  :RESULTS:
+  + [[file:docs/index.org][index]]
+  + [[file:docs/index_preamble.org][index_preamble]]
+  + [[file:docs/page_example.org][page_example]]
+  + Setup/
+    + [[file:docs/Setup/options.org][options]]
+    + [[file:docs/Setup/setupFile-1.org][setupFile-1]]
+    + [[file:docs/Setup/setupFile-2.org][setupFile-2]]
+    + [[file:docs/Setup/setupFile-3.org][setupFile-3]]
+    + [[file:docs/Setup/setupFile-4.org][setupFile-4]]
+    + [[file:docs/Setup/setupFile.org][setupFile]]
+  + [[file:docs/theindex.org][theindex]]
+  + [[file:docs/workInProgress.org][workInProgress]]
+  :END:
 
-You can have a look at the generated [[https://vincent-picaud.github.io/Project-Template-For-OrgMode/][GitHub doc]] but like it can not
-load the =css= style file it is much more instructive to clone this
-repository and browse it locally.
+  You can have a look at the generated [[https://vincent-picaud.github.io/Project-Template-For-OrgMode/][GitHub doc]] but like it can not
+  load the =css= style file it is much more instructive to clone this
+  repository and browse it locally.
 
-You can also use Org to generate PDF files like [[https://github.com/vincent-picaud/Project-Template-For-OrgMode/tree/master/docs/page_example.pdf][page_example.pdf]].
+  You can also use Org to generate PDF files like [[https://github.com/vincent-picaud/Project-Template-For-OrgMode/tree/master/docs/page_example.pdf][page_example.pdf]].
 
-#+BEGIN_SRC bash 
+  #+BEGIN_SRC bash 
 git clone https://github.com/vincent-picaud/Project-Template-For-OrgMode.git
 firefox docs/index.html 
-#+END_SRC
+  #+END_SRC
 
 ** Features
 
-The framework provides some functionalities like:
+   The framework provides some functionalities like:
 
-- org publish configuration 
-- bibliography file with its configuration 
-- pdf export configuration luaTeX + biber + minted (utf8 support)
-- org templates (also org protocol) configuration 
+   - org publish configuration 
+   - bibliography file with its configuration 
+   - pdf export configuration luaTeX + biber + minted (utf8 support)
+   - org templates (also org protocol) configuration 
 
 * Quick starter
 
 ** Emacs =init.el= configuration
 
-To use the project (template) simply run this code. 
+   To use the project (template) simply run this code. 
 
-*Note:* if you want to use this configure in a regular basis, simply add
-this function to your Emacs =init.el=
+   *Note:* if you want to use this configure in a regular basis, simply add
+   this function to your Emacs =init.el=
 
-#+NAME: my-project-configuration
-#+BEGIN_SRC emacs-lisp 
+   #+NAME: my-project-configuration
+   #+BEGIN_SRC emacs-lisp 
 (defun my-project-configuration ()
   "Set my-project-root as root project directory and load
 my-project-root/Setup/setupFile.el project configuration file "
@@ -81,55 +86,81 @@ my-project-root/Setup/setupFile.el project configuration file "
 	  (error "Project %s setup file not found" my-project-setup-file)))
     (error "Project root dir not found (missing .git ?)")))
 
-#+END_SRC
+   #+END_SRC
 
-Its role is to found the project root (= the directory containing the
-.git directory) and to load the project configuration
-=Setup/setupFile.el=.
+   Its role is to found the project root (= the directory containing the
+   .git directory) and to load the project configuration
+   =Setup/setupFile.el=.
 
-*Note:* if you want to use bibliography during HTML export you will also
-need [[https://github.com/yyr/org-mode/blob/master/contrib/lisp/ox-bibtex.el][ox-bibtex.el]]:
+   *Note:* if you want to use bibliography during HTML export you will also
+   need [[https://github.com/yyr/org-mode/blob/master/contrib/lisp/ox-bibtex.el][ox-bibtex.el]]:
 
-#+BEGIN_SRC emacs-lisp :eval never
+   #+BEGIN_SRC emacs-lisp :eval never
 (require 'ox-bibtex)
-#+END_SRC 
+   #+END_SRC 
 
 ** New project creation 
 
-Use the provided shell script:
+   Use the provided shell script:
 
-#+BEGIN_SRC bash :eval never
+   #+BEGIN_SRC bash :eval never
 createorgproject MyProject
-#+END_SRC
+   #+END_SRC
 
-Please note that by default, this script will *never* overwrite
-anything. If to want to overwrite, use the =-f= option.
+   Please note that by default, this script will *never* overwrite
+   anything. If to want to overwrite, use the =-f= option.
 
-*Important:* if you just created a fresh new project be sure that there
-is a =.git= directory as it is used to locate the project root. If you
-simply want to do a quick test you can do
-#+BEGIN_SRC bash :eval never
+   *Important:* if you just created a fresh new project be sure that there
+   is a =.git= directory as it is used to locate the project root. If you
+   simply want to do a quick test you can do
+   #+BEGIN_SRC bash :eval never
 cd MyProject
 echo >> .git
-#+END_SRC
-as an alternative.
+   #+END_SRC
+   as an alternative.
 
-Once that the script has been run you can use Emacs as usual:
-#+BEGIN_SRC bash :eval never
+   Once that the script has been run you can use Emacs as usual:
+   #+BEGIN_SRC bash :eval never
 emacs MyProject/page_example.org &
-#+END_SRC
+   #+END_SRC
 
-Then load your project configuration *M-x my-project-configuration*
+   Then load your project configuration *M-x my-project-configuration*
 
-Then you can do whatever you want, for instance publish your project
-with *C-c C-e P p* and visit the generated pages:
-#+BEGIN_SRC bash :eval never
+   Then you can do whatever you want, for instance publish your project
+   with *C-c C-e P p* and visit the generated pages:
+   #+BEGIN_SRC bash :eval never
 firefox  MyProject/index.html
-#+END_SRC
+   #+END_SRC
 
-*Note:* you can also try *C-c C-e l o* to check PDF exports.
+   *Note:* you can also try *C-c C-e l o* to check PDF exports.
 
-#+BEGIN_SRC bash :tangle yes :tangle create_orgMode_project :shebang "#!/bin/bash" :exports none :eval never
+* Project structure
+  :PROPERTIES:
+  :header-args: :tangle-mode (identity #o444) :mkdirp yes
+  :END:
+
+** =org_setup/=
+
+   This directory contains the configuration.
+
+*** =setup.el= 
+    #+INDEX: file!setup.el
+
+    #+HEADER: :noweb-ref setup.el
+    #+BEGIN_SRC emacs-lisp :tangle yes :tangle setup/setup.el
+toto
+    #+END_SRC
+
+
+
+
+* ~create_orgMode_project~ script (old) :noexport:
+
+
+
+
+
+  #+BEGIN_SRC bash :tangle yes :tangle create_orgMode_project :shebang "#!/bin/bash" :exports none :eval never
 
 #################
 # Parse command #
@@ -484,7 +515,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 			    ,(concat my-project-name "_Data"))
 	      )
 	      )
-	)
+      )
       ) ; progn
   ;; else
   (error "Project root undefined")
@@ -675,4 +706,4 @@ else
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
     exit 1
 fi
-#+END_SRC
+  #+END_SRC

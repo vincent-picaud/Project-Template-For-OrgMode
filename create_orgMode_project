@@ -352,7 +352,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 			    ,(concat my-project-name "_Data"))
 	      )
 	      )
-	)
+      )
       ) ; progn
   ;; else
   (error "Project root undefined")
