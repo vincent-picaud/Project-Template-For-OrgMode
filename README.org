@@ -1,7 +1,7 @@
 #+SETUPFILE: ./setup/setup.org
 #+TITLE: Org Emacs Project Template
 
-* Table of contents                                           :TOC_4:noexport:
+* Table of contents                                          :TOC_5:noexport:
 - [[#what-is-it][What is it?]]
   - [[#features][Features]]
 - [[#quick-starter][Quick starter]]
@@ -9,10 +9,13 @@
   - [[#new-project-creation][New project creation]]
 - [[#project-structure][Project structure]]
   - [[#setup][=setup/=]]
-    - [[#optionorg][=option.org=]]
+    - [[#setupoptionorg][=setup/option.org=]]
     - [[#setupel][=setup.el=]]
-  - [[#bibliography][Bibliography]]
+      - [[#bibliography-integration][Bibliography integration]]
+      - [[#complete-setupel-file][Complete =setup.el= file]]
+  - [[#bibliography][=bibliography/=]]
     - [[#bibliographybib][=bibliography.bib=]]
+    - [[#setupel-update][=setup.el= update]]
   - [[#example][=example=]]
 
 * What is it?
@@ -116,13 +119,12 @@ firefox  MyProject/index.html
   #  :header-args: :tangle-mode (identity #o444) :mkdirp yes
   :header-args: :mkdirp yes
   :END:
-
 ** =setup/=
    #+INDEX:directory!setup
 
    This directory contains the configuration.
 
-*** =option.org= 
+*** =setup/option.org= 
     #+INDEX: file!setup/option.org
  
 
@@ -141,7 +143,7 @@ firefox  MyProject/index.html
 ,#+HTML_HEAD_EXTRA: <style type="text/css"> pre {background:#EEEEEE; padding: 3px 13px}    </style>
     #+END_SRC
 
-The complete =option.org= file is:
+    The complete =option.org= file is:
 
     #+BEGIN_SRC emacs-lisp :exports code :noweb yes :tangle yes :tangle setup/options.org
 <<setup/options.org>>
@@ -149,6 +151,9 @@ The complete =option.org= file is:
 
 
 *** =setup.el= 
+    :PROPERTIES:
+    :ID:       dfcaca1b-a2db-4418-98d3-594593933cb7
+    :END:
     #+INDEX: file!setup/setup.el
 
     This file contains code executed by the =my-project-configuration=
@@ -225,27 +230,37 @@ The complete =option.org= file is:
        ))
     #+END_SRC
 
-The complete =setup.el= file is:
+**** Bibliography integration
 
-    #+BEGIN_SRC emacs-lisp :exports code :noweb yes :tangle yes :tangle setup/setup.el
+     See [[id:591df7a7-1832-492b-8102-a8fa7aeb9b04][=setup.el= update]]
+
+**** Complete =setup.el= file 
+
+     #+BEGIN_SRC emacs-lisp :exports code :noweb yes :tangle yes :tangle setup/setup.el
 (if my-project-root
     ;; Configuration
     (progn
       <<setup/setup.el>>
       )
   )
-    #+END_SRC
+     #+END_SRC
 
-** Bibliography 
 
-   This part configure bibliography integration.
+** =bibliography/=
+
+   This directory contains the [[id:377d8ec4-3d02-4ddf-8fca-6c816afe2b15][=bibliography.bib=]] file. 
 
 *** =bibliography.bib=
+    :PROPERTIES:
+    :ID:       377d8ec4-3d02-4ddf-8fca-6c816afe2b15
+    :END:
     #+INDEX:file!bibliography.bib 
 
-    First, one must create a bibliography file.
+    To be used as example here is our =bibliography.bib= example file. I
+    found convenient to provide a directory and not only the
+    =bibliography.bib= as I can annotate my reference here.
 
-    #+BEGIN_SRC bib :tangle yes :tangle bibliograpy.bib 
+    #+BEGIN_SRC bib :mkdir yes :tangle yes :tangle bibliography/bibliography.bib 
 @book{dominik16_org_mode_ref_manual,
   author =	 {Dominik, C.},
   title =	 {ORG MODE 9 REF MANUAL},
@@ -265,6 +280,20 @@ The complete =setup.el= file is:
 }
     #+END_SRC
 
+*** =setup.el= update
+    :PROPERTIES:
+    :ID:       591df7a7-1832-492b-8102-a8fa7aeb9b04
+    :END:
+    If you want to be able to html-export bibliography one must update =setup.el= with 
+
+    #+HEADER: :noweb-ref setup/setup.el
+    #+BEGIN_SRC emacs-lisp
+
+;; bibliography html-export
+(require 'ox-bibtex)
+    #+END_SRC
+
+    See: [[id:dfcaca1b-a2db-4418-98d3-594593933cb7][=setup.el=]]
 
 ** TODO =example=
    #+INDEX:directory!example
@@ -307,7 +336,7 @@ Test bibliography: \cite{lewis00_gnu_emacs_lisp}
    #+END_SRC
 
 
-The complete =example.org= file is:
+   The complete =example.org= file is:
    
    #+BEGIN_SRC org :exports code :noweb yes :tangle yes :tangle example/example.org
 <<example/example.org>>

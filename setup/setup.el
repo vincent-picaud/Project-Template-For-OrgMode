@@ -53,5 +53,8 @@
             (split-string
              (shell-command-to-string (format "cd %s; find -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root))
              ))
+      
+      ;; bibliography html-export
+      (require 'ox-bibtex)
       )
   )
