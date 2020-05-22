@@ -5,18 +5,23 @@
 - [[#what-is-it][What is it?]]
   - [[#features][Features]]
 - [[#quick-starter][Quick starter]]
-  - [[#my-new-project-configuration-emacs-initel-configuration][=my-new-project-configuration= Emacs =init.el= configuration]]
+  - [[#emacs-initel-configuration][Emacs =init.el= configuration]]
   - [[#new-project-creation][New project creation]]
 - [[#project-structure][Project structure]]
   - [[#setup][=setup/=]]
-    - [[#setupoptionorg][=setup/option.org=]]
+    - [[#setupoptionsorg][=setup/options.org=]]
     - [[#setupel][=setup.el=]]
       - [[#bibliography-integration][Bibliography integration]]
       - [[#complete-setupel-file][Complete =setup.el= file]]
   - [[#bibliography][=bibliography/=]]
     - [[#bibliographybib][=bibliography.bib=]]
     - [[#setupel-update][=setup.el= update]]
-  - [[#example][=example=]]
+  - [[#example][=example/=]]
+    - [[#exampleexampleorg][=example/example.org=]]
+      - [[#setup-header][Setup header]]
+      - [[#code-block-example][Code block example]]
+      - [[#bibliographic-reference-example][Bibliographic reference example]]
+    - [[#the-complete-exampleorg-file][The complete =example.org= file]]
 
 * What is it?
 
@@ -37,7 +42,7 @@ createOrgProject MyProject
 
 * Quick starter
 
-** =my-new-project-configuration= Emacs =init.el= configuration
+** Emacs =init.el= configuration
 
    To use the project (template) simply run this code. 
 
@@ -76,7 +81,8 @@ my-project-root/setup/setup.el project configuration file "
    need [[https://github.com/yyr/org-mode/blob/master/contrib/lisp/ox-bibtex.el][ox-bibtex.el]]:
 
    #+BEGIN_SRC emacs-lisp :eval never
-(require 'ox-bibtex)
+;;(require 'ox-bibtex)
+
    #+END_SRC 
 
 ** New project creation 
@@ -124,16 +130,16 @@ firefox  MyProject/index.html
 
    This directory contains the configuration.
 
-*** =setup/option.org= 
-    #+INDEX: file!setup/option.org
+*** =setup/options.org= 
+    #+INDEX: file!setup/options.org
  
 
     This are the org mode options:
 
-    #+HEADER: :noweb-ref setup/option.org
+    #+HEADER: :noweb-ref setup/options.org
     #+BEGIN_SRC emacs-lisp 
 ,#+OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc
-,#+PROPERTY: header-args :comments link :mkdirp yes
+,#+PROPERTY: header-args :mkdirp yes
     #+END_SRC
 
     This allows gray background
@@ -295,26 +301,37 @@ firefox  MyProject/index.html
 
     See: [[id:dfcaca1b-a2db-4418-98d3-594593933cb7][=setup.el=]]
 
-** TODO =example=
+** =example/=
    #+INDEX:directory!example
 
-   This is a page demo to check it works. The =setupfile= location is
-   automatically defined as explained in
-   https://emacs.stackexchange.com/q/58633/13563. 
+*** =example/example.org=
+#+INDEX:file:example/example.org
 
-   - [ ] another possibility is to use yasnippet
+    This is a page demo to check it works.
 
-   #+HEADER: :noweb-ref example/example.org
-   #+BEGIN_SRC org 
+**** TODO Setup header
+
+  To be properly configured the org mode file can begin as follows:
+
+     #+HEADER: :noweb-ref example/example.org
+     #+BEGIN_SRC org 
 src_emacs-lisp[:results raw]{(my-new-project-setupfile)}
-,#+TITLE: example 
-   #+END_SRC
+,#+TITLE: Example 
+     #+END_SRC
+     
+     For explanations:
+     https://emacs.stackexchange.com/q/58633/13563. 
 
-   We then add a code block to see that background is gray colored
+     - [ ] another possibility is to use yasnippet
 
-   #+HEADER: :noweb-ref example/example.org
-   #+BEGIN_SRC org 
 
+**** Code block example
+
+     We then add a code block to see that background is gray colored
+
+     #+HEADER: :noweb-ref example/example.org
+     #+BEGIN_SRC org 
+,* A code block example 
 ,#+BEGIN_SRC cpp 
 #include <iostream>
 int main()
@@ -324,26 +341,29 @@ int main()
 }
 ,#+END_SRC
 
-   #+END_SRC
-
-   Then we check that bibliography integration works
-
-   #+HEADER: :noweb-ref example/example.org
-   #+BEGIN_SRC org 
-
-Test bibliography: \cite{lewis00_gnu_emacs_lisp}
-
-   #+END_SRC
+     #+END_SRC
 
 
-   The complete =example.org= file is:
+**** Bibliographic reference example
+
+     Then we check that bibliography integration works
+
+     #+HEADER: :noweb-ref example/example.org
+     #+BEGIN_SRC org 
+,* A bibliographic reference
+Test bibliography: cite:lewis00_gnu_emacs_lisp
+
+,* The bibliography
+,#+BIBLIOGRAPHY: ../bibliography/bibliography plain limit:t
+     #+END_SRC
+
+*** The complete =example.org= file 
    
-   #+BEGIN_SRC org :exports code :noweb yes :tangle yes :tangle example/example.org
+    #+BEGIN_SRC org :exports code :noweb yes :tangle yes :tangle example/example.org
 <<example/example.org>>
-   #+END_SRC
+    #+END_SRC
 
-
-* ~create_orgMode_project~ script (old) :noexport:
+* ~create_orgMode_project~ script (old)                              :noexport:
 
 
 
@@ -408,7 +428,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM' 
 ,#+OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc
-,#+PROPERTY: header-args :comments link :mkdirp yes
+,#+PROPERTY: header-args :mkdirp yes
 ,#+HTML_HEAD_EXTRA: <style type="text/css"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style>
 ,#+HTML_HEAD_EXTRA: <style type="text/css"> pre {background:#EEEEEE; padding: 3px 13px}    </style>
 
@@ -896,3 +916,5 @@ else
     exit 1
 fi
   #+END_SRC
+
+sav@saint-cantin-chaffauge.com
