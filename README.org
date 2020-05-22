@@ -15,7 +15,11 @@
   - [[#setup][=setup/=]]
     - [[#setupoptionsorg][=setup/options.org=]]
     - [[#setupel][=setup.el=]]
+      - [[#configuration-message][Configuration message]]
+      - [[#org-publish-project-alist-definition][=org-publish-project-alist= definition]]
+      - [[#feed-org-agenda-files-with-org-files][Feed =org-agenda-files= with org files]]
       - [[#bibliography-integration][Bibliography integration]]
+      - [[#pdf-generation][PDF generation]]
       - [[#complete-setupel-file][Complete =setup.el= file]]
   - [[#bibliography][=bibliography/=]]
     - [[#bibliographybib][=bibliography.bib=]]
@@ -188,17 +192,21 @@ firefox  MyProject/index.html
     function. At this point there is only one variable =my-project-root=
     containing the project root.
 
-    Print a message 
-    #+HEADER: :noweb-ref setup/setup.el
-    #+BEGIN_SRC emacs-lisp
+**** Configuration message
+
+     Print a message 
+     #+HEADER: :noweb-ref setup/setup.el
+     #+BEGIN_SRC emacs-lisp
 (message (format "Configuring %s" my-project-root))
-    #+END_SRC
+     #+END_SRC
 
+**** =org-publish-project-alist= definition
 
-    The first task is to define how to publish the project:
+     The first task is to define how to publish the project:
 
-    #+HEADER: :noweb-ref setup/setup.el
-    #+BEGIN_SRC emacs-lisp
+     #+HEADER: :noweb-ref setup/setup.el
+     #+BEGIN_SRC emacs-lisp
+
 (setq my-publish-dir (concat my-project-root "doc"))
 
 (defun my-org-publish-sitemap (title list)
@@ -246,25 +254,41 @@ firefox  MyProject/index.html
 	 )
 	)
       )
-    #+END_SRC
+     #+END_SRC
 
-    Then we use the =find= command to feed the =org-agenda-files= variable:
+**** Feed =org-agenda-files= with org files
 
-    #+HEADER: :noweb-ref setup/setup.el
-    #+BEGIN_SRC emacs-lisp
+     Then we use the =find= command to feed the =org-agenda-files= variable:
+
+     #+HEADER: :noweb-ref setup/setup.el
+     #+BEGIN_SRC emacs-lisp
+
 (setq org-agenda-files
       (split-string
        (shell-command-to-string (format "cd %s; find -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root))
        ))
-    #+END_SRC
+     #+END_SRC
 
 **** Bibliography integration
 
      See [[id:591df7a7-1832-492b-8102-a8fa7aeb9b04][=setup.el= update]]
 
+**** PDF generation
+
+     #+HEADER: :noweb-ref setup/setup.el
+     #+BEGIN_SRC emacs-lisp
+;; defines how to generate the pdf file using lualatex + biber
+      (setq org-latex-pdf-process
+      '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+      "biber %b"
+      "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+      "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+     #+END_SRC
+
 **** Complete =setup.el= file 
 
      #+BEGIN_SRC emacs-lisp :exports code :noweb yes :tangle yes :tangle setup/setup.el
+
 (if my-project-root
     ;; Configuration
     (progn
@@ -322,6 +346,28 @@ firefox  MyProject/index.html
     #+END_SRC
 
     See: [[id:dfcaca1b-a2db-4418-98d3-594593933cb7][=setup.el=]]
+
+org-ref configuration
+   #+HEADER: :noweb-ref setup/setup.el
+    #+BEGIN_SRC emacs-lisp
+(setq my-bibtex-filename 
+      (concat my-project-root "bibliography/bibliography.bib"))
+(if (file-exists-p my-bibtex-filename)
+    ;; If bibliography.bib exists 
+    (setq reftex-default-bibliography  `(,my-bibtex-filename)
+	  bibtex-completion-notes-extension "-notes.org"
+	  bibtex-completion-notes-template-multiple-files "#+SETUPFILE: ../Setup/setupFile-1.org\n#+TITLE: ${author-or-editor} (${year}): ${title}\n\n* Personal Notes\n  :PROPERTIES:\n  :NOTER_DOCUMENT: ~/AnnotatedPDF/${=key=}.pdf\n  :END:\n\n[[file:~/AnnotatedPDF/${=key=}.pdf][${title}]]\n"
+	  bibtex-completion-bibliography my-bibtex-filename
+	  bibtex-completion-library-path (file-name-directory my-bibtex-filename)
+	  bibtex-completion-notes-path (file-name-directory my-bibtex-filename)
+	  
+	  org-ref-default-bibliography  `(,my-bibtex-filename)
+	  org-ref-pdf-directory (file-name-directory my-bibtex-filename)
+	  )
+  ;; otherwise unbound meaningless my-bibtex-filename
+  (makunbound 'my-bibtex-filename)
+  )
+  #+END_SRC
 
 ** =example/=
    #+INDEX:directory!example
