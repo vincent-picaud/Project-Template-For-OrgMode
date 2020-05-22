@@ -157,17 +157,9 @@ firefox  MyProject/index.html
 (message (format "Configuring %s" my-project-root))
     #+END_SRC
 
-    The first task is to find project's org mode files. 
 
-    #+HEADER: :noweb-ref setup/setup.el
-    #+BEGIN_SRC emacs-lisp
-(setq org-agenda-files
-      (split-string
-       (shell-command-to-string (format "cd %s; find -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root))
-       ))
-    #+END_SRC
+    The first task is to define how to publish the project:
 
-    The define how to publish the project
  #+HEADER: :noweb-ref setup/setup.el
     #+BEGIN_SRC emacs-lisp
 (setq my-publish-dir (concat my-project-root "doc"))
@@ -230,6 +222,16 @@ firefox  MyProject/index.html
 	 )
 	)
       )
+    #+END_SRC
+
+    Then we use the =find= command to feed the =org-agenda-files= variable:
+
+    #+HEADER: :noweb-ref setup/setup.el
+    #+BEGIN_SRC emacs-lisp
+(setq org-agenda-files
+      (split-string
+       (shell-command-to-string (format "cd %s; find -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root))
+       ))
     #+END_SRC
 
 
