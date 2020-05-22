@@ -1,6 +1,4 @@
-#+OPTIONS: H:5 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc
-#+HTML_HEAD_EXTRA: <style type="text/css"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style>
-#+HTML_HEAD_EXTRA: <style type="text/css"> pre {background:#EEEEEE; padding: 3px 13px}    </style>
+#+SETUPFILE: ./setup/setup.org
 #+TITLE: Org Emacs Project Template
 
 * Table of contents                                           :TOC_4:noexport:
@@ -44,7 +42,7 @@ createOrgProject MyProject
    #+NAME: my-project-configuration
    #+BEGIN_SRC emacs-lisp 
 (defun my-new-project-configuration ()
-  "Set my-project-root as root project directory and load
+  "Sets my-project-root as root project directory and load
 my-project-root/setup/setup.el project configuration file "
   (interactive)
   (setq my-project-root (car (project-roots (project-current))))
@@ -56,10 +54,14 @@ my-project-root/setup/setup.el project configuration file "
 	  (error "Project %s setup file not found" my-project-setup-file)))
     (error "Project root dir not found (missing .git ?)")))
 
+(defun my-new-project-setupfile ()
+  "Returns #+SETUPFILE: .../setup/setup.org"
+   (concat "#+SETUPFILE: "
+	   (expand-file-name (car (project-roots (project-current)))) "setup/setup.org"))
    #+END_SRC
 
    #+RESULTS: my-project-configuration
-   : my-new-project-configuration
+   : my-new-project-setupfile
 
    Its role is to found the project root (= the directory containing the
    .git directory) and to load the project configuration
@@ -242,16 +244,18 @@ firefox  MyProject/index.html
 
 
 
-** =example=
+** TODO =example=
    #+INDEX:directory!example
 
-   This is a page demo to check it works
+   This is a page demo to check it works. The =setupfile= location is
+   automatically defined as explained in
+   https://emacs.stackexchange.com/q/58633/13563. 
 
-   - [ ] https://emacs.stackexchange.com/q/58633/13563 another possibility is to use yasnippet
+   - [ ] another possibility is to use yasnippet
 
    #+HEADER: :noweb-ref example/example.org
    #+BEGIN_SRC org 
-,#+SETUPFILE: ../setup/options.org
+src_emacs-lisp[:results raw]{(my-new-project-setupfile)}
 ,#+TITLE: example 
 
 ,#+BEGIN_SRC cpp 
