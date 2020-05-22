@@ -1,0 +1,9 @@
+#+NAME: Setup
+#+BEGIN_SRC emacs-lisp :results drawer
+(concat "#+SETUPFILE: " (expand-file-name (car (project-roots (project-current)))) "setup/setup.org")
+#+END_SRC
+
+#+RESULTS: Setup
+:results:
+#+SETUPFILE: /home/picaud/GitHub/Project-Template-For-OrgMode/setup/setup.org
+:end:

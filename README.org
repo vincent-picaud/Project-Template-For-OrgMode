@@ -14,8 +14,12 @@
 - [[#project-structure][Project structure]]
   - [[#setup][=setup/=]]
     - [[#setupoptionsorg][=setup/options.org=]]
+    - [[#library-of-babelorg][=library-of-babel.org=]]
+      - [[#setup-1][=Setup()=]]
+      - [[#complete-listing-1][Complete listing]]
     - [[#setupel][=setup.el=]]
       - [[#configuration-message][Configuration message]]
+      - [[#load-library-of-babelorg][Load =library-of-babel.org=]]
       - [[#org-publish-project-alist-definition][=org-publish-project-alist= definition]]
       - [[#feed-org-agenda-files-with-org-files][Feed =org-agenda-files= with org files]]
       - [[#bibliography-integration][Bibliography integration]]
@@ -83,6 +87,9 @@ my-project-root/setup/setup.el project configuration file "
 	  (error "Project %s setup file not found" my-project-setup-file)))
     (error "Project root dir not found (missing .git ?)")))
     #+END_SRC
+
+    #+RESULTS:
+    : my-new-project-configuration
 
 
     Its role is to found the project root (= the directory containing the
@@ -181,12 +188,47 @@ firefox  MyProject/index.html
 <<setup/options.org>>
     #+END_SRC
 
-    
+*** =library-of-babel.org=
+    :PROPERTIES:
+    :ID:       358f0e27-0b25-472b-b8d0-e368ea8ba871
+    :END:
+    #+INDEX: file!setup/library-of-babel.org
+
+**** =Setup()=
+
+     #+HEADER: :noweb-ref setup/library-of-babel.org
+     #+BEGIN_SRC org
+,#+NAME: Setup
+,#+BEGIN_SRC emacs-lisp :results drawer
+,#+END_SRC
+     #+END_SRC
+
+# ,#+NAME: Setup
+# ,#+BEGIN_SRC emacs-lisp :results drawer
+# (concat "#+SETUPFILE: " (expand-file-name (car (project-roots (project-current)))) "setup/setup.org" "\n" 
+# 	"#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
+# 	"#+LATEX_HEADER: \\addbibresource{/home/picaud/GitHub/Project-Template-For-OrgMode/bibliography/bibliography.bib}\n"
+# )
+# ,#+END_SRC
+
+
+# ,#+NAME: Bibliography
+# ,#+BEGIN_EXPORT latex
+# \printbibliography
+# ,#+END_EXPORT
+
+**** Complete listing
+
+     #+BEGIN_SRC org :exports code :noweb yes :tangle yes :tangle setup/library-of-babel.org
+<<setup/library-of-babel.org>>
+     #+END_SRC
+
 *** =setup.el= 
     :PROPERTIES:
     :ID:       dfcaca1b-a2db-4418-98d3-594593933cb7
     :END:
     #+INDEX: file!setup/setup.el
+
 
     This file contains code executed by the =my-new-project-configuration=
     function. At this point there is only one variable =my-project-root=
@@ -199,6 +241,15 @@ firefox  MyProject/index.html
      #+BEGIN_SRC emacs-lisp
 (message (format "Configuring %s" my-project-root))
      #+END_SRC
+
+**** Load =library-of-babel.org=
+
+     #+HEADER: :noweb-ref setup/setup.el
+     #+BEGIN_SRC emacs-lisp
+(org-babel-lob-ingest (concat my-project-root "library-of-babel.org"))
+     #+END_SRC
+
+     See: [[id:358f0e27-0b25-472b-b8d0-e368ea8ba871][=library-of-babel.org=]]
 
 **** =org-publish-project-alist= definition
 
@@ -213,9 +264,6 @@ firefox  MyProject/index.html
   "Create my own index.org instead of the default one"
   (concat	"#+INCLUDE: \"setup/index_preamble.org\"\n"
 		"#+OPTIONS: toc:nil\n\n"
-		"#+TITLE: "
-		title
-		"\n"
 		"* My Sitemap\n\n"
 		(org-list-to-org list)
 		"\n\n"))
@@ -278,11 +326,11 @@ firefox  MyProject/index.html
      #+HEADER: :noweb-ref setup/setup.el
      #+BEGIN_SRC emacs-lisp
 ;; defines how to generate the pdf file using lualatex + biber
-      (setq org-latex-pdf-process
+(setq org-latex-pdf-process
       '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-      "biber %b"
-      "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-      "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+	"biber %b"
+	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
      #+END_SRC
 
 **** Complete =setup.el= file 
@@ -347,8 +395,8 @@ firefox  MyProject/index.html
 
     See: [[id:dfcaca1b-a2db-4418-98d3-594593933cb7][=setup.el=]]
 
-org-ref configuration
-   #+HEADER: :noweb-ref setup/setup.el
+    org-ref configuration
+    #+HEADER: :noweb-ref setup/setup.el
     #+BEGIN_SRC emacs-lisp
 (setq my-bibtex-filename 
       (concat my-project-root "bibliography/bibliography.bib"))
@@ -367,7 +415,7 @@ org-ref configuration
   ;; otherwise unbound meaningless my-bibtex-filename
   (makunbound 'my-bibtex-filename)
   )
-  #+END_SRC
+    #+END_SRC
 
 ** =example/=
    #+INDEX:directory!example
@@ -383,7 +431,7 @@ org-ref configuration
 
      #+HEADER: :noweb-ref example/example.org
      #+BEGIN_SRC org 
-src_emacs-lisp[:results raw]{(my-new-project-setupfile)}
+,#+CALL: Setup()
 ,#+TITLE: Example 
      #+END_SRC
      

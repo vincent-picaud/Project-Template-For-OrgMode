@@ -1,17 +1,17 @@
-src_emacs-lisp[:results raw]{(my-new-project-setupfile)}
+#+CALL: Setup()
 #+TITLE: Example 
 * A code block example 
-# #+BEGIN_SRC cpp 
-# #include <iostream>
-# int main()
-# {
-#   std::cout << "Hello world!" << std:endl;
-#   return 0;
-# }
-# #+END_SRC
+  #+BEGIN_SRC cpp 
+#include <iostream>
+int main()
+{
+  std::cout << "Hello world!" << std:endl;
+  return 0;
+}
+  #+END_SRC
 
 * A bibliographic reference
-Test bibliography: cite:lewis00_gnu_emacs_lisp
+  Test bibliography: cite:lewis00_gnu_emacs_lisp
 
 * The bibliography
-#+BIBLIOGRAPHY: ../bibliography/bibliography plain limit:t
+  #+BIBLIOGRAPHY: ../bibliography/bibliography plain limit:t

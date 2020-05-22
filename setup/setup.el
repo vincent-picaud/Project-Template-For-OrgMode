@@ -2,15 +2,14 @@
     ;; Configuration
     (progn
       (message (format "Configuring %s" my-project-root))
+      (org-babel-lob-ingest (concat my-project-root "library-of-babel.org"))
+      
       (setq my-publish-dir (concat my-project-root "doc"))
       
       (defun my-org-publish-sitemap (title list)
         "Create my own index.org instead of the default one"
         (concat	"#+INCLUDE: \"setup/index_preamble.org\"\n"
       		"#+OPTIONS: toc:nil\n\n"
-      		"#+TITLE: "
-      		title
-      		"\n"
       		"* My Sitemap\n\n"
       		(org-list-to-org list)
       		"\n\n"))
@@ -49,12 +48,36 @@
       	 )
       	)
             )
+      
       (setq org-agenda-files
             (split-string
              (shell-command-to-string (format "cd %s; find -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root))
              ))
+      ;; defines how to generate the pdf file using lualatex + biber
+      (setq org-latex-pdf-process
+            '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+      	"biber %b"
+      	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+      	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
       
       ;; bibliography html-export
       ;;(require 'ox-bibtex)
+      (setq my-bibtex-filename 
+            (concat my-project-root "bibliography/bibliography.bib"))
+      (if (file-exists-p my-bibtex-filename)
+          ;; If bibliography.bib exists 
+          (setq reftex-default-bibliography  `(,my-bibtex-filename)
+      	  bibtex-completion-notes-extension "-notes.org"
+      	  bibtex-completion-notes-template-multiple-files "#+SETUPFILE: ../Setup/setupFile-1.org\n#+TITLE: ${author-or-editor} (${year}): ${title}\n\n* Personal Notes\n  :PROPERTIES:\n  :NOTER_DOCUMENT: ~/AnnotatedPDF/${=key=}.pdf\n  :END:\n\n[[file:~/AnnotatedPDF/${=key=}.pdf][${title}]]\n"
+      	  bibtex-completion-bibliography my-bibtex-filename
+      	  bibtex-completion-library-path (file-name-directory my-bibtex-filename)
+      	  bibtex-completion-notes-path (file-name-directory my-bibtex-filename)
+      	  
+      	  org-ref-default-bibliography  `(,my-bibtex-filename)
+      	  org-ref-pdf-directory (file-name-directory my-bibtex-filename)
+      	  )
+        ;; otherwise unbound meaningless my-bibtex-filename
+        (makunbound 'my-bibtex-filename)
+        )
       )
   )
