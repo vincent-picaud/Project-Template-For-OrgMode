@@ -11,6 +11,8 @@
   - [[#setup][=setup/=]]
     - [[#optionorg][=option.org=]]
     - [[#setupel][=setup.el=]]
+  - [[#bibliography][Bibliography]]
+    - [[#bibliographybib][=bibliography.bib=]]
   - [[#example][=example=]]
 
 * What is it?
@@ -56,8 +58,8 @@ my-project-root/setup/setup.el project configuration file "
 
 (defun my-new-project-setupfile ()
   "Returns #+SETUPFILE: .../setup/setup.org"
-   (concat "#+SETUPFILE: "
-	   (expand-file-name (car (project-roots (project-current)))) "setup/setup.org"))
+  (concat "#+SETUPFILE: "
+	  (expand-file-name (car (project-roots (project-current)))) "setup/setup.org"))
    #+END_SRC
 
    #+RESULTS: my-project-configuration
@@ -139,7 +141,9 @@ firefox  MyProject/index.html
 ,#+HTML_HEAD_EXTRA: <style type="text/css"> pre {background:#EEEEEE; padding: 3px 13px}    </style>
     #+END_SRC
 
-    #+BEGIN_SRC emacs-lisp :exports none :noweb yes :tangle yes :tangle setup/options.org
+The complete =option.org= file is:
+
+    #+BEGIN_SRC emacs-lisp :exports code :noweb yes :tangle yes :tangle setup/options.org
 <<setup/options.org>>
     #+END_SRC
 
@@ -160,7 +164,7 @@ firefox  MyProject/index.html
 
     The first task is to define how to publish the project:
 
- #+HEADER: :noweb-ref setup/setup.el
+    #+HEADER: :noweb-ref setup/setup.el
     #+BEGIN_SRC emacs-lisp
 (setq my-publish-dir (concat my-project-root "doc"))
 
@@ -221,8 +225,9 @@ firefox  MyProject/index.html
        ))
     #+END_SRC
 
+The complete =setup.el= file is:
 
-    #+BEGIN_SRC emacs-lisp :exports none :noweb yes :tangle yes :tangle setup/setup.el
+    #+BEGIN_SRC emacs-lisp :exports code :noweb yes :tangle yes :tangle setup/setup.el
 (if my-project-root
     ;; Configuration
     (progn
@@ -231,6 +236,34 @@ firefox  MyProject/index.html
   )
     #+END_SRC
 
+** Bibliography 
+
+   This part configure bibliography integration.
+
+*** =bibliography.bib=
+    #+INDEX:file!bibliography.bib 
+
+    First, one must create a bibliography file.
+
+    #+BEGIN_SRC bib :tangle yes :tangle bibliograpy.bib 
+@book{dominik16_org_mode_ref_manual,
+  author =	 {Dominik, C.},
+  title =	 {ORG MODE 9 REF MANUAL},
+  year =	 2016,
+  publisher =	 {ARTPOWER International PUB},
+  isbn =	 9789888406852,
+}
+
+@Book{lewis00_gnu_emacs_lisp,
+  author =	 {Lewis, Bil},
+  title =	 {The GNU Emacs Lisp reference manual : for Emacs
+                  Version 21, Revision 2.6, May 2000},
+  year =	 2000,
+  publisher =	 {Free Software Foundation},
+  address =	 {Boston, MA},
+  isbn =	 {978-1882114733},
+}
+    #+END_SRC
 
 
 ** TODO =example=
@@ -246,6 +279,12 @@ firefox  MyProject/index.html
    #+BEGIN_SRC org 
 src_emacs-lisp[:results raw]{(my-new-project-setupfile)}
 ,#+TITLE: example 
+   #+END_SRC
+
+   We then add a code block to see that background is gray colored
+
+   #+HEADER: :noweb-ref example/example.org
+   #+BEGIN_SRC org 
 
 ,#+BEGIN_SRC cpp 
 #include <iostream>
@@ -255,9 +294,22 @@ int main()
   return 0;
 }
 ,#+END_SRC
+
    #+END_SRC
 
-   #+BEGIN_SRC org :exports none :noweb yes :tangle yes :tangle example/example.org
+   Then we check that bibliography integration works
+
+   #+HEADER: :noweb-ref example/example.org
+   #+BEGIN_SRC org 
+
+Test bibliography: \cite{lewis00_gnu_emacs_lisp}
+
+   #+END_SRC
+
+
+The complete =example.org= file is:
+   
+   #+BEGIN_SRC org :exports code :noweb yes :tangle yes :tangle example/example.org
 <<example/example.org>>
    #+END_SRC
 

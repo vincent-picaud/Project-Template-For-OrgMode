@@ -17,7 +17,7 @@
       
       (setq org-publish-project-alist
             `(
-      	("project-org-files",
+      	("my-project-org-files",
       	 :base-directory ,my-project-root
       	 :base-extension "org"
       	 :recursive t
@@ -34,7 +34,7 @@
       	 :sitemap-filename "index.org"
       	 )
       
-      	("project-data-files",
+      	("my-project-data-files",
       	 :base-directory ,my-project-root
       	 :base-extension "nb\\|?pp\\|png"
       	 :recursive t
@@ -45,7 +45,7 @@
       
       	;; Main
       	("my-project",
-      	 :components ("project-org-files" "project-data-files")
+      	 :components ("my-project-org-files" "my-project-data-files")
       	 )
       	)
             )
