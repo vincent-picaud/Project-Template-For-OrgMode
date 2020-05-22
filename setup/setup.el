@@ -55,6 +55,6 @@
              ))
       
       ;; bibliography html-export
-      (require 'ox-bibtex)
+      ;;(require 'ox-bibtex)
       )
   )

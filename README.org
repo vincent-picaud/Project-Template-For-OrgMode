@@ -6,6 +6,10 @@
   - [[#features][Features]]
 - [[#quick-starter][Quick starter]]
   - [[#emacs-initel-configuration][Emacs =init.el= configuration]]
+    - [[#required-packages][Required packages]]
+    - [[#my-new-project-configuration-function][=my-new-project-configuration= function]]
+    - [[#extra-configuration-functions][Extra configuration functions]]
+    - [[#complete-listing][Complete listing]]
   - [[#new-project-creation][New project creation]]
 - [[#project-structure][Project structure]]
   - [[#setup][=setup/=]]
@@ -49,8 +53,19 @@ createOrgProject MyProject
    *Note:* if you want to use this configure in a regular basis, simply add
    this function to your Emacs =init.el=
 
-   #+NAME: my-project-configuration
-   #+BEGIN_SRC emacs-lisp 
+*** Required packages
+    #+HEADER: :noweb-ref my-new-project-configuration
+    #+BEGIN_SRC emacs-lisp :exports code
+(require 'project)
+(require 'org-ref)
+(require 'htmlize)
+    #+END_SRC
+
+*** =my-new-project-configuration= function
+
+    #+HEADER: :noweb-ref my-new-project-configuration
+    #+BEGIN_SRC emacs-lisp :exports code
+
 (defun my-new-project-configuration ()
   "Sets my-project-root as root project directory and load
 my-project-root/setup/setup.el project configuration file "
@@ -63,27 +78,34 @@ my-project-root/setup/setup.el project configuration file "
 	    (load my-project-setup-file nil t t nil)
 	  (error "Project %s setup file not found" my-project-setup-file)))
     (error "Project root dir not found (missing .git ?)")))
+    #+END_SRC
+
+
+    Its role is to found the project root (= the directory containing the
+    .git directory) and to load the project configuration
+    =Setup/setupFile.el=.
+
+*** TODO Extra configuration functions
+
+    - [ ] replace this part by a setup/babel.org file + babel ingest 
+
+      #+HEADER: :noweb-ref my-new-project-configuration
+      #+BEGIN_SRC emacs-lisp :exports code
 
 (defun my-new-project-setupfile ()
   "Returns #+SETUPFILE: .../setup/setup.org"
   (concat "#+SETUPFILE: "
 	  (expand-file-name (car (project-roots (project-current)))) "setup/setup.org"))
-   #+END_SRC
+      #+END_SRC
 
-   #+RESULTS: my-project-configuration
-   : my-new-project-setupfile
+*** Complete listing 
+ 
+    #+BEGIN_SRC emacs-lisp :exports code :noweb yes
+<<my-new-project-configuration>>
+    #+END_SRC
 
-   Its role is to found the project root (= the directory containing the
-   .git directory) and to load the project configuration
-   =Setup/setupFile.el=.
-
-   *Note:* if you want to use bibliography during HTML export you will also
-   need [[https://github.com/yyr/org-mode/blob/master/contrib/lisp/ox-bibtex.el][ox-bibtex.el]]:
-
-   #+BEGIN_SRC emacs-lisp :eval never
-;;(require 'ox-bibtex)
-
-   #+END_SRC 
+    #+RESULTS:
+    : my-new-project-setupfile
 
 ** New project creation 
 
@@ -110,7 +132,7 @@ echo >> .git
 emacs MyProject/page_example.org &
    #+END_SRC
 
-   Then load your project configuration *M-x my-project-configuration*
+   Then load your project configuration *M-x my-new-project-configuration*
 
    Then you can do whatever you want, for instance publish your project
    with *C-c C-e P p* and visit the generated pages:
@@ -155,14 +177,14 @@ firefox  MyProject/index.html
 <<setup/options.org>>
     #+END_SRC
 
-
+    
 *** =setup.el= 
     :PROPERTIES:
     :ID:       dfcaca1b-a2db-4418-98d3-594593933cb7
     :END:
     #+INDEX: file!setup/setup.el
 
-    This file contains code executed by the =my-project-configuration=
+    This file contains code executed by the =my-new-project-configuration=
     function. At this point there is only one variable =my-project-root=
     containing the project root.
 
@@ -296,7 +318,7 @@ firefox  MyProject/index.html
     #+BEGIN_SRC emacs-lisp
 
 ;; bibliography html-export
-(require 'ox-bibtex)
+;;(require 'ox-bibtex)
     #+END_SRC
 
     See: [[id:dfcaca1b-a2db-4418-98d3-594593933cb7][=setup.el=]]
@@ -305,13 +327,13 @@ firefox  MyProject/index.html
    #+INDEX:directory!example
 
 *** =example/example.org=
-#+INDEX:file:example/example.org
+    #+INDEX:file:example/example.org
 
     This is a page demo to check it works.
 
 **** TODO Setup header
 
-  To be properly configured the org mode file can begin as follows:
+     To be properly configured the org mode file can begin as follows:
 
      #+HEADER: :noweb-ref example/example.org
      #+BEGIN_SRC org 
@@ -332,14 +354,14 @@ src_emacs-lisp[:results raw]{(my-new-project-setupfile)}
      #+HEADER: :noweb-ref example/example.org
      #+BEGIN_SRC org 
 ,* A code block example 
-,#+BEGIN_SRC cpp 
+  ,#+BEGIN_SRC cpp 
 #include <iostream>
 int main()
 {
   std::cout << "Hello world!" << std:endl;
   return 0;
 }
-,#+END_SRC
+  ,#+END_SRC
 
      #+END_SRC
 
@@ -351,10 +373,10 @@ int main()
      #+HEADER: :noweb-ref example/example.org
      #+BEGIN_SRC org 
 ,* A bibliographic reference
-Test bibliography: cite:lewis00_gnu_emacs_lisp
+  Test bibliography: cite:lewis00_gnu_emacs_lisp
 
 ,* The bibliography
-,#+BIBLIOGRAPHY: ../bibliography/bibliography plain limit:t
+  ,#+BIBLIOGRAPHY: ../bibliography/bibliography plain limit:t
      #+END_SRC
 
 *** The complete =example.org= file 
@@ -917,4 +939,4 @@ else
 fi
   #+END_SRC
 
-sav@saint-cantin-chaffauge.com
+  sav@saint-cantin-chaffauge.com
