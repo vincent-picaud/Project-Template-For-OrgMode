@@ -2,6 +2,14 @@
 #+BEGIN_SRC emacs-lisp :results drawer
 (concat "#+SETUPFILE: \"" my-project-root "setup/setup.org\"\n" 
  	"#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
+	"#+LATEX_HEADER: \\usepackage{verbatim}\n" 
  	"#+LATEX_HEADER: \\addbibresource{" my-project-root "bibliography/bibliography.bib}\n"
 	)
+#+END_SRC
+#+NAME: Bibliography
+#+BEGIN_SRC emacs-lisp :results drawer
+(concat "#+BEGIN_EXPORT latex\n\\printbibliography\n"
+	"\\begin{comment}\n#+END_EXPORT\n"
+	"bibliography:" my-project-root "bibliography/bibliography.bib\n"
+	"#+BEGIN_EXPORT latex\n\\end{comment}\n#+END_EXPORT\n")
 #+END_SRC

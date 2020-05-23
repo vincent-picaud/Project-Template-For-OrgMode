@@ -16,6 +16,7 @@
     - [[#setupoptionsorg][=setup/options.org=]]
     - [[#library-of-babelorg][=library-of-babel.org=]]
       - [[#setup-1][=Setup()=]]
+      - [[#bibliography][=Bibliography()=]]
       - [[#complete-listing-1][Complete listing]]
     - [[#setupel][=setup.el=]]
       - [[#configuration-message][Configuration message]]
@@ -25,7 +26,7 @@
       - [[#bibliography-integration][Bibliography integration]]
       - [[#pdf-generation][PDF generation]]
       - [[#complete-setupel-file][Complete =setup.el= file]]
-  - [[#bibliography][=bibliography/=]]
+  - [[#bibliography-1][=bibliography/=]]
     - [[#bibliographybib][=bibliography.bib=]]
     - [[#setupel-update][=setup.el= update]]
   - [[#example][=example/=]]
@@ -62,6 +63,7 @@ createOrgProject MyProject
    this function to your Emacs =init.el=
 
 *** Required packages
+
     #+HEADER: :noweb-ref my-new-project-configuration
     #+BEGIN_SRC emacs-lisp :exports code
 (require 'project)
@@ -196,22 +198,41 @@ firefox  MyProject/index.html
 
 **** =Setup()=
 
+     The =#+CALL: Setup()= has to be set at the beginning of your org file (see: [[file:example/example.org][file:example/example.org]]).
+
+
+     The latex package [[https://ctan.org/pkg/verbatim?lang=en][verbatim]] is required by the bibliography trick in
+     [[id:f64ef356-3f8c-4e37-93c6-34719a9393ae][=Bibliography()=]] to support both html and pdf export.
+
      #+HEADER: :noweb-ref setup/library-of-babel.org
      #+BEGIN_SRC org
 ,#+NAME: Setup
 ,#+BEGIN_SRC emacs-lisp :results drawer
 (concat "#+SETUPFILE: \"" my-project-root "setup/setup.org\"\n" 
  	"#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
+	"#+LATEX_HEADER: \\usepackage{verbatim}\n" 
  	"#+LATEX_HEADER: \\addbibresource{" my-project-root "bibliography/bibliography.bib}\n"
 	)
 ,#+END_SRC
      #+END_SRC
 
+**** =Bibliography()=
+     :PROPERTIES:
+     :ID:       f64ef356-3f8c-4e37-93c6-34719a9393ae
+     :END:
 
-# ,#+NAME: Bibliography
-# ,#+BEGIN_EXPORT latex
-# \printbibliography
-# ,#+END_EXPORT
+     The =#+CALL: Bibliography()= has to be set where you want to insert your bilbliography (see: [[file:example/example.org][file:example/example.org]]).
+
+     #+HEADER: :noweb-ref setup/library-of-babel.org
+     #+BEGIN_SRC org
+,#+NAME: Bibliography
+,#+BEGIN_SRC emacs-lisp :results drawer
+(concat "#+BEGIN_EXPORT latex\n\\printbibliography\n"
+	"\\begin{comment}\n#+END_EXPORT\n"
+	"bibliography:" my-project-root "bibliography/bibliography.bib\n"
+	"#+BEGIN_EXPORT latex\n\\end{comment}\n#+END_EXPORT\n")
+,#+END_SRC
+     #+END_SRC
 
 **** Complete listing
 
@@ -232,7 +253,7 @@ firefox  MyProject/index.html
 
 **** Configuration message
 
-     Print a message 
+     P rint a message 
      #+HEADER: :noweb-ref setup/setup.el
      #+BEGIN_SRC emacs-lisp
 (message (format "Configuring %s" my-project-root))
@@ -458,19 +479,16 @@ int main()
 
 **** Bibliographic reference example
 
-http://kitchingroup.cheme.cmu.edu/blog/2015/12/03/Exporting-numbered-citations-in-html-with-unsorted-numbered-bibliography/
-
-     Then we check that bibliography integration works
-
      #+HEADER: :noweb-ref example/example.org
      #+BEGIN_SRC org 
 ,* A bibliographic reference
   Test bibliography: cite:lewis00_gnu_emacs_lisp
+,* Another section
 
-,* The bibliography
-  ,#+BIBLIOGRAPHY: ../bibliography/bibliography plain limit:t
+  # put the bibliography here
+  ,#+CALL: Bibliography()
      #+END_SRC
-
+ 
 *** The complete =example.org= file 
    
     #+BEGIN_SRC org :exports code :noweb yes :tangle yes :tangle example/example.org
