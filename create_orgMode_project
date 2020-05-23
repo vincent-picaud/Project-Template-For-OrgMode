@@ -355,7 +355,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM'
 #+CALL: Setup()
-#+TITLE: My_Project_Name TODO list 
+#+TITLE: TODO list 
 #+HTML_LINK_UP: ./index.html
 #+HTML_LINK_HOME: ./index.html
 //MY_CODE_STREAM
@@ -376,7 +376,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM'
 #+CALL: Setup()
-#+TITLE: My_Project_Name Journal
+#+TITLE: Journal
 #+HTML_LINK_UP: ./index.html
 #+HTML_LINK_HOME: ./index.html
 //MY_CODE_STREAM
@@ -397,7 +397,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM'
 #+CALL: Setup()
-#+TITLE: My_Project_Name external web links
+#+TITLE: External web links
 #+HTML_LINK_UP: ./index.html
 #+HTML_LINK_HOME: ./index.html
 //MY_CODE_STREAM
@@ -425,7 +425,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM'
 #+CALL: Setup()
-#+TITLE: Example 
+#+TITLE: One example file
 #+HTML_LINK_UP: ../index.html
 #+HTML_LINK_HOME: ../index.html
 * A code block example 

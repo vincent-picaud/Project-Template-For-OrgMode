@@ -184,7 +184,7 @@ firefox  MyProject/index.html
     #+HEADER: :noweb-ref todo.org
     #+BEGIN_SRC org :noweb yes :tangle yes :tangle todo.org
 ,#+CALL: Setup()
-,#+TITLE: My_Project_Name TODO list 
+,#+TITLE: TODO list 
 ,#+HTML_LINK_UP: ./index.html
 ,#+HTML_LINK_HOME: ./index.html
     #+END_SRC
@@ -195,7 +195,7 @@ firefox  MyProject/index.html
     #+HEADER: :noweb-ref journal.org
     #+BEGIN_SRC org :noweb yes :tangle yes :tangle journal.org
 ,#+CALL: Setup()
-,#+TITLE: My_Project_Name Journal
+,#+TITLE: Journal
 ,#+HTML_LINK_UP: ./index.html
 ,#+HTML_LINK_HOME: ./index.html
     #+END_SRC
@@ -206,7 +206,7 @@ firefox  MyProject/index.html
     #+HEADER: :noweb-ref www_links.org 
     #+BEGIN_SRC org :noweb yes :tangle yes :tangle www_links.org
 ,#+CALL: Setup()
-,#+TITLE: My_Project_Name external web links
+,#+TITLE: External web links
 ,#+HTML_LINK_UP: ./index.html
 ,#+HTML_LINK_HOME: ./index.html
     #+END_SRC
@@ -598,7 +598,7 @@ firefox  MyProject/index.html
      #+HEADER: :noweb-ref example/example.org
      #+BEGIN_SRC org 
 ,#+CALL: Setup()
-,#+TITLE: Example 
+,#+TITLE: One example file
 ,#+HTML_LINK_UP: ../index.html
 ,#+HTML_LINK_HOME: ../index.html
      #+END_SRC
