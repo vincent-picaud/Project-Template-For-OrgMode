@@ -117,7 +117,7 @@ my-project-root/setup/setup.el project configuration file "
 
     Its role is to found the project root (= the directory containing the
     .git directory) and to load the project configuration
-    =Setup/setupFile.el=.
+    =setup/setup.el=.
 
 ** New project creation 
 
@@ -701,7 +701,7 @@ mkdir -p "$project_dir/setup"
 
 #----------------
 
-current_file="$project_dir/setup/setupFile.el"
+current_file="$project_dir/setup/setup.el"
 
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 

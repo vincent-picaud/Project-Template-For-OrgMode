@@ -50,7 +50,7 @@ mkdir -p "$project_dir/setup"
 
 #----------------
 
-current_file="$project_dir/setup/setupFile.el"
+current_file="$project_dir/setup/setup.el"
 
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
