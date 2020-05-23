@@ -269,7 +269,9 @@ current_file="$project_dir/setup/index_preamble.org"
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM'
+#+TITLE: My_Project_Name
 
+# add what you want
 //MY_CODE_STREAM
     #
     # replace project name 
@@ -289,12 +291,28 @@ mkdir -p "$project_dir/bibliography"
 
 #----------------
 
-current_file="$project_dir/Bibliography/bibliography.bib"
+current_file="$project_dir/bibliography/bibliography.bib"
 
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM' 
+@book{dominik16_org_mode_ref_manual,
+  author =	 {Dominik, C.},
+  title =	 {ORG MODE 9 REF MANUAL},
+  year =	 2016,
+  publisher =	 {ARTPOWER International PUB},
+  isbn =	 9789888406852,
+}
 
+@Book{lewis00_gnu_emacs_lisp,
+  author =	 {Lewis, Bil},
+  title =	 {The GNU Emacs Lisp reference manual : for Emacs
+                  Version 21, Revision 2.6, May 2000},
+  year =	 2000,
+  publisher =	 {Free Software Foundation},
+  address =	 {Boston, MA},
+  isbn =	 {978-1882114733},
+}
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 

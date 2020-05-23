@@ -160,56 +160,56 @@ firefox  MyProject/index.html
   :header-args: :mkdirp yes
   :END:
 ** =project root=
-#+INDEX:directory
+   #+INDEX:directory
 
-Create files at project root
+   Create files at project root
 *** =theindex_org=
     #+INDEX:file:theindex.org
 
-This file includes the generated index
+    This file includes the generated index
 
-   #+HEADER: :noweb-ref theindex.org
-   #+BEGIN_SRC org :noweb yes :tangle yes :tangle theindex.org
+    #+HEADER: :noweb-ref theindex.org
+    #+BEGIN_SRC org :noweb yes :tangle yes :tangle theindex.org
 ,#+CALL: Setup()
 ,#+TITLE: Index
 ,#+HTML_LINK_UP: ./index.html
 ,#+HTML_LINK_HOME: ./index.html
 
 ,#+INCLUDE: "theindex.inc"
-     #+END_SRC
+    #+END_SRC
 
 *** =todo.org=
     #+INDEX:file:todo.org
 
-   #+HEADER: :noweb-ref todo.org
-     #+BEGIN_SRC org :noweb yes :tangle yes :tangle todo.org
+    #+HEADER: :noweb-ref todo.org
+    #+BEGIN_SRC org :noweb yes :tangle yes :tangle todo.org
 ,#+CALL: Setup()
 ,#+TITLE: My_Project_Name TODO list 
 ,#+HTML_LINK_UP: ./index.html
 ,#+HTML_LINK_HOME: ./index.html
-     #+END_SRC
+    #+END_SRC
 
 *** =journal.org=
     #+INDEX:file:journal.org
 
-   #+HEADER: :noweb-ref journal.org
-     #+BEGIN_SRC org :noweb yes :tangle yes :tangle journal.org
+    #+HEADER: :noweb-ref journal.org
+    #+BEGIN_SRC org :noweb yes :tangle yes :tangle journal.org
 ,#+CALL: Setup()
 ,#+TITLE: My_Project_Name Journal
 ,#+HTML_LINK_UP: ./index.html
 ,#+HTML_LINK_HOME: ./index.html
-     #+END_SRC
+    #+END_SRC
 
 *** =www_links.org=
     #+INDEX:file:www_links.org
 
- #+HEADER: :noweb-ref www_links.org 
-     #+BEGIN_SRC org :noweb yes :tangle yes :tangle www_links.org
+    #+HEADER: :noweb-ref www_links.org 
+    #+BEGIN_SRC org :noweb yes :tangle yes :tangle www_links.org
 ,#+CALL: Setup()
 ,#+TITLE: My_Project_Name external web links
 ,#+HTML_LINK_UP: ./index.html
 ,#+HTML_LINK_HOME: ./index.html
-     #+END_SRC
+    #+END_SRC
 
 ** =setup/=
    #+INDEX:directory!setup
@@ -414,7 +414,7 @@ This file includes the generated index
 
 **** Some captures with their files
 
-*CAVEAT:* these files, "www_links.org", "journal.org", "todo.org" must exist.
+     *CAVEAT:* these files, "www_links.org", "journal.org", "todo.org" must exist.
 
      #+HEADER: :noweb-ref setup/setup.el
      #+BEGIN_SRC emacs-lisp
@@ -485,12 +485,12 @@ This file includes the generated index
 	 :create t
 	 )
 	))
-      #+END_SRC
+     #+END_SRC
 
 **** org-ref configuration
 
-    #+HEADER: :noweb-ref setup/setup.el
-    #+BEGIN_SRC emacs-lisp
+     #+HEADER: :noweb-ref setup/setup.el
+     #+BEGIN_SRC emacs-lisp
 (setq my-bibtex-filename 
       (concat my-project-root "bibliography/bibliography.bib"))
 (if (file-exists-p my-bibtex-filename)
@@ -508,7 +508,7 @@ This file includes the generated index
   ;; otherwise unbound meaningless my-bibtex-filename
   (makunbound 'my-bibtex-filename)
   )
-    #+END_SRC
+     #+END_SRC
 
 **** PDF generation
 
@@ -541,11 +541,12 @@ This file includes the generated index
     This is file included in sitemap.org. Note: no need for =Setup()=,
     it is already declared in the template.
 
-     #+BEGIN_SRC org :noweb yes :tangle yes :tangle setup/index_preamble.org
-#+TITLE: My_Project_Name
+    #+HEADER: :noweb-ref setup/index_preamble.org
+    #+BEGIN_SRC org :noweb yes :tangle yes :tangle setup/index_preamble.org
+,#+TITLE: My_Project_Name
 
 # add what you want
-     #+END_SRC
+    #+END_SRC
      
 ** =bibliography/=
 
@@ -561,6 +562,7 @@ This file includes the generated index
     found convenient to provide a directory and not only the
     =bibliography.bib= as I can annotate my reference here.
 
+    #+HEADER: :noweb-ref bibliography/bibliography.bib 
     #+BEGIN_SRC bib :mkdir yes :tangle yes :tangle bibliography/bibliography.bib 
 @book{dominik16_org_mode_ref_manual,
   author =	 {Dominik, C.},
@@ -640,9 +642,9 @@ int main()
  
 **** The complete =example.org= file                                 :noexport:
    
-    #+BEGIN_SRC org :exports none :noweb yes :tangle yes :tangle example/example.org
+     #+BEGIN_SRC org :exports none :noweb yes :tangle yes :tangle example/example.org
 <<example/example.org>>
-    #+END_SRC
+     #+END_SRC
 
 * ~create_orgMode_project~ script                                    :noexport:
 
