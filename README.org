@@ -1,4 +1,4 @@
-# +CALL: Setup()
+#+CALL: Setup()
 
 #+RESULTS:
 :results:
@@ -47,7 +47,7 @@
       - [[#load-library-of-babelorg][Load =library-of-babel.org=]]
       - [[#org-publish-project-alist-definition][=org-publish-project-alist= definition]]
       - [[#feed-org-agenda-files-with-org-files][Feed =org-agenda-files= with org files]]
-      - [[#bibliography-integration][Bibliography integration]]
+      - [[#some-captures-with-their-files][Some captures with their files]]
       - [[#pdf-generation][PDF generation]]
       - [[#complete-setupel-file][Complete =setup.el= file]]
   - [[#bibliography][=bibliography/=]]
@@ -182,7 +182,7 @@ firefox  MyProject/index.html
     :END:
     #+INDEX: file!setup/library-of-babel.org
 
-This file contains function definitions, that are loaded with [[id:3179dc59-bf96-4c38-ab21-6de2d0dcb8a8][=org-babel-lob-ingest=]].
+    This file contains function definitions, that are loaded with [[id:3179dc59-bf96-4c38-ab21-6de2d0dcb8a8][=org-babel-lob-ingest=]].
 
 **** The =Setup()= command
      :PROPERTIES:
@@ -281,7 +281,7 @@ This file contains function definitions, that are loaded with [[id:3179dc59-bf96
      :ID:       7102a2f8-70da-4fee-9bff-ae78e1c90be3
      :END:
 
-See [[id:25b27bbf-6bb7-4dfa-a016-50266497a98d][=Setup()=]]
+     See [[id:25b27bbf-6bb7-4dfa-a016-50266497a98d][=Setup()=]]
 
      #+HEADER: :noweb-ref setup/setup.el
      #+BEGIN_SRC emacs-lisp
@@ -373,9 +373,80 @@ See [[id:25b27bbf-6bb7-4dfa-a016-50266497a98d][=Setup()=]]
        ))
      #+END_SRC
 
-**** Bibliography integration
+**** Some captures with their files
 
-     See [[id:591df7a7-1832-492b-8102-a8fa7aeb9b04][=setup.el= update]]
+*CAVEAT:* these files, "www_links.org", "journal.org", "todo.org" must exist.
+
+     #+HEADER: :noweb-ref setup/setup.el
+     #+BEGIN_SRC emacs-lisp
+(setq my-www-links-filename (concat my-project-root "www_links.org"))
+(setq my-journal-filename (concat my-project-root "journal.org"))
+(setq my-todo-filename (concat my-project-root "todo.org"))
+
+(setq-default org-display-custom-times t)
+(setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
+
+(setq org-capture-templates
+      `(
+	("A"
+	 "Agenda/Meeting" entry (file+headline "~/GitLab/PVBibliography/agenda.org" "Agenda")
+	 "* %^{Title?} %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
+	 :empty-lines 1  
+	 :create t
+	 )
+
+	("K" "Log Time" entry (file+datetree "~/GitLab/PVBibliography/activity.org" "Activity")
+	 "* %U - %^{Activity}  :TIME:"
+	 )
+	
+
+	;;----------------
+	
+	("t"
+	 "Todo" entry (file+olp+datetree ,my-todo-filename)
+	 "* TODO %^{Title?} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n - [ ] %?"
+	 :empty-lines 1  
+	 :create t
+	 )
+	
+	("T"
+	 "Todo with file link" entry (file+olp+datetree ,my-todo-filename)
+	 "* TODO %^{Title|%f} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\nBack link: %a\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n - [ ] %?"
+	 :empty-lines 1  
+	 :create t
+	 )
+	
+	("j" "Journal" entry (file+olp+datetree ,my-journal-filename)
+	 "* %^{Title} %^G\n\n%?"
+	 :empty-lines 1  
+	 :create t
+	 )
+	("J" 
+	 "Journal with file link" entry (file+olp+datetree ,my-journal-filename)
+	 "* %^{Title|%f} %^G\n\nBack link: %a\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
+	 :empty-lines 1  
+	 :create t
+	 )
+	;;
+	;; See: https://github.com/sprig/org-capture-extension for further details
+	;;
+	("L" 
+	 "Protocol Link" entry (file ,my-www-links-filename)
+	 "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
+		%^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
+	 :empty-lines 1  
+	 :create t
+	 )
+	
+	("p" 
+	 "Protocol" entry (file ,my-www-links-filename)
+	 "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
+		 %^G\n:PROPERTIES:\n:Created: %U\n:END:\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
+	 :empty-lines 1  
+	 :create t
+	 )
+	))
+      #+END_SRC
 
 **** PDF generation
 

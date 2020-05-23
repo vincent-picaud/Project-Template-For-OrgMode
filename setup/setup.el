@@ -59,6 +59,73 @@
             (split-string
              (shell-command-to-string (format "cd %s; find -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root))
              ))
+      (setq my-www-links-filename (concat my-project-root "www_links.org"))
+      (setq my-journal-filename (concat my-project-root "journal.org"))
+      (setq my-todo-filename (concat my-project-root "todo.org"))
+      
+      (setq-default org-display-custom-times t)
+      (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
+      
+      (setq org-capture-templates
+            `(
+      	("A"
+      	 "Agenda/Meeting" entry (file+headline "~/GitLab/PVBibliography/agenda.org" "Agenda")
+      	 "* %^{Title?} %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
+      	 :empty-lines 1  
+      	 :create t
+      	 )
+      
+      	("K" "Log Time" entry (file+datetree "~/GitLab/PVBibliography/activity.org" "Activity")
+      	 "* %U - %^{Activity}  :TIME:"
+      	 )
+      	
+      
+      	;;----------------
+      	
+      	("t"
+      	 "Todo" entry (file+olp+datetree ,my-todo-filename)
+      	 "* TODO %^{Title?} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n - [ ] %?"
+      	 :empty-lines 1  
+      	 :create t
+      	 )
+      	
+      	("T"
+      	 "Todo with file link" entry (file+olp+datetree ,my-todo-filename)
+      	 "* TODO %^{Title|%f} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\nBack link: %a\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n - [ ] %?"
+      	 :empty-lines 1  
+      	 :create t
+      	 )
+      	
+      	("j" "Journal" entry (file+olp+datetree ,my-journal-filename)
+      	 "* %^{Title} %^G\n\n%?"
+      	 :empty-lines 1  
+      	 :create t
+      	 )
+      	("J" 
+      	 "Journal with file link" entry (file+olp+datetree ,my-journal-filename)
+      	 "* %^{Title|%f} %^G\n\nBack link: %a\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
+      	 :empty-lines 1  
+      	 :create t
+      	 )
+      	;;
+      	;; See: https://github.com/sprig/org-capture-extension for further details
+      	;;
+      	("L" 
+      	 "Protocol Link" entry (file ,my-www-links-filename)
+      	 "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
+      		%^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
+      	 :empty-lines 1  
+      	 :create t
+      	 )
+      	
+      	("p" 
+      	 "Protocol" entry (file ,my-www-links-filename)
+      	 "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
+      		 %^G\n:PROPERTIES:\n:Created: %U\n:END:\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
+      	 :empty-lines 1  
+      	 :create t
+      	 )
+      	))
       ;; defines how to generate the pdf file using lualatex + biber
       (setq org-latex-pdf-process
             '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
