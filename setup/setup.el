@@ -2,7 +2,7 @@
     ;; Configuration
     (progn
       (message (format "Configuring %s" my-project-root))
-      (org-babel-lob-ingest (concat my-project-root "library-of-babel.org"))
+      (org-babel-lob-ingest (concat my-project-root "setup/library-of-babel.org"))
       
       (setq my-publish-dir (concat my-project-root "doc"))
       

@@ -1,4 +1,12 @@
 #+CALL: Setup()
+
+#+RESULTS:
+:RESULTS:
+#+SETUPFILE: "~/GitHub/Project-Template-For-OrgMode/setup/setup.org"
+#+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
+#+LATEX_HEADER: \addbibresource{~/GitHub/Project-Template-For-OrgMode/bibliography/bibliography.bib}
+:END:
+
 #+TITLE: Example 
 * A code block example 
   #+BEGIN_SRC cpp 

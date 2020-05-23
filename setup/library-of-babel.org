@@ -1,9 +1,14 @@
 #+NAME: Setup
 #+BEGIN_SRC emacs-lisp :results drawer
-(concat "#+SETUPFILE: " (expand-file-name (car (project-roots (project-current)))) "setup/setup.org")
+(concat "#+SETUPFILE: \"" my-project-root "setup/setup.org\"\n" 
+ 	"#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
+ 	"#+LATEX_HEADER: \\addbibresource{" my-project-root "bibliography/bibliography.bib}\n"
+	)
 #+END_SRC
 
 #+RESULTS: Setup
-:results:
-#+SETUPFILE: /home/picaud/GitHub/Project-Template-For-OrgMode/setup/setup.org
-:end:
+:RESULTS:
+#+SETUPFILE: "~/GitHub/Project-Template-For-OrgMode/setup/setup.org"
+#+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
+#+LATEX_HEADER: \addbibresource{~/GitHub/Project-Template-For-OrgMode/bibliography/bibliography.bib}
+:END:

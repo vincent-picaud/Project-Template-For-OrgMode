@@ -78,7 +78,7 @@ createOrgProject MyProject
   "Sets my-project-root as root project directory and load
 my-project-root/setup/setup.el project configuration file "
   (interactive)
-  (setq my-project-root (car (project-roots (project-current))))
+  (setq my-project-root (expand-file-name (car (project-roots (project-current)))))
 
   (if my-project-root
       (let ((my-project-setup-file (concat my-project-root "setup/setup.el")))
@@ -200,16 +200,12 @@ firefox  MyProject/index.html
      #+BEGIN_SRC org
 ,#+NAME: Setup
 ,#+BEGIN_SRC emacs-lisp :results drawer
+(concat "#+SETUPFILE: \"" my-project-root "setup/setup.org\"\n" 
+ 	"#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
+ 	"#+LATEX_HEADER: \\addbibresource{" my-project-root "bibliography/bibliography.bib}\n"
+	)
 ,#+END_SRC
      #+END_SRC
-
-# ,#+NAME: Setup
-# ,#+BEGIN_SRC emacs-lisp :results drawer
-# (concat "#+SETUPFILE: " (expand-file-name (car (project-roots (project-current)))) "setup/setup.org" "\n" 
-# 	"#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
-# 	"#+LATEX_HEADER: \\addbibresource{/home/picaud/GitHub/Project-Template-For-OrgMode/bibliography/bibliography.bib}\n"
-# )
-# ,#+END_SRC
 
 
 # ,#+NAME: Bibliography
@@ -246,7 +242,7 @@ firefox  MyProject/index.html
 
      #+HEADER: :noweb-ref setup/setup.el
      #+BEGIN_SRC emacs-lisp
-(org-babel-lob-ingest (concat my-project-root "library-of-babel.org"))
+(org-babel-lob-ingest (concat my-project-root "setup/library-of-babel.org"))
      #+END_SRC
 
      See: [[id:358f0e27-0b25-472b-b8d0-e368ea8ba871][=library-of-babel.org=]]
