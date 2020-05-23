@@ -8,10 +8,6 @@
  "#+HTML_HEAD_EXTRA: <style type=\"text/css\"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style> \n"
  "#+HTML_HEAD_EXTRA: <style type=\"text/css\"> pre {background:#EEEEEE; padding: 3px 13px}    </style> \n"
 
- "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://orgmode.org/worg/style/worg.css\"/> \n"
- "#+HTML_HEAD: <style type=\"text/css\">body{ max-width:80%; }</style> \n"
- "# +INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:" my-publish-dir "/index.html" "\n"
-
  "#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
  "#+LATEX_HEADER: \\usepackage{verbatim}\n" 
  "#+LATEX_HEADER: \\usepackage{minted}\n"

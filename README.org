@@ -1,14 +1,11 @@
-#+CALL: Setup()
+# +CALL: Setup()
 
 #+RESULTS:
 :results:
-#+OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc 
+# +OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc 
 #+PROPERTY: header-args :mkdirp yes 
 #+HTML_HEAD_EXTRA: <style type="text/css"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style> 
 #+HTML_HEAD_EXTRA: <style type="text/css"> pre {background:#EEEEEE; padding: 3px 13px}    </style> 
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/> 
-#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style> 
-#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:~/GitHub/Project-Template-For-OrgMode/doc/index.html
 #+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
 #+LATEX_HEADER: \usepackage{verbatim}
 #+LATEX_HEADER: \usepackage{minted}
@@ -26,9 +23,6 @@
 \setminted{xleftmargin=0pt} 
 #+END_EXPORT 
 :end:
-
-#+HTML_LINK_HOME: index.html
-#+HTML_LINK_UP: index.html
 
 #+TITLE: Org Emacs Project Template
 
@@ -217,10 +211,6 @@ This file contains function definitions, that are loaded with [[id:3179dc59-bf96
  "#+HTML_HEAD_EXTRA: <style type=\"text/css\"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style> \n"
  "#+HTML_HEAD_EXTRA: <style type=\"text/css\"> pre {background:#EEEEEE; padding: 3px 13px}    </style> \n"
 
- "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://orgmode.org/worg/style/worg.css\"/> \n"
- "#+HTML_HEAD: <style type=\"text/css\">body{ max-width:80%; }</style> \n"
- "# +INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:" my-publish-dir "/index.html" "\n"
-
  "#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
  "#+LATEX_HEADER: \\usepackage{verbatim}\n" 
  "#+LATEX_HEADER: \\usepackage{minted}\n"
@@ -344,7 +334,7 @@ See [[id:25b27bbf-6bb7-4dfa-a016-50266497a98d][=Setup()=]]
 	 :publishing-function org-html-publish-to-html
 	 :sitemap-function my-org-publish-sitemap
 	 :htmlize-source t
-					;	 :org-html-head-include-default-style nil
+	 :sitemap-sort-files anti-chronologically
 	 :exclude "setup/*"
 	 ;; Generates theindex.org + inc files
 	 :makeindex t
@@ -499,6 +489,8 @@ See [[id:25b27bbf-6bb7-4dfa-a016-50266497a98d][=Setup()=]]
      #+BEGIN_SRC org 
 ,#+CALL: Setup()
 ,#+TITLE: Example 
+,#+HTML_LINK_UP: ../index.html
+,#+HTML_LINK_HOME: ../index.html
      #+END_SRC
      
      For explanations:

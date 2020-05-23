@@ -30,7 +30,7 @@
       	 :publishing-function org-html-publish-to-html
       	 :sitemap-function my-org-publish-sitemap
       	 :htmlize-source t
-      					;	 :org-html-head-include-default-style nil
+      	 :sitemap-sort-files anti-chronologically
       	 :exclude "setup/*"
       	 ;; Generates theindex.org + inc files
       	 :makeindex t
