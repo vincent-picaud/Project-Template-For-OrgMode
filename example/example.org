@@ -1,26 +1,18 @@
 #+CALL: Setup()
 #+TITLE: Example 
-
-bibliographystyle:plain
+* A code block example 
+  #+BEGIN_SRC cpp 
+#include <iostream>
+int main()
+{
+  std::cout << "Hello world!" << std:endl;
+  return 0;
+}
+  #+END_SRC
 
 * A bibliographic reference
-  Test bibliography:
+  Test bibliography: cite:lewis00_gnu_emacs_lisp
+* Another section
 
-* The bibliography
-  # +BIBLIOGRAPHY: ../bibliography/bibliography plain limit:t
-#+BEGIN_EXPORT latex
-\printbibliography
-#+END_EXPORT
-
-# bibliography:../bibliography/bibliography.bib
-
-
-
-#+BEGIN_SRC emacs-lisp
-(setq org-ref-bibliography-entry-format
-      '(("article" . "<li><a name=\"\%k\"></a>%a, %t, <i>%j</i>, <b>%v(%n)</b>, %p (%y). <a href=\"%U\">link</a>. <a href=\"https://doi.org/%D\">doi</a>.</li>")
-        ("book" . "<li><a name=\"\%k\"></a>%a, %t, %u (%y).</li>")))
- #+END_SRC
-
- #+RESULTS:
- : ((article . <li><a name="%k"></a>%a, %t, <i>%j</i>, <b>%v(%n)</b>, %p (%y). <a href="%U">link</a>. <a href="https://doi.org/%D">doi</a>.</li>) (book . <li><a name="%k"></a>%a, %t, %u (%y).</li>))
+  # put the bibliography here
+  #+CALL: Bibliography()

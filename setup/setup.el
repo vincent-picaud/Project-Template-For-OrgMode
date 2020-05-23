@@ -1,9 +1,13 @@
 (if my-project-root
     ;; Configuration
     (progn
+      ;; Configuration message
       (message (format "Configuring %s" my-project-root))
+      ;; use =minted= for listings
+      (setq org-latex-listings 'minted)
+      ;; Load =library-of-babel.org=
       (org-babel-lob-ingest (concat my-project-root "setup/library-of-babel.org"))
-      
+      ;; =org-publish-project-alist= definition
       (setq my-publish-dir (concat my-project-root "doc"))
       
       (defun my-org-publish-sitemap (title list)

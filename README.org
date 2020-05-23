@@ -8,7 +8,6 @@
   - [[#emacs-initel-configuration][Emacs =init.el= configuration]]
     - [[#required-packages][Required packages]]
     - [[#my-new-project-configuration-function][=my-new-project-configuration= function]]
-    - [[#extra-configuration-functions][Extra configuration functions]]
     - [[#complete-listing][Complete listing]]
   - [[#new-project-creation][New project creation]]
 - [[#project-structure][Project structure]]
@@ -20,6 +19,7 @@
       - [[#complete-listing-1][Complete listing]]
     - [[#setupel][=setup.el=]]
       - [[#configuration-message][Configuration message]]
+      - [[#use-minted-for-listings][Use =minted= for listings]]
       - [[#load-library-of-babelorg][Load =library-of-babel.org=]]
       - [[#org-publish-project-alist-definition][=org-publish-project-alist= definition]]
       - [[#feed-org-agenda-files-with-org-files][Feed =org-agenda-files= with org files]]
@@ -97,19 +97,6 @@ my-project-root/setup/setup.el project configuration file "
     Its role is to found the project root (= the directory containing the
     .git directory) and to load the project configuration
     =Setup/setupFile.el=.
-
-*** TODO Extra configuration functions
-
-    - [ ] replace this part by a setup/babel.org file + babel ingest 
-
-      #+HEADER: :noweb-ref my-new-project-configuration
-      #+BEGIN_SRC emacs-lisp :exports code
-
-(defun my-new-project-setupfile ()
-  "Returns #+SETUPFILE: .../setup/setup.org"
-  (concat "#+SETUPFILE: "
-	  (expand-file-name (car (project-roots (project-current)))) "setup/setup.org"))
-      #+END_SRC
 
 *** Complete listing 
  
@@ -197,12 +184,20 @@ firefox  MyProject/index.html
     #+INDEX: file!setup/library-of-babel.org
 
 **** =Setup()=
+     :PROPERTIES:
+     :ID:       25b27bbf-6bb7-4dfa-a016-50266497a98d
+     :END:
+     :BACKLINKS:
+     [2020-05-23 Sat 12:07] <- [[id:7102a2f8-70da-4fee-9bff-ae78e1c90be3][Use =minted= for listings]]
+     :END:
 
      The =#+CALL: Setup()= has to be set at the beginning of your org file (see: [[file:example/example.org][file:example/example.org]]).
 
 
      The latex package [[https://ctan.org/pkg/verbatim?lang=en][verbatim]] is required by the bibliography trick in
      [[id:f64ef356-3f8c-4e37-93c6-34719a9393ae][=Bibliography()=]] to support both html and pdf export.
+
+     The [[https://ctan.org/pkg/minted?lang=en][minted]] package is used for code listings
 
      #+HEADER: :noweb-ref setup/library-of-babel.org
      #+BEGIN_SRC org
@@ -211,7 +206,21 @@ firefox  MyProject/index.html
 (concat "#+SETUPFILE: \"" my-project-root "setup/setup.org\"\n" 
  	"#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
 	"#+LATEX_HEADER: \\usepackage{verbatim}\n" 
+	"#+LATEX_HEADER: \\usepackage{minted}\n"
+	"#+LATEX_HEADER: \\hypersetup{colorlinks=true}\n"
  	"#+LATEX_HEADER: \\addbibresource{" my-project-root "bibliography/bibliography.bib}\n"
+
+	"#+BEGIN_EXPORT latex \n"
+	"% from: https://github.com/SublimeText/LaTeXTools/issues/657#issuecomment-188188632 \n"
+	"\\renewcommand{\\MintedPygmentize}{/usr/bin/pygmentize} \n"
+	"\\definecolor{bg}{rgb}{0.95,0.95,0.95} \n"
+	"\\setminted{bgcolor=bg} \n"
+	"\\setminted{fontsize=\\footnotesize}   \n"
+	"\\setminted{breaklines} \n"
+	"\\setminted{breakautoindent=false} \n"
+	"\\setminted{mathescape} \n"
+	"\\setminted{xleftmargin=0pt} \n"
+	"#+END_EXPORT \n"
 	)
 ,#+END_SRC
      #+END_SRC
@@ -253,16 +262,31 @@ firefox  MyProject/index.html
 
 **** Configuration message
 
-     P rint a message 
+     Print a message 
      #+HEADER: :noweb-ref setup/setup.el
      #+BEGIN_SRC emacs-lisp
+;; Configuration message
 (message (format "Configuring %s" my-project-root))
+     #+END_SRC
+
+**** Use =minted= for listings
+     :PROPERTIES:
+     :ID:       7102a2f8-70da-4fee-9bff-ae78e1c90be3
+     :END:
+
+See [[id:25b27bbf-6bb7-4dfa-a016-50266497a98d][=Setup()=]]
+
+     #+HEADER: :noweb-ref setup/setup.el
+     #+BEGIN_SRC emacs-lisp
+;; use =minted= for listings
+(setq org-latex-listings 'minted)
      #+END_SRC
 
 **** Load =library-of-babel.org=
 
      #+HEADER: :noweb-ref setup/setup.el
      #+BEGIN_SRC emacs-lisp
+;; Load =library-of-babel.org=
 (org-babel-lob-ingest (concat my-project-root "setup/library-of-babel.org"))
      #+END_SRC
 
@@ -274,7 +298,7 @@ firefox  MyProject/index.html
 
      #+HEADER: :noweb-ref setup/setup.el
      #+BEGIN_SRC emacs-lisp
-
+;; =org-publish-project-alist= definition
 (setq my-publish-dir (concat my-project-root "doc"))
 
 (defun my-org-publish-sitemap (title list)
