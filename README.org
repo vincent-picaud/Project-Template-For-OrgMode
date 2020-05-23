@@ -35,6 +35,11 @@
     - [[#my-new-project-configuration-function][=my-new-project-configuration= function]]
   - [[#new-project-creation][New project creation]]
 - [[#project-structure][Project structure]]
+  - [[#project-root][=project root=]]
+    - [[#theindex_org][=theindex_org=]]
+    - [[#todoorg][=todo.org=]]
+    - [[#journalorg][=journal.org=]]
+    - [[#www_linksorg][=www_links.org=]]
   - [[#setup][=setup/=]]
     - [[#setuplibrary-of-babelorg][=setup/library-of-babel.org=]]
       - [[#the-setup-command][The =Setup()= command]]
@@ -56,10 +61,6 @@
       - [[#file-header][File header]]
       - [[#code-block-example][Code block example]]
       - [[#bibliographic-reference-example][Bibliographic reference example]]
-  - [[#project-root][=project root=]]
-    - [[#todoorg][=todo.org=]]
-    - [[#journalorg][=journal.org=]]
-    - [[#www_linksorg][=www_links.org=]]
 
 * What is it?
 
@@ -158,6 +159,58 @@ firefox  MyProject/index.html
   #  :header-args: :tangle-mode (identity #o444) :mkdirp yes
   :header-args: :mkdirp yes
   :END:
+** =project root=
+#+INDEX:directory
+
+Create files at project root
+*** =theindex_org=
+    #+INDEX:file:theindex.org
+
+This file includes the generated index
+
+   #+HEADER: :noweb-ref theindex.org
+   #+BEGIN_SRC org :noweb yes :tangle yes :tangle theindex.org
+,#+CALL: Setup()
+,#+TITLE: Index
+,#+HTML_LINK_UP: ./index.html
+,#+HTML_LINK_HOME: ./index.html
+
+,#+INCLUDE: "theindex.inc"
+     #+END_SRC
+
+*** =todo.org=
+    #+INDEX:file:todo.org
+
+   #+HEADER: :noweb-ref todo.org
+     #+BEGIN_SRC org :noweb yes :tangle yes :tangle todo.org
+,#+CALL: Setup()
+,#+TITLE: My_Project_Name TODO list 
+,#+HTML_LINK_UP: ./index.html
+,#+HTML_LINK_HOME: ./index.html
+     #+END_SRC
+
+*** =journal.org=
+    #+INDEX:file:journal.org
+
+   #+HEADER: :noweb-ref journal.org
+     #+BEGIN_SRC org :noweb yes :tangle yes :tangle journal.org
+,#+CALL: Setup()
+,#+TITLE: My_Project_Name Journal
+,#+HTML_LINK_UP: ./index.html
+,#+HTML_LINK_HOME: ./index.html
+     #+END_SRC
+
+*** =www_links.org=
+    #+INDEX:file:www_links.org
+
+ #+HEADER: :noweb-ref www_links.org 
+     #+BEGIN_SRC org :noweb yes :tangle yes :tangle www_links.org
+,#+CALL: Setup()
+,#+TITLE: My_Project_Name external web links
+,#+HTML_LINK_UP: ./index.html
+,#+HTML_LINK_HOME: ./index.html
+     #+END_SRC
+
 ** =setup/=
    #+INDEX:directory!setup
 
@@ -485,7 +538,8 @@ firefox  MyProject/index.html
 *** =setup/index_preamble.org=
     #+INDEX:file:setup/index_preamble.org
 
-    This is file included in sitemap.org
+    This is file included in sitemap.org. Note: no need for =Setup()=,
+    it is already declared in the template.
 
      #+BEGIN_SRC org :noweb yes :tangle yes :tangle setup/index_preamble.org
 #+TITLE: My_Project_Name
@@ -590,45 +644,7 @@ int main()
 <<example/example.org>>
     #+END_SRC
 
-** =project root=
-#+INDEX:directory
-
-Create some capture target files at project root
-
-*** =todo.org=
-    #+INDEX:file:todo.org
-
-   #+HEADER: :noweb-ref todo.org
-     #+BEGIN_SRC org :noweb yes :tangle yes :tangle todo.org
-,#+CALL: Setup()
-,#+TITLE: My_Project_Name TODO list 
-,#+HTML_LINK_UP: ./index.html
-,#+HTML_LINK_HOME: ./index.html
-     #+END_SRC
-
-*** =journal.org=
-    #+INDEX:file:journal.org
-
-   #+HEADER: :noweb-ref journal.org
-     #+BEGIN_SRC org :noweb yes :tangle yes :tangle journal.org
-,#+CALL: Setup()
-,#+TITLE: My_Project_Name Journal
-,#+HTML_LINK_UP: ./index.html
-,#+HTML_LINK_HOME: ./index.html
-     #+END_SRC
-
-*** =www_links.org=
-    #+INDEX:file:www_links.org
-
- #+HEADER: :noweb-ref www_links.org 
-     #+BEGIN_SRC org :noweb yes :tangle yes :tangle www_links.org
-,#+CALL: Setup()
-,#+TITLE: My_Project_Name external web links
-,#+HTML_LINK_UP: ./index.html
-,#+HTML_LINK_HOME: ./index.html
-     #+END_SRC
-
-* ~create_orgMode_project~ script (old)                              :noexport:
+* ~create_orgMode_project~ script                                    :noexport:
 
   #+BEGIN_SRC bash :noweb yes :tangle yes :tangle create_orgMode_project :shebang "#!/bin/bash" :exports none :eval never
 
@@ -713,6 +729,24 @@ else
     exit 1
 fi
 
+#----------------
+
+current_file="$project_dir/setup/index_preamble.org"
+
+if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
+    echo "Creates file      $current_file" 
+    more > "$current_file" <<'//MY_CODE_STREAM'
+<<setup/index_preamble.org>>
+//MY_CODE_STREAM
+    #
+    # replace project name 
+    #
+    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
+else 
+    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
+    exit 1
+fi
+
 #############################
 # Creates biblio dir & file #
 #############################
@@ -738,26 +772,6 @@ fi
 # Creates remaining files (index_preamble.org, ...) #
 ##############################################
 
-current_file="$project_dir/index_preamble.org"
-
-if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
-    echo "Creates file      $current_file" 
-    more > "$current_file" <<'//MY_CODE_STREAM'
-,#+SETUPFILE: ./Setup/setupFile.org
-,#+TITLE: My_Project_Name
-
-,* Introduction
-
-This is your project sitemap, you can put here anything you want.
-//MY_CODE_STREAM
-    #
-    # replace project name 
-    #
-    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
-else 
-    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
-    exit 1
-fi
 
 #----------------
 
@@ -766,68 +780,7 @@ current_file="$project_dir/theindex.org"
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM'
-,#+SETUPFILE: ./Setup/setupFile.org
-,#+TITLE: My_Project_Name Index
-
-,* Index 
-,#+INCLUDE: "theindex.inc"
-//MY_CODE_STREAM
-    #
-    # replace project name 
-    #
-    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
-else 
-    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
-    exit 1
-fi
-
-#----------------
-
-current_file="$project_dir/page_example.org"
-
-if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
-    echo "Creates file      $current_file" 
-    more > "$current_file" <<'//MY_CODE_STREAM'
-,#+SETUPFILE: ./Setup/setupFile.org
-,#+TITLE: Example page
-
-,#+BEGIN_EXPORT latex
-\definecolor{bg}{rgb}{0.95,0.95,0.95}
-\setminted[]{
-  bgcolor=bg,
-  breaklines=true,
-  breakanywhere=true,
-  mathescape,
-  fontsize=\footnotesize}
-,#+END_EXPORT
-
-,* A section
-
-,#+BEGIN_SRC c++
-class Foo {
-};
-
-int foo() {
-  return 0
-}
-,#+END_SRC
-
-A bibliographical reference: cite:dominik16_org_mode_ref_manual
-
-,* Bibliography
-
-,#+BEGIN_EXPORT latex
-\printbibliography
-,#+END_EXPORT
-
-,#+BEGIN_EXPORT latex
-\begin{comment}
-,#+END_EXPORT
-# Important: the limit:t option limits bib to cited documents
-,#+BIBLIOGRAPHY: ./Bibliography/bibliography plain limit:t
-,#+BEGIN_EXPORT latex
-\end{comment}
-,#+END_EXPORT
+<<theindex.org>>
 //MY_CODE_STREAM
     #
     # replace project name 
@@ -882,6 +835,31 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM'
 <<www_links.org>>
+//MY_CODE_STREAM
+    #
+    # replace project name 
+    #
+    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
+else 
+    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
+    exit 1
+fi
+
+########################
+# Creates example file #
+########################
+
+echo "Creates directory $project_dir/example" 
+mkdir -p "$project_dir/example"
+
+#----------------
+
+current_file="$project_dir/example/example.org"
+
+if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
+    echo "Creates file      $current_file" 
+    more > "$current_file" <<'//MY_CODE_STREAM'
+<<example/example.org>>
 //MY_CODE_STREAM
     #
     # replace project name 

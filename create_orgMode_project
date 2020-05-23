@@ -262,6 +262,24 @@ else
     exit 1
 fi
 
+#----------------
+
+current_file="$project_dir/setup/index_preamble.org"
+
+if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
+    echo "Creates file      $current_file" 
+    more > "$current_file" <<'//MY_CODE_STREAM'
+
+//MY_CODE_STREAM
+    #
+    # replace project name 
+    #
+    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
+else 
+    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
+    exit 1
+fi
+
 #############################
 # Creates biblio dir & file #
 #############################
@@ -287,26 +305,6 @@ fi
 # Creates remaining files (index_preamble.org, ...) #
 ##############################################
 
-current_file="$project_dir/index_preamble.org"
-
-if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
-    echo "Creates file      $current_file" 
-    more > "$current_file" <<'//MY_CODE_STREAM'
-#+SETUPFILE: ./Setup/setupFile.org
-#+TITLE: My_Project_Name
-
-* Introduction
-
-This is your project sitemap, you can put here anything you want.
-//MY_CODE_STREAM
-    #
-    # replace project name 
-    #
-    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
-else 
-    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
-    exit 1
-fi
 
 #----------------
 
@@ -315,68 +313,12 @@ current_file="$project_dir/theindex.org"
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM'
-#+SETUPFILE: ./Setup/setupFile.org
-#+TITLE: My_Project_Name Index
+#+CALL: Setup()
+#+TITLE: Index
+#+HTML_LINK_UP: ./index.html
+#+HTML_LINK_HOME: ./index.html
 
-* Index 
 #+INCLUDE: "theindex.inc"
-//MY_CODE_STREAM
-    #
-    # replace project name 
-    #
-    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
-else 
-    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
-    exit 1
-fi
-
-#----------------
-
-current_file="$project_dir/page_example.org"
-
-if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
-    echo "Creates file      $current_file" 
-    more > "$current_file" <<'//MY_CODE_STREAM'
-#+SETUPFILE: ./Setup/setupFile.org
-#+TITLE: Example page
-
-#+BEGIN_EXPORT latex
-\definecolor{bg}{rgb}{0.95,0.95,0.95}
-\setminted[]{
-  bgcolor=bg,
-  breaklines=true,
-  breakanywhere=true,
-  mathescape,
-  fontsize=\footnotesize}
-#+END_EXPORT
-
-* A section
-
-#+BEGIN_SRC c++
-class Foo {
-};
-
-int foo() {
-  return 0
-}
-#+END_SRC
-
-A bibliographical reference: cite:dominik16_org_mode_ref_manual
-
-* Bibliography
-
-#+BEGIN_EXPORT latex
-\printbibliography
-#+END_EXPORT
-
-#+BEGIN_EXPORT latex
-\begin{comment}
-#+END_EXPORT
-# Important: the limit:t option limits bib to cited documents
-#+BIBLIOGRAPHY: ./Bibliography/bibliography plain limit:t
-#+BEGIN_EXPORT latex
-\end{comment}
-#+END_EXPORT
 //MY_CODE_STREAM
     #
     # replace project name 
@@ -396,8 +338,8 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     more > "$current_file" <<'//MY_CODE_STREAM'
 #+CALL: Setup()
 #+TITLE: My_Project_Name TODO list 
-#+HTML_LINK_UP: .index.html
-#+HTML_LINK_HOME: .index.html
+#+HTML_LINK_UP: ./index.html
+#+HTML_LINK_HOME: ./index.html
 //MY_CODE_STREAM
     #
     # replace project name 
@@ -417,8 +359,8 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     more > "$current_file" <<'//MY_CODE_STREAM'
 #+CALL: Setup()
 #+TITLE: My_Project_Name Journal
-#+HTML_LINK_UP: .index.html
-#+HTML_LINK_HOME: .index.html
+#+HTML_LINK_UP: ./index.html
+#+HTML_LINK_HOME: ./index.html
 //MY_CODE_STREAM
     #
     # replace project name 
@@ -440,6 +382,50 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 #+TITLE: My_Project_Name external web links
 #+HTML_LINK_UP: ./index.html
 #+HTML_LINK_HOME: ./index.html
+//MY_CODE_STREAM
+    #
+    # replace project name 
+    #
+    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
+else 
+    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
+    exit 1
+fi
+
+########################
+# Creates example file #
+########################
+
+echo "Creates directory $project_dir/example" 
+mkdir -p "$project_dir/example"
+
+#----------------
+
+current_file="$project_dir/example/example.org"
+
+if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
+    echo "Creates file      $current_file" 
+    more > "$current_file" <<'//MY_CODE_STREAM'
+#+CALL: Setup()
+#+TITLE: Example 
+#+HTML_LINK_UP: ../index.html
+#+HTML_LINK_HOME: ../index.html
+* A code block example 
+  #+BEGIN_SRC cpp 
+#include <iostream>
+int main()
+{
+  std::cout << "Hello world!" << std:endl;
+  return 0;
+}
+  #+END_SRC
+
+* A bibliographic reference
+  Test bibliography: cite:lewis00_gnu_emacs_lisp
+* Another section
+
+  # put the bibliography here
+  #+CALL: Bibliography()
 //MY_CODE_STREAM
     #
     # replace project name 
