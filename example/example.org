@@ -1,4 +1,26 @@
 #+CALL: Setup()
+
+#+RESULTS:
+:results:
+#+SETUPFILE: "~/GitHub/Project-Template-For-OrgMode/setup/setup.org"
+#+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
+#+LATEX_HEADER: \usepackage{verbatim}
+#+LATEX_HEADER: \usepackage{minted}
+#+LATEX_HEADER: \hypersetup{colorlinks=true}
+#+LATEX_HEADER: \addbibresource{~/GitHub/Project-Template-For-OrgMode/bibliography/bibliography.bib}
+#+BEGIN_EXPORT latex 
+% from: https://github.com/SublimeText/LaTeXTools/issues/657#issuecomment-188188632 
+\renewcommand{\MintedPygmentize}{/usr/bin/pygmentize} 
+\definecolor{bg}{rgb}{0.95,0.95,0.95} 
+\setminted{bgcolor=bg} 
+\setminted{fontsize=\footnotesize}   
+\setminted{breaklines} 
+\setminted{breakautoindent=false} 
+\setminted{mathescape} 
+\setminted{xleftmargin=0pt} 
+#+END_EXPORT 
+:end:
+
 #+TITLE: Example 
 * A code block example 
   #+BEGIN_SRC cpp 

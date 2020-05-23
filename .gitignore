@@ -10,3 +10,7 @@ doc/
 /index.org
 /theindex.inc
 /theindex.org
+/example/_minted-example/
+/example/example.bbl
+/example/example.pdf
+/example/example.tex

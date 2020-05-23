@@ -1,24 +1,30 @@
 #+NAME: Setup
 #+BEGIN_SRC emacs-lisp :results drawer
-(concat "#+SETUPFILE: \"" my-project-root "setup/setup.org\"\n" 
- 	"#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
-	"#+LATEX_HEADER: \\usepackage{verbatim}\n" 
-	"#+LATEX_HEADER: \\usepackage{minted}\n"
-	"#+LATEX_HEADER: \\hypersetup{colorlinks=true}\n"
- 	"#+LATEX_HEADER: \\addbibresource{" my-project-root "bibliography/bibliography.bib}\n"
+(concat 
+ "#+OPTIONS: H:3 toc:t num:t \\n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc \n"
+ "#+PROPERTY: header-args :mkdirp yes \n"
 
-	"#+BEGIN_EXPORT latex \n"
-	"% from: https://github.com/SublimeText/LaTeXTools/issues/657#issuecomment-188188632 \n"
-	"\\renewcommand{\\MintedPygmentize}{/usr/bin/pygmentize} \n"
-	"\\definecolor{bg}{rgb}{0.95,0.95,0.95} \n"
-	"\\setminted{bgcolor=bg} \n"
-	"\\setminted{fontsize=\\footnotesize}   \n"
-	"\\setminted{breaklines} \n"
-	"\\setminted{breakautoindent=false} \n"
-	"\\setminted{mathescape} \n"
-	"\\setminted{xleftmargin=0pt} \n"
-	"#+END_EXPORT \n"
-	)
+ "#+HTML_HEAD_EXTRA: <style type=\"text/css\"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style> \n"
+ "#+HTML_HEAD_EXTRA: <style type=\"text/css\"> pre {background:#EEEEEE; padding: 3px 13px}    </style> \n"
+
+ "#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
+ "#+LATEX_HEADER: \\usepackage{verbatim}\n" 
+ "#+LATEX_HEADER: \\usepackage{minted}\n"
+ "#+LATEX_HEADER: \\hypersetup{colorlinks=true}\n"
+ "#+LATEX_HEADER: \\addbibresource{" my-project-root "bibliography/bibliography.bib}\n"
+
+ "#+BEGIN_EXPORT latex \n"
+ "% from: https://github.com/SublimeText/LaTeXTools/issues/657#issuecomment-188188632 \n"
+ "\\renewcommand{\\MintedPygmentize}{/usr/bin/pygmentize} \n"
+ "\\definecolor{bg}{rgb}{0.95,0.95,0.95} \n"
+ "\\setminted{bgcolor=bg} \n"
+ "\\setminted{fontsize=\\footnotesize}   \n"
+ "\\setminted{breaklines} \n"
+ "\\setminted{breakautoindent=false} \n"
+ "\\setminted{mathescape} \n"
+ "\\setminted{xleftmargin=0pt} \n"
+ "#+END_EXPORT \n"
+ )
 #+END_SRC
 #+NAME: Bibliography
 #+BEGIN_SRC emacs-lisp :results drawer

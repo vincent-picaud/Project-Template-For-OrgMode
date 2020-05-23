@@ -1,4 +1,4 @@
-#+SETUPFILE: ./setup/setup.org
+#+CALL: Setup()
 #+TITLE: Org Emacs Project Template
 
 * Table of contents                                          :TOC_5:noexport:
@@ -12,10 +12,9 @@
   - [[#new-project-creation][New project creation]]
 - [[#project-structure][Project structure]]
   - [[#setup][=setup/=]]
-    - [[#setupoptionsorg][=setup/options.org=]]
-    - [[#library-of-babelorg][=library-of-babel.org=]]
-      - [[#setup-1][=Setup()=]]
-      - [[#bibliography][=Bibliography()=]]
+    - [[#setuplibrary-of-babelorg][=setup/library-of-babel.org=]]
+      - [[#the-setup-command][The =Setup()= command]]
+      - [[#the-bibliography-command][The =Bibliography()= command]]
       - [[#complete-listing-1][Complete listing]]
     - [[#setupel][=setup.el=]]
       - [[#configuration-message][Configuration message]]
@@ -26,7 +25,7 @@
       - [[#bibliography-integration][Bibliography integration]]
       - [[#pdf-generation][PDF generation]]
       - [[#complete-setupel-file][Complete =setup.el= file]]
-  - [[#bibliography-1][=bibliography/=]]
+  - [[#bibliography][=bibliography/=]]
     - [[#bibliographybib][=bibliography.bib=]]
     - [[#setupel-update][=setup.el= update]]
   - [[#example][=example/=]]
@@ -150,40 +149,17 @@ firefox  MyProject/index.html
 ** =setup/=
    #+INDEX:directory!setup
 
-   This directory contains the configuration.
+   This directory contains the configuration files.
 
-*** =setup/options.org= 
-    #+INDEX: file!setup/options.org
- 
-
-    This are the org mode options:
-
-    #+HEADER: :noweb-ref setup/options.org
-    #+BEGIN_SRC emacs-lisp 
-,#+OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc
-,#+PROPERTY: header-args :mkdirp yes
-    #+END_SRC
-
-    This allows gray background
-    #+HEADER: :noweb-ref setup/options.org
-    #+BEGIN_SRC emacs-lisp 
-,#+HTML_HEAD_EXTRA: <style type="text/css"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style>
-,#+HTML_HEAD_EXTRA: <style type="text/css"> pre {background:#EEEEEE; padding: 3px 13px}    </style>
-    #+END_SRC
-
-    The complete =option.org= file is:
-
-    #+BEGIN_SRC emacs-lisp :exports code :noweb yes :tangle yes :tangle setup/options.org
-<<setup/options.org>>
-    #+END_SRC
-
-*** =library-of-babel.org=
+*** =setup/library-of-babel.org=
     :PROPERTIES:
     :ID:       358f0e27-0b25-472b-b8d0-e368ea8ba871
     :END:
     #+INDEX: file!setup/library-of-babel.org
 
-**** =Setup()=
+This file contains function definitions, that are loaded with [[id:3179dc59-bf96-4c38-ab21-6de2d0dcb8a8][=org-babel-lob-ingest=]].
+
+**** The =Setup()= command
      :PROPERTIES:
      :ID:       25b27bbf-6bb7-4dfa-a016-50266497a98d
      :END:
@@ -192,7 +168,6 @@ firefox  MyProject/index.html
      :END:
 
      The =#+CALL: Setup()= has to be set at the beginning of your org file (see: [[file:example/example.org][file:example/example.org]]).
-
 
      The latex package [[https://ctan.org/pkg/verbatim?lang=en][verbatim]] is required by the bibliography trick in
      [[id:f64ef356-3f8c-4e37-93c6-34719a9393ae][=Bibliography()=]] to support both html and pdf export.
@@ -203,29 +178,35 @@ firefox  MyProject/index.html
      #+BEGIN_SRC org
 ,#+NAME: Setup
 ,#+BEGIN_SRC emacs-lisp :results drawer
-(concat "#+SETUPFILE: \"" my-project-root "setup/setup.org\"\n" 
- 	"#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
-	"#+LATEX_HEADER: \\usepackage{verbatim}\n" 
-	"#+LATEX_HEADER: \\usepackage{minted}\n"
-	"#+LATEX_HEADER: \\hypersetup{colorlinks=true}\n"
- 	"#+LATEX_HEADER: \\addbibresource{" my-project-root "bibliography/bibliography.bib}\n"
+(concat 
+ "#+OPTIONS: H:3 toc:t num:t \\n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc \n"
+ "#+PROPERTY: header-args :mkdirp yes \n"
 
-	"#+BEGIN_EXPORT latex \n"
-	"% from: https://github.com/SublimeText/LaTeXTools/issues/657#issuecomment-188188632 \n"
-	"\\renewcommand{\\MintedPygmentize}{/usr/bin/pygmentize} \n"
-	"\\definecolor{bg}{rgb}{0.95,0.95,0.95} \n"
-	"\\setminted{bgcolor=bg} \n"
-	"\\setminted{fontsize=\\footnotesize}   \n"
-	"\\setminted{breaklines} \n"
-	"\\setminted{breakautoindent=false} \n"
-	"\\setminted{mathescape} \n"
-	"\\setminted{xleftmargin=0pt} \n"
-	"#+END_EXPORT \n"
-	)
+ "#+HTML_HEAD_EXTRA: <style type=\"text/css\"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style> \n"
+ "#+HTML_HEAD_EXTRA: <style type=\"text/css\"> pre {background:#EEEEEE; padding: 3px 13px}    </style> \n"
+
+ "#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
+ "#+LATEX_HEADER: \\usepackage{verbatim}\n" 
+ "#+LATEX_HEADER: \\usepackage{minted}\n"
+ "#+LATEX_HEADER: \\hypersetup{colorlinks=true}\n"
+ "#+LATEX_HEADER: \\addbibresource{" my-project-root "bibliography/bibliography.bib}\n"
+
+ "#+BEGIN_EXPORT latex \n"
+ "% from: https://github.com/SublimeText/LaTeXTools/issues/657#issuecomment-188188632 \n"
+ "\\renewcommand{\\MintedPygmentize}{/usr/bin/pygmentize} \n"
+ "\\definecolor{bg}{rgb}{0.95,0.95,0.95} \n"
+ "\\setminted{bgcolor=bg} \n"
+ "\\setminted{fontsize=\\footnotesize}   \n"
+ "\\setminted{breaklines} \n"
+ "\\setminted{breakautoindent=false} \n"
+ "\\setminted{mathescape} \n"
+ "\\setminted{xleftmargin=0pt} \n"
+ "#+END_EXPORT \n"
+ )
 ,#+END_SRC
      #+END_SRC
 
-**** =Bibliography()=
+**** The =Bibliography()= command
      :PROPERTIES:
      :ID:       f64ef356-3f8c-4e37-93c6-34719a9393ae
      :END:
@@ -283,6 +264,12 @@ See [[id:25b27bbf-6bb7-4dfa-a016-50266497a98d][=Setup()=]]
      #+END_SRC
 
 **** Load =library-of-babel.org=
+     :PROPERTIES:
+     :ID:       3179dc59-bf96-4c38-ab21-6de2d0dcb8a8
+     :END:
+     :BACKLINKS:
+     [2020-05-23 Sat 12:23] <- [[id:358f0e27-0b25-472b-b8d0-e368ea8ba871][=setup/library-of-babel.org=]]
+     :END:
 
      #+HEADER: :noweb-ref setup/setup.el
      #+BEGIN_SRC emacs-lisp
