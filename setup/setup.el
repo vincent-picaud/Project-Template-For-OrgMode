@@ -12,11 +12,13 @@
       
       (defun my-org-publish-sitemap (title list)
         "Create my own index.org instead of the default one"
-        (concat	"#+INCLUDE: \"setup/index_preamble.org\"\n"
-      		"#+OPTIONS: toc:nil\n\n"
-      		"* My Sitemap\n\n"
-      		(org-list-to-org list)
-      		"\n\n"))
+        (concat
+         "#+CALL: Setup()\n"
+         "#+INCLUDE: \"setup/index_preamble.org\"\n"
+         "#+OPTIONS: toc:nil\n\n"
+         "* My Sitemap\n\n"
+         (org-list-to-org list)
+         "\n\n"))
       
       (setq org-publish-project-alist
             `(

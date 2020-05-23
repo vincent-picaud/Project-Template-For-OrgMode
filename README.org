@@ -1,4 +1,35 @@
 #+CALL: Setup()
+
+#+RESULTS:
+:results:
+#+OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc 
+#+PROPERTY: header-args :mkdirp yes 
+#+HTML_HEAD_EXTRA: <style type="text/css"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style> 
+#+HTML_HEAD_EXTRA: <style type="text/css"> pre {background:#EEEEEE; padding: 3px 13px}    </style> 
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/> 
+#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style> 
+#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:~/GitHub/Project-Template-For-OrgMode/doc/index.html
+#+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
+#+LATEX_HEADER: \usepackage{verbatim}
+#+LATEX_HEADER: \usepackage{minted}
+#+LATEX_HEADER: \hypersetup{colorlinks=true}
+#+LATEX_HEADER: \addbibresource{~/GitHub/Project-Template-For-OrgMode/bibliography/bibliography.bib}
+#+BEGIN_EXPORT latex 
+% from: https://github.com/SublimeText/LaTeXTools/issues/657#issuecomment-188188632 
+\renewcommand{\MintedPygmentize}{/usr/bin/pygmentize} 
+\definecolor{bg}{rgb}{0.95,0.95,0.95} 
+\setminted{bgcolor=bg} 
+\setminted{fontsize=\footnotesize}   
+\setminted{breaklines} 
+\setminted{breakautoindent=false} 
+\setminted{mathescape} 
+\setminted{xleftmargin=0pt} 
+#+END_EXPORT 
+:end:
+
+#+HTML_LINK_HOME: index.html
+#+HTML_LINK_UP: index.html
+
 #+TITLE: Org Emacs Project Template
 
 * Table of contents                                          :TOC_5:noexport:
@@ -180,10 +211,15 @@ This file contains function definitions, that are loaded with [[id:3179dc59-bf96
 ,#+BEGIN_SRC emacs-lisp :results drawer
 (concat 
  "#+OPTIONS: H:3 toc:t num:t \\n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc \n"
+
  "#+PROPERTY: header-args :mkdirp yes \n"
 
  "#+HTML_HEAD_EXTRA: <style type=\"text/css\"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style> \n"
  "#+HTML_HEAD_EXTRA: <style type=\"text/css\"> pre {background:#EEEEEE; padding: 3px 13px}    </style> \n"
+
+ "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://orgmode.org/worg/style/worg.css\"/> \n"
+ "#+HTML_HEAD: <style type=\"text/css\">body{ max-width:80%; }</style> \n"
+ "# +INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:" my-publish-dir "/index.html" "\n"
 
  "#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
  "#+LATEX_HEADER: \\usepackage{verbatim}\n" 
@@ -290,11 +326,13 @@ See [[id:25b27bbf-6bb7-4dfa-a016-50266497a98d][=Setup()=]]
 
 (defun my-org-publish-sitemap (title list)
   "Create my own index.org instead of the default one"
-  (concat	"#+INCLUDE: \"setup/index_preamble.org\"\n"
-		"#+OPTIONS: toc:nil\n\n"
-		"* My Sitemap\n\n"
-		(org-list-to-org list)
-		"\n\n"))
+  (concat
+   "#+CALL: Setup()\n"
+   "#+INCLUDE: \"setup/index_preamble.org\"\n"
+   "#+OPTIONS: toc:nil\n\n"
+   "* My Sitemap\n\n"
+   (org-list-to-org list)
+   "\n\n"))
 
 (setq org-publish-project-alist
       `(
