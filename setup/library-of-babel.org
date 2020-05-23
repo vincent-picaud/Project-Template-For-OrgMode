@@ -5,10 +5,3 @@
  	"#+LATEX_HEADER: \\addbibresource{" my-project-root "bibliography/bibliography.bib}\n"
 	)
 #+END_SRC
-
-#+RESULTS: Setup
-:RESULTS:
-#+SETUPFILE: "~/GitHub/Project-Template-For-OrgMode/setup/setup.org"
-#+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
-#+LATEX_HEADER: \addbibresource{~/GitHub/Project-Template-For-OrgMode/bibliography/bibliography.bib}
-:END:

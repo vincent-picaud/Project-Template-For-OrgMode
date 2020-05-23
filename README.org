@@ -400,7 +400,7 @@ firefox  MyProject/index.html
     ;; If bibliography.bib exists 
     (setq reftex-default-bibliography  `(,my-bibtex-filename)
 	  bibtex-completion-notes-extension "-notes.org"
-	  bibtex-completion-notes-template-multiple-files "#+SETUPFILE: ../Setup/setupFile-1.org\n#+TITLE: ${author-or-editor} (${year}): ${title}\n\n* Personal Notes\n  :PROPERTIES:\n  :NOTER_DOCUMENT: ~/AnnotatedPDF/${=key=}.pdf\n  :END:\n\n[[file:~/AnnotatedPDF/${=key=}.pdf][${title}]]\n"
+	  bibtex-completion-notes-template-multiple-files "#+CALL: Setup()\n#+TITLE: ${author-or-editor} (${year}): ${title}\n\n* Personal Notes\n  :PROPERTIES:\n  :NOTER_DOCUMENT: ~/AnnotatedPDF/${=key=}.pdf\n  :END:\n\n[[file:~/AnnotatedPDF/${=key=}.pdf][${title}]]\n"
 	  bibtex-completion-bibliography my-bibtex-filename
 	  bibtex-completion-library-path (file-name-directory my-bibtex-filename)
 	  bibtex-completion-notes-path (file-name-directory my-bibtex-filename)
