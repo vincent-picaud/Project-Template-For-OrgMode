@@ -45,318 +45,164 @@ mkdir -p "$project_dir"
 # Creates setup dir & files #
 #############################
 
-echo "Creates directory $project_dir/Setup" 
-mkdir -p "$project_dir/Setup"
+echo "Creates directory $project_dir/setup" 
+mkdir -p "$project_dir/setup"
 
 #----------------
 
-current_file="$project_dir/Setup/options.org"
+current_file="$project_dir/setup/setupFile.el"
 
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM' 
-#+OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc
-#+PROPERTY: header-args :mkdirp yes
-#+HTML_HEAD_EXTRA: <style type="text/css"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style>
-#+HTML_HEAD_EXTRA: <style type="text/css"> pre {background:#EEEEEE; padding: 3px 13px}    </style>
+;; Configuration message
+(message (format "Configuring %s" my-project-root))
+;; use =minted= for listings
+(setq org-latex-listings 'minted)
+;; Load =library-of-babel.org=
+(org-babel-lob-ingest (concat my-project-root "setup/library-of-babel.org"))
+;; =org-publish-project-alist= definition
+(setq my-publish-dir (concat my-project-root "doc"))
 
-# Listing and bibliography config 
-#+LATEX_HEADER: \usepackage{minted}    
-#+LATEX_HEADER: \usepackage{fontspec}
-#+LATEX_HEADER: \setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
-# verbatim provides "comment" env. (use with bibliography to skip some Org exported code)
-#+LATEX_HEADER: \usepackage{verbatim} 
-#+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
-#+LATEX_HEADER: \hypersetup{colorlinks=true}
-//MY_CODE_STREAM
-else 
-    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
-    exit 1
-fi
+(defun my-org-publish-sitemap (title list)
+  "Create my own index.org instead of the default one"
+  (concat
+   "#+CALL: Setup()\n"
+   "#+INCLUDE: \"setup/index_preamble.org\"\n"
+   "#+OPTIONS: toc:nil\n\n"
+   "* My Sitemap\n\n"
+   (org-list-to-org list)
+   "\n\n"))
 
-#----------------
+(setq org-publish-project-alist
+      `(
+	("My_Project_Name-org-files",
+	 :base-directory ,my-project-root
+	 :base-extension "org"
+	 :recursive t
+	 :publishing-directory ,my-publish-dir
+	 :publishing-function org-html-publish-to-html
+	 :sitemap-function my-org-publish-sitemap
+	 :htmlize-source t
+	 :sitemap-sort-files anti-chronologically
+	 :exclude "setup/*"
+	 ;; Generates theindex.org + inc files
+	 :makeindex t
+	 ;; Creates index.org, calls my-org-publish-sitemap to fill it
+	 :auto-sitemap t
+	 :sitemap-filename "index.org"
+	 )
 
-current_file="$project_dir/Setup/setupFile.org"
+	("My_Project_Name-data-files",
+	 :base-directory ,my-project-root
+	 :base-extension "nb\\|?pp\\|png"
+	 :recursive t
+	 :publishing-directory ,my-publish-dir
+	 :publishing-function org-publish-attachment
+	 :exclude ".*bazel-.*"
+	 )
 
-if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
-    echo "Creates file      $current_file" 
-    more > "$current_file" <<'//MY_CODE_STREAM' 
-#+SETUPFILE: options.org
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
-#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
-#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:index.html
-#+LATEX_HEADER: \addbibresource{Bibliography/bibliography.bib}
-//MY_CODE_STREAM
-else 
-    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
-    exit 1
-fi
-
-#----------------
-
-current_file="$project_dir/Setup/setupFile-1.org"
-
-if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
-    echo "Creates file      $current_file" 
-    more > "$current_file" <<'//MY_CODE_STREAM' 
-#+SETUPFILE: options.org
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
-#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
-#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../index.html
-#+LATEX_HEADER: \addbibresource{../Bibliography/bibliography.bib}
-//MY_CODE_STREAM
-else 
-    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
-    exit 1
-fi
-
-#----------------
-
-current_file="$project_dir/Setup/setupFile-2.org"
-
-if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
-    echo "Creates file      $current_file" 
-    more > "$current_file" <<'//MY_CODE_STREAM' 
-#+SETUPFILE: options.org
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
-#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
-#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../index.html
-#+LATEX_HEADER: \addbibresource{../../Bibliography/bibliography.bib}
-//MY_CODE_STREAM
-else 
-    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
-    exit 1
-fi
-
-#----------------
-
-current_file="$project_dir/Setup/setupFile-3.org"
-
-if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
-    echo "Creates file      $current_file" 
-    more > "$current_file" <<'//MY_CODE_STREAM' 
-#+SETUPFILE: options.org
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
-#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
-#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../../index.html
-#+LATEX_HEADER: \addbibresource{../../../Bibliography/bibliography.bib}
-//MY_CODE_STREAM
-else 
-    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
-    exit 1
-fi
-
-#----------------
-
-current_file="$project_dir/Setup/setupFile-4.org"
-
-if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
-    echo "Creates file      $current_file" 
-    more > "$current_file" <<'//MY_CODE_STREAM' 
-#+SETUPFILE: options.org
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/style/worg.css"/>
-#+HTML_HEAD: <style type="text/css">body{ max-width:80%; }</style>
-#+INFOJS_OPT: view:showall mouse:underline path:http://orgmode.org/org-info.js home:../../../../index.html
-#+LATEX_HEADER: \addbibresource{../../../../Bibliography/bibliography.bib}
-//MY_CODE_STREAM
-else 
-    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
-    exit 1
-fi
-
-#----------------
-
-current_file="$project_dir/Setup/setupFile.el"
-
-if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
-    echo "Creates file      $current_file" 
-    more > "$current_file" <<'//MY_CODE_STREAM' 
-(if my-project-root
-    ;; Configuration
-    (progn
-      (message "Configuring %s " my-project-root)
-      ;;
-      ;; PDF Export config 
-      ;;
-      (setq org-image-actual-width (/ (display-pixel-width) 4))
-
-      ;; uses the minted package instead of the listings one
-      (setq org-latex-listings 'minted)
-      
-      ;; defines how to generate the pdf file using lualatex + biber
-      (setq org-latex-pdf-process
-      '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-      "biber %b"
-      "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-      "lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-      ;;
-      ;; Working Bibliography with HTML export requires ox-bibtex
-      ;;
-      (require 'ox-bibtex)
-      ;;
-      ;; Local bibliography
-      ;;
-      (setq my-bibtex-filename 
-	    (concat my-project-root "Bibliography/bibliography.bib"))
-      (if (file-exists-p my-bibtex-filename)
-	  ;; If bibliography.bib exists 
-	  (setq reftex-default-bibliography  `(,my-bibtex-filename)
-	        bibtex-completion-notes-extension "-notes.org"
-		bibtex-completion-notes-template-multiple-files "#+SETUPFILE: ../Setup/setupFile-1.org\n#+TITLE: ${author-or-editor} (${year}): ${title}\n\n* Personal Notes\n  :PROPERTIES:\n  :NOTER_DOCUMENT: ~/AnnotatedPDF/${=key=}.pdf\n  :END:\n\n[[file:~/AnnotatedPDF/${=key=}.pdf][${title}]]\n"
-
-		bibtex-completion-bibliography my-bibtex-filename
-		bibtex-completion-library-path (file-name-directory my-bibtex-filename)
-		bibtex-completion-notes-path (file-name-directory my-bibtex-filename)
-		
-		org-ref-default-bibliography  `(,my-bibtex-filename)
-		org-ref-pdf-directory (file-name-directory my-bibtex-filename)
-	  )
-	;; otherwise unbound meaningless my-bibtex-filename
-	(makunbound 'my-bibtex-filename)
-    )
-      ;;
-      ;; Agenda files
-      ;;
-      (setq org-agenda-files
-	    (mapcar 'abbreviate-file-name
-		    (split-string
-		     (shell-command-to-string (format "find %s -name \"*.org\" ! -name \"index.org\"  ! -name \"agenda.org\"  ! -path \"./Setup/*\"" my-project-root))
-		     "\n")))
-      ;;
-      ;; My my-workInProgress-filename and its associated captures
-      ;;
-      (setq my-www-links-filename (concat my-project-root "www_links.org"))
-      (setq my-journal-filename (concat my-project-root "journal.org"))
-      (setq my-todo-filename (concat my-project-root "todo.org"))
-
-      (setq org-capture-templates
-      	      `(
-	      ;; Personal template (adapt them for your setting)
-	      ;; ("A"
-	      ;;  "Agenda/Meeting" entry (file+headline "~/GitLab/PVBibliography/agenda.org" "Agenda")
-	      ;; "* %^{Title?} %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n %?"
-	      ;; :empty-lines 1  
-	      ;; :create t
-	      ;; )
-	      ;;
-	      ;; ("K" "Log Time" entry (file+datetree "~/GitLab/PVBibliography/activity.org" "Activity")
-	      ;; "* %U - %^{Activity}  :TIME:"
-	      ;; )
-
-		("t"
-		 "Todo" entry (file+olp+datetree ,my-todo-filename)
-		 "* TODO %^{Title?} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n - [ ] %?"
-		 :empty-lines 1  
-		 :create t
-		)
-		
-		("T"
-		 "Todo with file link" entry (file+olp+datetree ,my-todo-filename)
-		 "* TODO %^{Title|%f} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\nBack link: %a\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n - [ ] %?"
-		 :empty-lines 1  
-		 :create t
-		)
-		
-		("j" "Journal" entry (file+olp+datetree ,my-journal-filename)
-		 "* %^{Title} %^G\n\n%?"
-		 :empty-lines 1  
-		 :create t
-		)
-
-		("J" 
-		"Journal with file link" entry (file+olp+datetree ,my-journal-filename)
-		 "* %^{Title|%f} %^G\n\nBack link: %a\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
-		 :empty-lines 1  
-		 :create t
-		)
-
-		;;
-		;; See: https://github.com/sprig/org-capture-extension for further details
-		;;
-		("L" 
-		"Protocol Link" entry (file ,my-www-links-filename)
-		"* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
-		%^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
-		:empty-lines 1  
-		:create t
-		)
-		
-		("p" 
-		"Protocol" entry (file ,my-www-links-filename)
-		 "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
-		 %^G\n:PROPERTIES:\n:Created: %U\n:END:\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
-		 :empty-lines 1  
-		 :create t
-		)
-		))
-      ;;
-      ;; You can publish in another place:
-      ;;
-      ;; (setq my-publish-dir "~/Temp/Publish")
-      ;;
-      ;; by default we publish in-place 
-      ;; (advantage: C-c C-e h h directly update the published page)
-      (setq my-publish-dir my-project-root)
-
-      (setq my-project-name "My_Project_Name")
-   
-      (defun my-org-publish-sitemap (title list)
-	"Create my own index.org instead of the default one"
-	(concat	"#+INCLUDE: \"index_preamble.org\"\n"
-		"#+OPTIONS: toc:nil\n\n"
-		"* Sitemap\n\n"
-		(org-list-to-org list)
-		"\n\n"))
-  
-      (setq org-publish-project-alist
-	    `(
-	      (,(concat my-project-name "_Org")
-	       :base-directory ,my-project-root
-	       :base-extension "org"
-	       :recursive t
-	       :publishing-directory ,my-publish-dir
-	       :publishing-function org-html-publish-to-html
-	       :sitemap-function my-org-publish-sitemap
-	       :htmlize-source t
-	       :org-html-head-include-default-style nil
-	       :exclude "Setup*\\|index_preamble.org" 
-	       ;; Generates theindex.org + inc files
-	       :makeindex t
-	       ;; Creates index.org, calls my-org-publish-sitemap to fill it
-	       :auto-sitemap t
-	       :sitemap-filename "index.org"
-	      )
-
-	      ;; (,(concat my-project-name "_Tangle")
-	      ;;  :base-directory ,my-project-root
-	      ;;  :base-extension "org"
-	      ;;  :recursive t
-	      ;;  :publishing-directory ,my-publish-dir
-	      ;;  :publishing-function org-babel-tangle-publish
-	      ;;  :exclude ".*bazel-.*"
-	      ;;  )
-
-	      (,(concat my-project-name "_Data")
-	       :base-directory ,my-project-root
-	       :base-extension "nb\\|?pp\\|png"
-	       :recursive t
-	       :publishing-directory ,my-publish-dir
-	       :publishing-function org-publish-attachment
-	       :exclude ".*bazel-.*"
-	      )
-
-	      ;; Main
-	      (,my-project-name
-	       :components (,(concat my-project-name "_Org")
-	                    ;; ,(concat my-project-name "_Tangle")
-			    ,(concat my-project-name "_Data"))
-	      )
-	      )
+	;; Main
+	("My_Project_Name",
+	 :components ("My_Project_Name-org-files" "My_Project_Name-data-files")
+	 )
+	)
       )
-      ) ; progn
-  ;; else
-  (error "Project root undefined")
-    )
+
+(setq org-agenda-files
+      (split-string
+       (shell-command-to-string (format "cd %s; find -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root))
+       ))
+(setq my-www-links-filename (concat my-project-root "www_links.org"))
+(setq my-journal-filename (concat my-project-root "journal.org"))
+(setq my-todo-filename (concat my-project-root "todo.org"))
+
+(setq-default org-display-custom-times t)
+(setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
+
+(setq org-capture-templates
+      `(
+	("A"
+	 "Agenda/Meeting" entry (file+headline "~/GitLab/PVBibliography/agenda.org" "Agenda")
+	 "* %^{Title?} %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
+	 :empty-lines 1  
+	 :create t
+	 )
+
+	("K" "Log Time" entry (file+datetree "~/GitLab/PVBibliography/activity.org" "Activity")
+	 "* %U - %^{Activity}  :TIME:"
+	 )
+	
+
+	;;----------------
+	
+	("t"
+	 "Todo" entry (file+olp+datetree ,my-todo-filename)
+	 "* TODO %^{Title?} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n - [ ] %?"
+	 :empty-lines 1  
+	 :create t
+	 )
+	
+	("T"
+	 "Todo with file link" entry (file+olp+datetree ,my-todo-filename)
+	 "* TODO %^{Title|%f} [/] %^G\n:PROPERTIES:\n:Created: %U\n:END:\n\nBack link: %a\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n - [ ] %?"
+	 :empty-lines 1  
+	 :create t
+	 )
+	
+	("j" "Journal" entry (file+olp+datetree ,my-journal-filename)
+	 "* %^{Title} %^G\n\n%?"
+	 :empty-lines 1  
+	 :create t
+	 )
+	("J" 
+	 "Journal with file link" entry (file+olp+datetree ,my-journal-filename)
+	 "* %^{Title|%f} %^G\n\nBack link: %a\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
+	 :empty-lines 1  
+	 :create t
+	 )
+	;;
+	;; See: https://github.com/sprig/org-capture-extension for further details
+	;;
+	("L" 
+	 "Protocol Link" entry (file ,my-www-links-filename)
+	 "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
+		%^G\n:PROPERTIES:\n:Created: %U\n:END:\n\n%?"
+	 :empty-lines 1  
+	 :create t
+	 )
+	
+	("p" 
+	 "Protocol" entry (file ,my-www-links-filename)
+	 "* [[%:link][%(transform-square-brackets-to-round-ones \"%:description\")]] \
+		 %^G\n:PROPERTIES:\n:Created: %U\n:END:\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n%?"
+	 :empty-lines 1  
+	 :create t
+	 )
+	))
+(setq my-bibtex-filename 
+      (concat my-project-root "bibliography/bibliography.bib"))
+(if (file-exists-p my-bibtex-filename)
+    ;; If bibliography.bib exists 
+    (setq reftex-default-bibliography  `(,my-bibtex-filename)
+	  bibtex-completion-notes-extension "-notes.org"
+	  bibtex-completion-notes-template-multiple-files "#+CALL: Setup()\n#+TITLE: ${author-or-editor} (${year}): ${title}\n\n* Personal Notes\n  :PROPERTIES:\n  :NOTER_DOCUMENT: ~/AnnotatedPDF/${=key=}.pdf\n  :END:\n\n[[file:~/AnnotatedPDF/${=key=}.pdf][${title}]]\n"
+	  bibtex-completion-bibliography my-bibtex-filename
+	  bibtex-completion-library-path (file-name-directory my-bibtex-filename)
+	  bibtex-completion-notes-path (file-name-directory my-bibtex-filename)
+	  
+	  org-ref-default-bibliography  `(,my-bibtex-filename)
+	  org-ref-pdf-directory (file-name-directory my-bibtex-filename)
+	  )
+  ;; otherwise unbound meaningless my-bibtex-filename
+  (makunbound 'my-bibtex-filename)
+  )
+;; defines how to generate the pdf file using lualatex + biber
+(setq org-latex-pdf-process
+      '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+	"biber %b"
+	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 //MY_CODE_STREAM
     #
     # replace project name 
@@ -367,12 +213,61 @@ else
     exit 1
 fi
 
+#----------------
+
+current_file="$project_dir/setup/library-of-babel.org"
+
+if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
+    echo "Creates file      $current_file" 
+    more > "$current_file" <<'//MY_CODE_STREAM' 
+#+NAME: Setup
+#+BEGIN_SRC emacs-lisp :results drawer
+(concat 
+ "#+OPTIONS: H:3 toc:t num:t \\n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc \n"
+
+ "#+PROPERTY: header-args :mkdirp yes \n"
+
+ "#+HTML_HEAD_EXTRA: <style type=\"text/css\"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style> \n"
+ "#+HTML_HEAD_EXTRA: <style type=\"text/css\"> pre {background:#EEEEEE; padding: 3px 13px}    </style> \n"
+
+ "#+LATEX_HEADER: \\usepackage[backend=biber, bibencoding=utf8 ]{biblatex}\n" 
+ "#+LATEX_HEADER: \\usepackage{verbatim}\n" 
+ "#+LATEX_HEADER: \\usepackage{minted}\n"
+ "#+LATEX_HEADER: \\hypersetup{colorlinks=true}\n"
+ "#+LATEX_HEADER: \\addbibresource{" my-project-root "bibliography/bibliography.bib}\n"
+
+ "#+BEGIN_EXPORT latex \n"
+ "% from: https://github.com/SublimeText/LaTeXTools/issues/657#issuecomment-188188632 \n"
+ "\\renewcommand{\\MintedPygmentize}{/usr/bin/pygmentize} \n"
+ "\\definecolor{bg}{rgb}{0.95,0.95,0.95} \n"
+ "\\setminted{bgcolor=bg} \n"
+ "\\setminted{fontsize=\\footnotesize}   \n"
+ "\\setminted{breaklines} \n"
+ "\\setminted{breakautoindent=false} \n"
+ "\\setminted{mathescape} \n"
+ "\\setminted{xleftmargin=0pt} \n"
+ "#+END_EXPORT \n"
+ )
+#+END_SRC
+#+NAME: Bibliography
+#+BEGIN_SRC emacs-lisp :results drawer
+(concat "#+BEGIN_EXPORT latex\n\\printbibliography\n"
+	"\\begin{comment}\n#+END_EXPORT\n"
+	"bibliography:" my-project-root "bibliography/bibliography.bib\n"
+	"#+BEGIN_EXPORT latex\n\\end{comment}\n#+END_EXPORT\n")
+#+END_SRC
+//MY_CODE_STREAM
+else 
+    echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
+    exit 1
+fi
+
 #############################
 # Creates biblio dir & file #
 #############################
 
-echo "Creates directory $project_dir/Bibliography" 
-mkdir -p "$project_dir/Bibliography"
+echo "Creates directory $project_dir/bibliography" 
+mkdir -p "$project_dir/bibliography"
 
 #----------------
 
@@ -381,14 +276,7 @@ current_file="$project_dir/Bibliography/bibliography.bib"
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM' 
-@book{dominik16_org_mode_ref_manual,
-  author =	 {Dominik, C.},
-  title =	 {ORG MODE 9 REF MANUAL},
-  year =	 2016,
-  publisher =	 {ARTPOWER International PUB},
-  url =		 {https://books.google.fr/books?id=E4kLMQAACAAJ},
-  isbn =	 9789888406852,
-}
+
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
@@ -506,9 +394,15 @@ current_file="$project_dir/todo.org"
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM'
-#+SETUPFILE: Setup/setupFile.org
-#+TITLE: TODO list
+#+CALL: Setup()
+#+TITLE: My_Project_Name TODO list 
+#+HTML_LINK_UP: .index.html
+#+HTML_LINK_HOME: .index.html
 //MY_CODE_STREAM
+    #
+    # replace project name 
+    #
+    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
     exit 1
@@ -521,9 +415,15 @@ current_file="$project_dir/journal.org"
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM'
-#+SETUPFILE: Setup/setupFile.org
-#+TITLE: Journal
+#+CALL: Setup()
+#+TITLE: My_Project_Name Journal
+#+HTML_LINK_UP: .index.html
+#+HTML_LINK_HOME: .index.html
 //MY_CODE_STREAM
+    #
+    # replace project name 
+    #
+    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
     exit 1
@@ -536,9 +436,15 @@ current_file="$project_dir/www_links.org"
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM'
-#+SETUPFILE: Setup/setupFile.org
-#+TITLE: WWW links
+#+CALL: Setup()
+#+TITLE: My_Project_Name external web links
+#+HTML_LINK_UP: ./index.html
+#+HTML_LINK_HOME: ./index.html
 //MY_CODE_STREAM
+    #
+    # replace project name 
+    #
+    sed -i "s/My_Project_Name/$project_name/g" "$current_file"
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
     exit 1

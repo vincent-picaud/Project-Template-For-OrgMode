@@ -22,7 +22,7 @@
       
       (setq org-publish-project-alist
             `(
-      	("my-project-org-files",
+      	("My_Project_Name-org-files",
       	 :base-directory ,my-project-root
       	 :base-extension "org"
       	 :recursive t
@@ -39,7 +39,7 @@
       	 :sitemap-filename "index.org"
       	 )
       
-      	("my-project-data-files",
+      	("My_Project_Name-data-files",
       	 :base-directory ,my-project-root
       	 :base-extension "nb\\|?pp\\|png"
       	 :recursive t
@@ -49,8 +49,8 @@
       	 )
       
       	;; Main
-      	("my-project",
-      	 :components ("my-project-org-files" "my-project-data-files")
+      	("My_Project_Name",
+      	 :components ("My_Project_Name-org-files" "My_Project_Name-data-files")
       	 )
       	)
             )
@@ -126,15 +126,6 @@
       	 :create t
       	 )
       	))
-      ;; defines how to generate the pdf file using lualatex + biber
-      (setq org-latex-pdf-process
-            '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-      	"biber %b"
-      	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-      	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-      
-      ;; bibliography html-export
-      ;;(require 'ox-bibtex)
       (setq my-bibtex-filename 
             (concat my-project-root "bibliography/bibliography.bib"))
       (if (file-exists-p my-bibtex-filename)
@@ -152,5 +143,11 @@
         ;; otherwise unbound meaningless my-bibtex-filename
         (makunbound 'my-bibtex-filename)
         )
+      ;; defines how to generate the pdf file using lualatex + biber
+      (setq org-latex-pdf-process
+            '("lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+      	"biber %b"
+      	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+      	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
       )
   )

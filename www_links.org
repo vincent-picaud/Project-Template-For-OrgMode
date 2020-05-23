@@ -1,0 +1,4 @@
+#+CALL: Setup()
+#+TITLE: My_Project_Name external web links
+#+HTML_LINK_UP: ./index.html
+#+HTML_LINK_HOME: ./index.html
