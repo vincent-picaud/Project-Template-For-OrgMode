@@ -756,7 +756,7 @@ mkdir -p "$project_dir/bibliography"
 
 #----------------
 
-current_file="$project_dir/Bibliography/bibliography.bib"
+current_file="$project_dir/bibliography/bibliography.bib"
 
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
