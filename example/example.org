@@ -1,18 +1,26 @@
 #+CALL: Setup()
 #+TITLE: Example 
-* A code block example 
-  #+BEGIN_SRC cpp 
-#include <iostream>
-int main()
-{
-  std::cout << "Hello world!" << std:endl;
-  return 0;
-}
-  #+END_SRC
-cite:dominik16_org_mode_ref_manual
+
+bibliographystyle:plain
 
 * A bibliographic reference
-  Test bibliography: cite:lewis00_gnu_emacs_lisp
+  Test bibliography:
 
 * The bibliography
-  #+BIBLIOGRAPHY: ../bibliography/bibliography plain limit:t
+  # +BIBLIOGRAPHY: ../bibliography/bibliography plain limit:t
+#+BEGIN_EXPORT latex
+\printbibliography
+#+END_EXPORT
+
+# bibliography:../bibliography/bibliography.bib
+
+
+
+#+BEGIN_SRC emacs-lisp
+(setq org-ref-bibliography-entry-format
+      '(("article" . "<li><a name=\"\%k\"></a>%a, %t, <i>%j</i>, <b>%v(%n)</b>, %p (%y). <a href=\"%U\">link</a>. <a href=\"https://doi.org/%D\">doi</a>.</li>")
+        ("book" . "<li><a name=\"\%k\"></a>%a, %t, %u (%y).</li>")))
+ #+END_SRC
+
+ #+RESULTS:
+ : ((article . <li><a name="%k"></a>%a, %t, <i>%j</i>, <b>%v(%n)</b>, %p (%y). <a href="%U">link</a>. <a href="https://doi.org/%D">doi</a>.</li>) (book . <li><a name="%k"></a>%a, %t, %u (%y).</li>))

@@ -458,6 +458,8 @@ int main()
 
 **** Bibliographic reference example
 
+http://kitchingroup.cheme.cmu.edu/blog/2015/12/03/Exporting-numbered-citations-in-html-with-unsorted-numbered-bibliography/
+
      Then we check that bibliography integration works
 
      #+HEADER: :noweb-ref example/example.org
