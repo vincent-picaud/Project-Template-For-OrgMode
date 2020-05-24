@@ -37,7 +37,7 @@
     - [[#exampleexampleorg][=example/example.org=]]
       - [[#file-header][File header]]
       - [[#equation-example][Equation example]]
-- [[#a-figure-example][A figure example]]
+      - [[#a-figure-example][A figure example]]
       - [[#code-block-example][Code block example]]
       - [[#bibliographic-reference-example][Bibliographic reference example]]
 
@@ -607,13 +607,13 @@ firefox  MyProject/index.html
   \end{equation*}
      #+END_SRC 
 
-* A figure example 
+**** A figure example 
 
-  #+HEADER: :noweb-ref example/example.org
-  #+BEGIN_SRC org
+     #+HEADER: :noweb-ref example/example.org
+     #+BEGIN_SRC org
 ,* A figure example
   file:./figures/sg_d1.png
-  #+END_SRC 
+     #+END_SRC 
 
 **** Code block example
 
