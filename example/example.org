@@ -2,6 +2,12 @@
 #+TITLE: One example file
 #+HTML_LINK_UP: ../index.html
 #+HTML_LINK_HOME: ../index.html
+* An equation
+
+  Do GitHub pages support equation rendering?
+  \begin{equation*}
+  \int \cos{(x)} dx = \sin{(x)}
+  \end{equation*}
 * A code block example 
   #+BEGIN_SRC cpp 
 #include <iostream>

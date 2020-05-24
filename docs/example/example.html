@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-24 Sun 07:34 -->
+<!-- 2020-05-24 Sun 08:06 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>One example file</title>
@@ -228,6 +228,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="org-div-home-and-up">
@@ -240,16 +262,28 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org458b53f">1. A code block example</a></li>
-<li><a href="#org93ef334">2. A bibliographic reference</a></li>
-<li><a href="#orgfe3abbd">3. Another section</a></li>
+<li><a href="#org5e6562a">1. An equation</a></li>
+<li><a href="#org458b53f">2. A code block example</a></li>
+<li><a href="#org93ef334">3. A bibliographic reference</a></li>
+<li><a href="#orgfe3abbd">4. Another section</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org458b53f" class="outline-2">
-<h2 id="org458b53f"><span class="section-number-2">1</span> A code block example</h2>
+<div id="outline-container-org5e6562a" class="outline-2">
+<h2 id="org5e6562a"><span class="section-number-2">1</span> An equation</h2>
 <div class="outline-text-2" id="text-1">
+<p>
+Do GitHub pages support equation rendering?
+</p>
+\begin{equation*}
+\int \cos{(x)} dx = \sin{(x)}
+\end{equation*}
+</div>
+</div>
+<div id="outline-container-org458b53f" class="outline-2">
+<h2 id="org458b53f"><span class="section-number-2">2</span> A code block example</h2>
+<div class="outline-text-2" id="text-2">
 <div class="org-src-container">
 <pre class="src src-cpp"><span style="color: #cdad00;">#include</span> <span style="color: #8b7355;">&lt;iostream&gt;</span>
 <span style="color: #00688b;">int</span> <span style="color: #cd9b1d;">main</span>()
@@ -263,16 +297,16 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-org93ef334" class="outline-2">
-<h2 id="org93ef334"><span class="section-number-2">2</span> A bibliographic reference</h2>
-<div class="outline-text-2" id="text-2">
+<h2 id="org93ef334"><span class="section-number-2">3</span> A bibliographic reference</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 Test bibliography: <a class='org-ref-reference' href="#lewis00_gnu_emacs_lisp">lewis00_gnu_emacs_lisp</a>
 </p>
 </div>
 </div>
 <div id="outline-container-orgfe3abbd" class="outline-2">
-<h2 id="orgfe3abbd"><span class="section-number-2">3</span> Another section</h2>
-<div class="outline-text-2" id="text-3">
+<h2 id="orgfe3abbd"><span class="section-number-2">4</span> Another section</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 <h1 class='org-ref-bib-h1'>Bibliography</h1>
 <ul class='org-ref-bib'><li><a id="lewis00_gnu_emacs_lisp">[lewis00_gnu_emacs_lisp]</a> <a name="lewis00_gnu_emacs_lisp"></a>Lewis, The GNU Emacs Lisp reference manual : for Emacs  Version 21, Revision 2.6, May 2000, Free Software Foundation (2000).</li>
@@ -283,7 +317,7 @@ Test bibliography: <a class='org-ref-reference' href="#lewis00_gnu_emacs_lisp">l
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: picaud</p>
-<p class="date">Created: 2020-05-24 Sun 07:34</p>
+<p class="date">Created: 2020-05-24 Sun 08:06</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

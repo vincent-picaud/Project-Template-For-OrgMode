@@ -36,6 +36,7 @@
   - [[#example][=example/=]]
     - [[#exampleexampleorg][=example/example.org=]]
       - [[#file-header][File header]]
+      - [[#equation-example][Equation example]]
       - [[#code-block-example][Code block example]]
       - [[#bibliographic-reference-example][Bibliographic reference example]]
 
@@ -591,6 +592,19 @@ firefox  MyProject/index.html
 
      - [ ] another possibility is to use yasnippet
 
+**** Equation example
+
+     Check if equations are processed with mathjax
+
+     #+HEADER: :noweb-ref example/example.org
+     #+BEGIN_SRC org
+,* An equation
+
+  Do GitHub pages support equation rendering?
+  \begin{equation*}
+  \int \cos{(x)} dx = \sin{(x)}
+  \end{equation*}
+     #+END_SRC 
 
 **** Code block example
 
