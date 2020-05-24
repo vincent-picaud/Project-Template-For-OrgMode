@@ -62,7 +62,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 ;; Load =library-of-babel.org=
 (org-babel-lob-ingest (concat my-project-root "setup/library-of-babel.org"))
 ;; =org-publish-project-alist= definition
-(setq my-publish-dir (concat my-project-root "doc"))
+(setq my-publish-dir (concat my-project-root "docs"))
 
 (defun my-org-publish-sitemap (title list)
   "Create my own index.org instead of the default one"

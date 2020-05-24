@@ -1,0 +1,14 @@
+#+CALL: Setup()
+#+INCLUDE: "setup/index_preamble.org"
+#+OPTIONS: toc:nil
+
+* My Sitemap
+
+- [[file:README.org][Org Emacs Project Template]]
+- [[file:www_links.org][External web links]]
+- [[file:todo.org][TODO list]]
+- [[file:theindex.org][Index]]
+- [[file:journal.org][Journal]]
+- example
+  - [[file:example/example.org][One example file]]
+

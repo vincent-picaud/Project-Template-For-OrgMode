@@ -1,30 +1,7 @@
 #+CALL: Setup()
-
-#+RESULTS:
-:results:
-# +OPTIONS: H:3 toc:t num:t \n:nil ::t |:t ^:{} -:t f:t *:t tex:t d:t tags:not-in-toc 
-#+PROPERTY: header-args :mkdirp yes 
-#+HTML_HEAD_EXTRA: <style type="text/css"> blockquote {background:#EEEEEE; padding: 3px 13px}    </style> 
-#+HTML_HEAD_EXTRA: <style type="text/css"> pre {background:#EEEEEE; padding: 3px 13px}    </style> 
-#+LATEX_HEADER: \usepackage[backend=biber, bibencoding=utf8 ]{biblatex}
-#+LATEX_HEADER: \usepackage{verbatim}
-#+LATEX_HEADER: \usepackage{minted}
-#+LATEX_HEADER: \hypersetup{colorlinks=true}
-#+LATEX_HEADER: \addbibresource{~/GitHub/Project-Template-For-OrgMode/bibliography/bibliography.bib}
-#+BEGIN_EXPORT latex 
-% from: https://github.com/SublimeText/LaTeXTools/issues/657#issuecomment-188188632 
-\renewcommand{\MintedPygmentize}{/usr/bin/pygmentize} 
-\definecolor{bg}{rgb}{0.95,0.95,0.95} 
-\setminted{bgcolor=bg} 
-\setminted{fontsize=\footnotesize}   
-\setminted{breaklines} 
-\setminted{breakautoindent=false} 
-\setminted{mathescape} 
-\setminted{xleftmargin=0pt} 
-#+END_EXPORT 
-:end:
-
 #+TITLE: Org Emacs Project Template
+#+HTML_LINK_UP: index.html
+#+HTML_LINK_HOME: index.html
 
 * Table of contents                                          :TOC_5:noexport:
 - [[#what-is-it][What is it?]]
@@ -97,6 +74,9 @@ createOrgProject MyProject
 (require 'htmlize)
     #+END_SRC
 
+    #+RESULTS:
+    : htmlize
+
 *** =my-new-project-configuration= function
 
     #+HEADER: :noweb-ref my-new-project-configuration :exports code 
@@ -114,6 +94,9 @@ my-project-root/setup/setup.el project configuration file "
 	  (error "Project %s setup file not found" my-project-setup-file)))
     (error "Project root dir not found (missing .git ?)")))
     #+END_SRC
+
+    #+RESULTS:
+    : my-new-project-configuration
 
     Its role is to found the project root (= the directory containing the
     .git directory) and to load the project configuration
@@ -351,7 +334,7 @@ firefox  MyProject/index.html
      #+HEADER: :noweb-ref setup/setup.el
      #+BEGIN_SRC emacs-lisp
 ;; =org-publish-project-alist= definition
-(setq my-publish-dir (concat my-project-root "doc"))
+(setq my-publish-dir (concat my-project-root "docs"))
 
 (defun my-org-publish-sitemap (title list)
   "Create my own index.org instead of the default one"
