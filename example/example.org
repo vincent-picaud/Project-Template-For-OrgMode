@@ -6,8 +6,10 @@
 
   Do GitHub pages support equation rendering?
   \begin{equation*}
-  \int \cos{(x)} dx = \sin{(x)}
+  \int \cos{x} dx = \sin{x}
   \end{equation*}
+* A figure example
+  file:./figures/sg_d1.png
 * A code block example 
   #+BEGIN_SRC cpp 
 #include <iostream>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-24 Sun 08:06 -->
+<!-- 2020-05-24 Sun 08:32 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Org Emacs Project Template</title>
@@ -285,6 +285,7 @@ for the JavaScript code in this tag.
 </li>
 </ul>
 </li>
+<li><a href="#orgff943f4">4. A figure example</a></li>
 </ul>
 </div>
 </div>
@@ -688,7 +689,7 @@ The first task is to define how to publish the project:
          <span style="color: #cd6600;">:sitemap-function</span> my-org-publish-sitemap
          <span style="color: #cd6600;">:htmlize-source</span> t
          <span style="color: #cd6600;">:sitemap-sort-files</span> anti-chronologically
-         <span style="color: #cd6600;">:exclude</span> <span style="color: #8b7355;">"setup/*"</span>
+         <span style="color: #cd6600;">:exclude</span> <span style="color: #8b7355;">"setup/*</span><span style="color: #8b7355; font-weight: bold;">\\</span><span style="color: #8b7355; font-weight: bold;">|</span><span style="color: #8b7355;">docs/*"</span>
          <span style="color: #7f7f7f;">;; </span><span style="color: #7f7f7f;">Generates theindex.org + inc files</span>
          <span style="color: #cd6600;">:makeindex</span> t
          <span style="color: #7f7f7f;">;; </span><span style="color: #7f7f7f;">Creates index.org, calls my-org-publish-sitemap to fill it</span>
@@ -961,15 +962,30 @@ Check if equations are processed with mathjax
 
   Do GitHub pages support equation rendering?
   \begin{equation*}
-  \int \cos{(x)} dx = \sin{(x)}
+  \int \cos{x} dx = \sin{x}
   \end{equation*}
 </pre>
 </div>
 </div>
 </li>
+</ol>
+</div>
+</div>
+</div>
 
+<div id="outline-container-orgff943f4" class="outline-2">
+<h2 id="orgff943f4"><span class="section-number-2">4</span> A figure example</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+<pre class="src src-org"><span style="color: #0000cd;">* A figure example</span>
+  <span style="color: #3a5fcd; text-decoration: underline;"><a href="file:./figures/sg_d1.png">file:./figures/sg_d1.png</a></span>
+</pre>
+</div>
+</div>
+
+<ol class="org-ol">
 <li><a id="org049803c"></a>Code block example<br />
-<div class="outline-text-5" id="text-3-4-1-3">
+<div class="outline-text-5" id="text-4-0-0-1">
 <p>
 We then add a code block to see that background is gray colored
 </p>
@@ -992,7 +1008,7 @@ We then add a code block to see that background is gray colored
 
 
 <li><a id="orgdf4999f"></a>Bibliographic reference example<br />
-<div class="outline-text-5" id="text-3-4-1-4">
+<div class="outline-text-5" id="text-4-0-0-2">
 <div class="org-src-container">
 <pre class="src src-org"><span style="color: #0000cd;">* A bibliographic reference</span>
   Test bibliography: <span style="color: #228b22; text-decoration: underline;"><a href="cite:lewis00_gnu_emacs_lisp">cite:lewis00_gnu_emacs_lisp</a></span>
@@ -1007,11 +1023,9 @@ We then add a code block to see that background is gray colored
 </ol>
 </div>
 </div>
-</div>
-</div>
 <div id="postamble" class="status">
 <p class="author">Author: picaud</p>
-<p class="date">Created: 2020-05-24 Sun 08:06</p>
+<p class="date">Created: 2020-05-24 Sun 08:32</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

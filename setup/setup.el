@@ -31,7 +31,7 @@
       	 :sitemap-function my-org-publish-sitemap
       	 :htmlize-source t
       	 :sitemap-sort-files anti-chronologically
-      	 :exclude "setup/*"
+      	 :exclude "setup/*\\|docs/*"
       	 ;; Generates theindex.org + inc files
       	 :makeindex t
       	 ;; Creates index.org, calls my-org-publish-sitemap to fill it

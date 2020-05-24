@@ -37,6 +37,7 @@
     - [[#exampleexampleorg][=example/example.org=]]
       - [[#file-header][File header]]
       - [[#equation-example][Equation example]]
+- [[#a-figure-example][A figure example]]
       - [[#code-block-example][Code block example]]
       - [[#bibliographic-reference-example][Bibliographic reference example]]
 
@@ -358,7 +359,7 @@ firefox  MyProject/index.html
 	 :sitemap-function my-org-publish-sitemap
 	 :htmlize-source t
 	 :sitemap-sort-files anti-chronologically
-	 :exclude "setup/*"
+	 :exclude "setup/*\\|docs/*"
 	 ;; Generates theindex.org + inc files
 	 :makeindex t
 	 ;; Creates index.org, calls my-org-publish-sitemap to fill it
@@ -602,9 +603,17 @@ firefox  MyProject/index.html
 
   Do GitHub pages support equation rendering?
   \begin{equation*}
-  \int \cos{(x)} dx = \sin{(x)}
+  \int \cos{x} dx = \sin{x}
   \end{equation*}
      #+END_SRC 
+
+* A figure example 
+
+  #+HEADER: :noweb-ref example/example.org
+  #+BEGIN_SRC org
+,* A figure example
+  file:./figures/sg_d1.png
+  #+END_SRC 
 
 **** Code block example
 
