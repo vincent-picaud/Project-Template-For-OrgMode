@@ -31,7 +31,7 @@
       	 :sitemap-function my-org-publish-sitemap
       	 :htmlize-source t
       	 :sitemap-sort-files anti-chronologically
-      	 :exclude "setup/*\\|docs/*"
+      	 :exclude "setup/*\\|docs/*\\|subprojects/*"
       	 ;; Generates theindex.org + inc files
       	 :makeindex t
       	 ;; Creates index.org, calls my-org-publish-sitemap to fill it
@@ -45,7 +45,7 @@
       	 :recursive t
       	 :publishing-directory ,my-publish-dir
       	 :publishing-function org-publish-attachment
-      	 :exclude ".*bazel-.*"
+      	 :exclude "setup/*\\|docs/*\\|subprojects/*"
       	 )
       
       	;; Main
@@ -58,7 +58,7 @@
       (setq org-agenda-files
             (split-string
              (shell-command-to-string (format "find \"$(cd %s; pwd)\"  -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root)
-             )))
+      				)))
       (setq my-www-links-filename (concat my-project-root "www_links.org"))
       (setq my-journal-filename (concat my-project-root "journal.org"))
       (setq my-todo-filename (concat my-project-root "todo.org"))

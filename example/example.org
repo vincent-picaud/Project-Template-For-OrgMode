@@ -1,7 +1,6 @@
 #+CALL: Setup()
 #+TITLE: One example file
-#+HTML_LINK_UP: ../index.html
-#+HTML_LINK_HOME: ../index.html
+#+CALL: HomeUp()
 * An equation
 
   Do GitHub pages support equation rendering?

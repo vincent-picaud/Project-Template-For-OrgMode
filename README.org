@@ -1,7 +1,6 @@
 #+CALL: Setup()
 #+TITLE: Org Emacs Project Template
-#+HTML_LINK_UP: index.html
-#+HTML_LINK_HOME: index.html
+#+CALL: HomeUp()
 
 * Table of contents                                          :TOC_5:noexport:
 - [[#what-is-it][What is it?]]
@@ -21,6 +20,7 @@
     - [[#setuplibrary-of-babelorg][=setup/library-of-babel.org=]]
       - [[#the-setup-command][The =Setup()= command]]
       - [[#the-bibliography-command][The =Bibliography()= command]]
+      - [[#automatic-homeup][Automatic Home/Up]]
     - [[#setupsetupel][=setup/setup.el=]]
       - [[#configuration-message][Configuration message]]
       - [[#use-minted-for-listings][Use =minted= for listings]]
@@ -157,8 +157,8 @@ firefox  MyProject/index.html
     #+BEGIN_SRC org :noweb yes :tangle yes :tangle theindex.org
 ,#+CALL: Setup()
 ,#+TITLE: Index
-,#+HTML_LINK_UP: ./index.html
-,#+HTML_LINK_HOME: ./index.html
+,#+CALL: HomeUp()
+
 
 ,#+INCLUDE: "theindex.inc"
     #+END_SRC
@@ -170,8 +170,7 @@ firefox  MyProject/index.html
     #+BEGIN_SRC org :noweb yes :tangle yes :tangle todo.org
 ,#+CALL: Setup()
 ,#+TITLE: TODO list 
-,#+HTML_LINK_UP: ./index.html
-,#+HTML_LINK_HOME: ./index.html
+,#+CALL: HomeUp()
     #+END_SRC
 
 *** =journal.org=
@@ -181,8 +180,7 @@ firefox  MyProject/index.html
     #+BEGIN_SRC org :noweb yes :tangle yes :tangle journal.org
 ,#+CALL: Setup()
 ,#+TITLE: Journal
-,#+HTML_LINK_UP: ./index.html
-,#+HTML_LINK_HOME: ./index.html
+,#+CALL: HomeUp()
     #+END_SRC
 
 *** =www_links.org=
@@ -192,8 +190,7 @@ firefox  MyProject/index.html
     #+BEGIN_SRC org :noweb yes :tangle yes :tangle www_links.org
 ,#+CALL: Setup()
 ,#+TITLE: External web links
-,#+HTML_LINK_UP: ./index.html
-,#+HTML_LINK_HOME: ./index.html
+,#+CALL: HomeUp()
     #+END_SRC
 
 ** =setup/=
@@ -272,6 +269,36 @@ firefox  MyProject/index.html
 	"\\begin{comment}\n#+END_EXPORT\n"
 	"bibliography:" my-project-root "bibliography/bibliography.bib\n"
 	"#+BEGIN_EXPORT latex\n\\end{comment}\n#+END_EXPORT\n")
+,#+END_SRC
+     #+END_SRC
+
+**** Automatic Home/Up
+
+     This one took me some time and I still do not understand why I must use *relative* path for links
+
+     #+HEADER: :noweb-ref setup/library-of-babel.org
+     #+BEGIN_SRC org
+,#+NAME: HomeUp
+,#+BEGIN_SRC emacs-lisp :results drawer
+(let* ((my-project-root
+	(expand-file-name (car (project-roots (project-current)))))
+       (my-buffer-dir
+	(expand-file-name (file-name-directory buffer-file-name)))
+       (my-up
+	(expand-file-name (concat my-buffer-dir "../index.org")))
+       (my-home
+	(expand-file-name (concat my-project-root "index.org")))
+       (my-has-up (string< my-project-root my-buffer-dir))
+       )
+  (concat
+   (if (file-exists-p my-home)
+       ;; why relative path?
+       (format "[[file:%s][*HOME*]] " (file-relative-name my-home my-buffer-dir)))
+   (if (and my-has-up (file-exists-p my-up))
+       ;; why relative path?
+       (format "[[file:%s][*UP*]] " (file-relative-name my-up my-buffer-dir)))
+   )
+  )
 ,#+END_SRC
      #+END_SRC
 
@@ -359,7 +386,7 @@ firefox  MyProject/index.html
 	 :sitemap-function my-org-publish-sitemap
 	 :htmlize-source t
 	 :sitemap-sort-files anti-chronologically
-	 :exclude "setup/*\\|docs/*"
+	 :exclude "setup/*\\|docs/*\\|subprojects/*"
 	 ;; Generates theindex.org + inc files
 	 :makeindex t
 	 ;; Creates index.org, calls my-org-publish-sitemap to fill it
@@ -373,7 +400,7 @@ firefox  MyProject/index.html
 	 :recursive t
 	 :publishing-directory ,my-publish-dir
 	 :publishing-function org-publish-attachment
-	 :exclude ".*bazel-.*"
+	 :exclude "setup/*\\|docs/*\\|subprojects/*"
 	 )
 
 	;; Main
@@ -394,7 +421,7 @@ firefox  MyProject/index.html
 (setq org-agenda-files
       (split-string
        (shell-command-to-string (format "find \"$(cd %s; pwd)\"  -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root)
-       )))
+				)))
      #+END_SRC
 
 **** Some captures with their files
@@ -584,8 +611,7 @@ firefox  MyProject/index.html
      #+BEGIN_SRC org 
 ,#+CALL: Setup()
 ,#+TITLE: One example file
-,#+HTML_LINK_UP: ../index.html
-,#+HTML_LINK_HOME: ../index.html
+,#+CALL: HomeUp()
      #+END_SRC
      
      For explanations:

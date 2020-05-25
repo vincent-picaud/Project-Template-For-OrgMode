@@ -85,7 +85,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 	 :sitemap-function my-org-publish-sitemap
 	 :htmlize-source t
 	 :sitemap-sort-files anti-chronologically
-	 :exclude "setup/*\\|docs/*"
+	 :exclude "setup/*\\|docs/*\\|subprojects/*"
 	 ;; Generates theindex.org + inc files
 	 :makeindex t
 	 ;; Creates index.org, calls my-org-publish-sitemap to fill it
@@ -99,7 +99,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 	 :recursive t
 	 :publishing-directory ,my-publish-dir
 	 :publishing-function org-publish-attachment
-	 :exclude ".*bazel-.*"
+	 :exclude "setup/*\\|docs/*\\|subprojects/*"
 	 )
 
 	;; Main
@@ -112,7 +112,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 (setq org-agenda-files
       (split-string
        (shell-command-to-string (format "find \"$(cd %s; pwd)\"  -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root)
-       )))
+				)))
 (setq my-www-links-filename (concat my-project-root "www_links.org"))
 (setq my-journal-filename (concat my-project-root "journal.org"))
 (setq my-todo-filename (concat my-project-root "todo.org"))
@@ -256,6 +256,28 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 	"bibliography:" my-project-root "bibliography/bibliography.bib\n"
 	"#+BEGIN_EXPORT latex\n\\end{comment}\n#+END_EXPORT\n")
 #+END_SRC
+#+NAME: HomeUp
+#+BEGIN_SRC emacs-lisp :results drawer
+(let* ((my-project-root
+	(expand-file-name (car (project-roots (project-current)))))
+       (my-buffer-dir
+	(expand-file-name (file-name-directory buffer-file-name)))
+       (my-up
+	(expand-file-name (concat my-buffer-dir "../index.org")))
+       (my-home
+	(expand-file-name (concat my-project-root "index.org")))
+       (my-has-up (string< my-project-root my-buffer-dir))
+       )
+  (concat
+   (if (file-exists-p my-home)
+       ;; why relative path?
+       (format "[[file:%s][*HOME*]] " (file-relative-name my-home my-buffer-dir)))
+   (if (and my-has-up (file-exists-p my-up))
+       ;; why relative path?
+       (format "[[file:%s][*UP*]] " (file-relative-name my-up my-buffer-dir)))
+   )
+  )
+#+END_SRC
 //MY_CODE_STREAM
 else 
     echo "File $current_file already exists, aborted! (you can use -f to force overwrite)" 
@@ -333,8 +355,8 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     more > "$current_file" <<'//MY_CODE_STREAM'
 #+CALL: Setup()
 #+TITLE: Index
-#+HTML_LINK_UP: ./index.html
-#+HTML_LINK_HOME: ./index.html
+#+CALL: HomeUp()
+
 
 #+INCLUDE: "theindex.inc"
 //MY_CODE_STREAM
@@ -356,8 +378,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     more > "$current_file" <<'//MY_CODE_STREAM'
 #+CALL: Setup()
 #+TITLE: TODO list 
-#+HTML_LINK_UP: ./index.html
-#+HTML_LINK_HOME: ./index.html
+#+CALL: HomeUp()
 //MY_CODE_STREAM
     #
     # replace project name 
@@ -377,8 +398,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     more > "$current_file" <<'//MY_CODE_STREAM'
 #+CALL: Setup()
 #+TITLE: Journal
-#+HTML_LINK_UP: ./index.html
-#+HTML_LINK_HOME: ./index.html
+#+CALL: HomeUp()
 //MY_CODE_STREAM
     #
     # replace project name 
@@ -398,8 +418,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     more > "$current_file" <<'//MY_CODE_STREAM'
 #+CALL: Setup()
 #+TITLE: External web links
-#+HTML_LINK_UP: ./index.html
-#+HTML_LINK_HOME: ./index.html
+#+CALL: HomeUp()
 //MY_CODE_STREAM
     #
     # replace project name 
@@ -426,8 +445,7 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     more > "$current_file" <<'//MY_CODE_STREAM'
 #+CALL: Setup()
 #+TITLE: One example file
-#+HTML_LINK_UP: ../index.html
-#+HTML_LINK_HOME: ../index.html
+#+CALL: HomeUp()
 * An equation
 
   Do GitHub pages support equation rendering?

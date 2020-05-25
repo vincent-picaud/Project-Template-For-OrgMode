@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-24 Sun 08:32 -->
+<!-- 2020-05-25 Mon 12:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Org Emacs Project Template</title>
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -187,7 +200,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -230,69 +243,67 @@ for the JavaScript code in this tag.
 </script>
 </head>
 <body>
-<div id="org-div-home-and-up">
- <a accesskey="h" href="index.html"> UP </a>
- |
- <a accesskey="H" href="index.html"> HOME </a>
-</div><div id="content">
+<div id="content">
 <h1 class="title">Org Emacs Project Template</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org2b18371">1. What is it?</a>
+<li><a href="#org0a2da30">1. What is it?</a>
 <ul>
-<li><a href="#org72fe294">1.1. Features</a></li>
+<li><a href="#org105d822">1.1. Features</a></li>
 </ul>
 </li>
-<li><a href="#org282fcf4">2. Quick starter</a>
+<li><a href="#org3523d20">2. Quick starter</a>
 <ul>
-<li><a href="#orga378158">2.1. Emacs <code>init.el</code> configuration</a>
+<li><a href="#org12cc1c3">2.1. Emacs <code>init.el</code> configuration</a>
 <ul>
-<li><a href="#org6a91419">2.1.1. Required packages</a></li>
-<li><a href="#org565b8da">2.1.2. <code>my-new-project-configuration</code> function</a></li>
+<li><a href="#org775e797">2.1.1. Required packages</a></li>
+<li><a href="#orgb656497">2.1.2. <code>my-new-project-configuration</code> function</a></li>
 </ul>
 </li>
-<li><a href="#org1fa9de2">2.2. New project creation</a></li>
+<li><a href="#org9127af0">2.2. New project creation</a></li>
 </ul>
 </li>
-<li><a href="#orga148839">3. Project structure</a>
+<li><a href="#org888fb6c">3. Project structure</a>
 <ul>
-<li><a href="#orge0d94c9">3.1. <code>project root</code></a>
+<li><a href="#org579ce72">3.1. <code>project root</code></a>
 <ul>
-<li><a href="#org00ab465">3.1.1. <code>theindex_org</code></a></li>
-<li><a href="#org23afc65">3.1.2. <code>todo.org</code></a></li>
-<li><a href="#orgec8fecf">3.1.3. <code>journal.org</code></a></li>
-<li><a href="#org5ed6a89">3.1.4. <code>www_links.org</code></a></li>
+<li><a href="#org0663d98">3.1.1. <code>theindex_org</code></a></li>
+<li><a href="#orgbd2d993">3.1.2. <code>todo.org</code></a></li>
+<li><a href="#org84f4269">3.1.3. <code>journal.org</code></a></li>
+<li><a href="#org98ec0b8">3.1.4. <code>www_links.org</code></a></li>
 </ul>
 </li>
-<li><a href="#org679bec0">3.2. <code>setup/</code></a>
+<li><a href="#org4aa86a4">3.2. <code>setup/</code></a>
 <ul>
-<li><a href="#org863be77">3.2.1. <code>setup/library-of-babel.org</code></a></li>
-<li><a href="#org72954bb">3.2.2. <code>setup/setup.el</code></a></li>
-<li><a href="#orge3a05f0">3.2.3. <code>setup/index_preamble.org</code></a></li>
+<li><a href="#org9180d88">3.2.1. <code>setup/library-of-babel.org</code></a></li>
+<li><a href="#org73efd3c">3.2.2. <code>setup/setup.el</code></a></li>
+<li><a href="#orgaa05a73">3.2.3. <code>setup/index_preamble.org</code></a></li>
 </ul>
 </li>
-<li><a href="#org6271b99">3.3. <code>bibliography/</code></a>
+<li><a href="#org622adfa">3.3. <code>bibliography/</code></a>
 <ul>
-<li><a href="#org2d08368">3.3.1. <code>bibliography.bib</code></a></li>
+<li><a href="#orgcec379c">3.3.1. <code>bibliography.bib</code></a></li>
 </ul>
 </li>
-<li><a href="#org09da935">3.4. <code>example/</code></a>
+<li><a href="#orgd6582ac">3.4. <code>example/</code></a>
 <ul>
-<li><a href="#orgc15bfc6">3.4.1. <code>example/example.org</code></a></li>
+<li><a href="#org98123ef">3.4.1. <code>example/example.org</code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgff943f4">4. A figure example</a></li>
 </ul>
 </div>
 </div>
 
+<p>
+<a href="index.html"><b>HOME</b></a> 
+</p>
 
-<div id="outline-container-org2b18371" class="outline-2">
-<h2 id="org2b18371"><span class="section-number-2">1</span> What is it?</h2>
+<div id="outline-container-org0a2da30" class="outline-2">
+<h2 id="org0a2da30"><span class="section-number-2">1</span> What is it?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Defines a <code>create_orgMode_project</code> bash script to quickly generate an OrgMode project structure.
@@ -304,8 +315,8 @@ Defines a <code>create_orgMode_project</code> bash script to quickly generate an
 </div>
 </div>
 
-<div id="outline-container-org72fe294" class="outline-3">
-<h3 id="org72fe294"><span class="section-number-3">1.1</span> Features</h3>
+<div id="outline-container-org105d822" class="outline-3">
+<h3 id="org105d822"><span class="section-number-3">1.1</span> Features</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 The framework provides some functionalities like:
@@ -321,12 +332,12 @@ The framework provides some functionalities like:
 </div>
 </div>
 
-<div id="outline-container-org282fcf4" class="outline-2">
-<h2 id="org282fcf4"><span class="section-number-2">2</span> Quick starter</h2>
+<div id="outline-container-org3523d20" class="outline-2">
+<h2 id="org3523d20"><span class="section-number-2">2</span> Quick starter</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orga378158" class="outline-3">
-<h3 id="orga378158"><span class="section-number-3">2.1</span> Emacs <code>init.el</code> configuration</h3>
+<div id="outline-container-org12cc1c3" class="outline-3">
+<h3 id="org12cc1c3"><span class="section-number-3">2.1</span> Emacs <code>init.el</code> configuration</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 To use the project (template) simply run this code. 
@@ -338,8 +349,8 @@ this function to your Emacs <code>init.el</code>
 </p>
 </div>
 
-<div id="outline-container-org6a91419" class="outline-4">
-<h4 id="org6a91419"><span class="section-number-4">2.1.1</span> Required packages</h4>
+<div id="outline-container-org775e797" class="outline-4">
+<h4 id="org775e797"><span class="section-number-4">2.1.1</span> Required packages</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #1c86ee;">require</span> '<span style="color: #6e8b3d;">project</span>)
@@ -350,8 +361,8 @@ this function to your Emacs <code>init.el</code>
 </div>
 </div>
 
-<div id="outline-container-org565b8da" class="outline-4">
-<h4 id="org565b8da"><span class="section-number-4">2.1.2</span> <code>my-new-project-configuration</code> function</h4>
+<div id="outline-container-orgb656497" class="outline-4">
+<h4 id="orgb656497"><span class="section-number-4">2.1.2</span> <code>my-new-project-configuration</code> function</h4>
 <div class="outline-text-4" id="text-2-1-2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #1c86ee;">defun</span> <span style="color: #cd9b1d;">my-new-project-configuration</span> ()
@@ -378,8 +389,8 @@ Its role is to found the project root (= the directory containing the
 </div>
 </div>
 
-<div id="outline-container-org1fa9de2" class="outline-3">
-<h3 id="org1fa9de2"><span class="section-number-3">2.2</span> New project creation</h3>
+<div id="outline-container-org9127af0" class="outline-3">
+<h3 id="org9127af0"><span class="section-number-3">2.2</span> New project creation</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Use the provided shell script:
@@ -437,22 +448,22 @@ with <b>C-c C-e P p</b> and visit the generated pages:
 </div>
 </div>
 
-<div id="outline-container-orga148839" class="outline-2">
-<h2 id="orga148839"><span class="section-number-2">3</span> Project structure</h2>
+<div id="outline-container-org888fb6c" class="outline-2">
+<h2 id="org888fb6c"><span class="section-number-2">3</span> Project structure</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 :header-args: :mkdirp yes
 </p>
 </div>
-<div id="outline-container-orge0d94c9" class="outline-3">
-<h3 id="orge0d94c9"><span class="section-number-3">3.1</span> <code>project root</code></h3>
+<div id="outline-container-org579ce72" class="outline-3">
+<h3 id="org579ce72"><span class="section-number-3">3.1</span> <code>project root</code></h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Create files at project root
 </p>
 </div>
-<div id="outline-container-org00ab465" class="outline-4">
-<h4 id="org00ab465"><span class="section-number-4">3.1.1</span> <code>theindex_org</code></h4>
+<div id="outline-container-org0663d98" class="outline-4">
+<h4 id="org0663d98"><span class="section-number-4">3.1.1</span> <code>theindex_org</code></h4>
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 This file includes the generated index
@@ -461,8 +472,8 @@ This file includes the generated index
 <div class="org-src-container">
 <pre class="src src-org"><span style="color: #7f7f7f;">#+CALL: Setup()</span>
 <span style="color: #7f7f7f;">#+TITLE:</span> <span style="color: #191970; font-weight: bold;">Index</span>
-<span style="color: #7f7f7f;">#+HTML_LINK_UP: ./index.html</span>
-<span style="color: #7f7f7f;">#+HTML_LINK_HOME: ./index.html</span>
+<span style="color: #7f7f7f;">#+CALL: HomeUp()</span>
+
 
 <span style="color: #7f7f7f;">#+INCLUDE: "theindex.inc"</span>
 </pre>
@@ -470,67 +481,64 @@ This file includes the generated index
 </div>
 </div>
 
-<div id="outline-container-org23afc65" class="outline-4">
-<h4 id="org23afc65"><span class="section-number-4">3.1.2</span> <code>todo.org</code></h4>
+<div id="outline-container-orgbd2d993" class="outline-4">
+<h4 id="orgbd2d993"><span class="section-number-4">3.1.2</span> <code>todo.org</code></h4>
 <div class="outline-text-4" id="text-3-1-2">
 <div class="org-src-container">
 <pre class="src src-org"><span style="color: #7f7f7f;">#+CALL: Setup()</span>
 <span style="color: #7f7f7f;">#+TITLE:</span> <span style="color: #191970; font-weight: bold;">TODO list </span>
-<span style="color: #7f7f7f;">#+HTML_LINK_UP: ./index.html</span>
-<span style="color: #7f7f7f;">#+HTML_LINK_HOME: ./index.html</span>
+<span style="color: #7f7f7f;">#+CALL: HomeUp()</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgec8fecf" class="outline-4">
-<h4 id="orgec8fecf"><span class="section-number-4">3.1.3</span> <code>journal.org</code></h4>
+<div id="outline-container-org84f4269" class="outline-4">
+<h4 id="org84f4269"><span class="section-number-4">3.1.3</span> <code>journal.org</code></h4>
 <div class="outline-text-4" id="text-3-1-3">
 <div class="org-src-container">
 <pre class="src src-org"><span style="color: #7f7f7f;">#+CALL: Setup()</span>
 <span style="color: #7f7f7f;">#+TITLE:</span> <span style="color: #191970; font-weight: bold;">Journal</span>
-<span style="color: #7f7f7f;">#+HTML_LINK_UP: ./index.html</span>
-<span style="color: #7f7f7f;">#+HTML_LINK_HOME: ./index.html</span>
+<span style="color: #7f7f7f;">#+CALL: HomeUp()</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5ed6a89" class="outline-4">
-<h4 id="org5ed6a89"><span class="section-number-4">3.1.4</span> <code>www_links.org</code></h4>
+<div id="outline-container-org98ec0b8" class="outline-4">
+<h4 id="org98ec0b8"><span class="section-number-4">3.1.4</span> <code>www_links.org</code></h4>
 <div class="outline-text-4" id="text-3-1-4">
 <div class="org-src-container">
 <pre class="src src-org"><span style="color: #7f7f7f;">#+CALL: Setup()</span>
 <span style="color: #7f7f7f;">#+TITLE:</span> <span style="color: #191970; font-weight: bold;">External web links</span>
-<span style="color: #7f7f7f;">#+HTML_LINK_UP: ./index.html</span>
-<span style="color: #7f7f7f;">#+HTML_LINK_HOME: ./index.html</span>
+<span style="color: #7f7f7f;">#+CALL: HomeUp()</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org679bec0" class="outline-3">
-<h3 id="org679bec0"><span class="section-number-3">3.2</span> <code>setup/</code></h3>
+<div id="outline-container-org4aa86a4" class="outline-3">
+<h3 id="org4aa86a4"><span class="section-number-3">3.2</span> <code>setup/</code></h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 This directory contains the configuration files.
 </p>
 </div>
 
-<div id="outline-container-org863be77" class="outline-4">
-<h4 id="org863be77"><a id="ID-358f0e27-0b25-472b-b8d0-e368ea8ba871"></a><span class="section-number-4">3.2.1</span> <code>setup/library-of-babel.org</code></h4>
+<div id="outline-container-org9180d88" class="outline-4">
+<h4 id="org9180d88"><span class="section-number-4">3.2.1</span> <code>setup/library-of-babel.org</code></h4>
 <div class="outline-text-4" id="text-3-2-1">
 <p>
-This file contains function definitions, that are loaded with <a href="#orgbd8f5be"><code>org-babel-lob-ingest</code></a>.
+This file contains function definitions, that are loaded with <a href="#org69836fb"><code>org-babel-lob-ingest</code></a>.
 </p>
 </div>
 
 <ol class="org-ol">
-<li><a id="orgaeaca50"></a><a id="ID-25b27bbf-6bb7-4dfa-a016-50266497a98d"></a>The <code>Setup()</code> command<br />
+<li><a id="org58e2a42"></a>The <code>Setup()</code> command<br />
 <div class="outline-text-5" id="text-3-2-1-1">
 <p>
-<span class="timestamp-wrapper"><span class="timestamp">&lt;Sat May 23 2020 12:07&gt;</span></span> &lt;- <a href="#orgbf51232">Use <code>minted</code> for listings</a>
+<span class="timestamp-wrapper"><span class="timestamp">&lt;Sat May 23 2020 12:07&gt;</span></span> &lt;- <a href="#org3dbe5fc">Use <code>minted</code> for listings</a>
 </p>
 
 <p>
@@ -539,7 +547,7 @@ The <code>#+CALL: Setup()</code> has to be set at the beginning of your org file
 
 <p>
 The latex package <a href="https://ctan.org/pkg/verbatim?lang=en">verbatim</a> is required by the bibliography trick in
-<a href="#orgb5e6f65"><code>Bibliography()</code></a> to support both html and pdf export.
+<a href="#org4a96f36"><code>Bibliography()</code></a> to support both html and pdf export.
 </p>
 
 <p>
@@ -581,7 +589,7 @@ The <a href="https://ctan.org/pkg/minted?lang=en">minted</a> package is used for
 </div>
 </li>
 
-<li><a id="orgb5e6f65"></a><a id="ID-f64ef356-3f8c-4e37-93c6-34719a9393ae"></a>The <code>Bibliography()</code> command<br />
+<li><a id="org4a96f36"></a>The <code>Bibliography()</code> command<br />
 <div class="outline-text-5" id="text-3-2-1-2">
 <p>
 The <code>#+CALL: Bibliography()</code> has to be set where you want to insert your bilbliography (see: <a href="example/example.html">file:example/example.org</a>).
@@ -599,11 +607,45 @@ The <code>#+CALL: Bibliography()</code> has to be set where you want to insert y
 </div>
 </div>
 </li>
+
+<li><a id="org04fece1"></a>Automatic Home/Up<br />
+<div class="outline-text-5" id="text-3-2-1-3">
+<p>
+This one took me some time and I still do not understand why I must use <b>relative</b> path for links
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span style="color: #7f7f7f;">#+NAME: HomeUp</span>
+<span style="color: #7f7f7f;">#+BEGIN_SRC emacs-lisp :results drawer</span>
+<span style="color: #7f7f7f;">(</span><span style="color: #1c86ee;">let*</span><span style="color: #7f7f7f;"> ((my-project-root</span>
+<span style="color: #7f7f7f;">        (expand-file-name (car (project-roots (project-current)))))</span>
+<span style="color: #7f7f7f;">       (my-buffer-dir</span>
+<span style="color: #7f7f7f;">        (expand-file-name (file-name-directory buffer-file-name)))</span>
+<span style="color: #7f7f7f;">       (my-up</span>
+<span style="color: #7f7f7f;">        (expand-file-name (concat my-buffer-dir </span><span style="color: #8b7355;">"../index.org"</span><span style="color: #7f7f7f;">)))</span>
+<span style="color: #7f7f7f;">       (my-home</span>
+<span style="color: #7f7f7f;">        (expand-file-name (concat my-project-root </span><span style="color: #8b7355;">"index.org"</span><span style="color: #7f7f7f;">)))</span>
+<span style="color: #7f7f7f;">       (my-has-up (string&lt; my-project-root my-buffer-dir))</span>
+<span style="color: #7f7f7f;">       )</span>
+<span style="color: #7f7f7f;">  (concat</span>
+<span style="color: #7f7f7f;">   (</span><span style="color: #1c86ee;">if</span><span style="color: #7f7f7f;"> (file-exists-p my-home)</span>
+<span style="color: #7f7f7f;">       </span><span style="color: #7f7f7f;">;; </span><span style="color: #7f7f7f;">why relative path?</span>
+<span style="color: #7f7f7f;">       (format </span><span style="color: #8b7355;">"<a href="file:%s">[[file:%s][*HOME*]]</a> "</span><span style="color: #7f7f7f;"> (file-relative-name my-home my-buffer-dir)))</span>
+<span style="color: #7f7f7f;">   (</span><span style="color: #1c86ee;">if</span><span style="color: #7f7f7f;"> (</span><span style="color: #1c86ee;">and</span><span style="color: #7f7f7f;"> my-has-up (file-exists-p my-up))</span>
+<span style="color: #7f7f7f;">       </span><span style="color: #7f7f7f;">;; </span><span style="color: #7f7f7f;">why relative path?</span>
+<span style="color: #7f7f7f;">       (format </span><span style="color: #8b7355;">"<a href="file:%s">[[file:%s][*UP*]]</a> "</span><span style="color: #7f7f7f;"> (file-relative-name my-up my-buffer-dir)))</span>
+<span style="color: #7f7f7f;">   )</span>
+<span style="color: #7f7f7f;">  )</span>
+<span style="color: #7f7f7f;">#+END_SRC</span>
+</pre>
+</div>
+</div>
+</li>
 </ol>
 </div>
 
-<div id="outline-container-org72954bb" class="outline-4">
-<h4 id="org72954bb"><a id="ID-dfcaca1b-a2db-4418-98d3-594593933cb7"></a><span class="section-number-4">3.2.2</span> <code>setup/setup.el</code></h4>
+<div id="outline-container-org73efd3c" class="outline-4">
+<h4 id="org73efd3c"><span class="section-number-4">3.2.2</span> <code>setup/setup.el</code></h4>
 <div class="outline-text-4" id="text-3-2-2">
 <p>
 This file contains code executed by the <code>my-new-project-configuration</code>
@@ -613,7 +655,7 @@ containing the project root.
 </div>
 
 <ol class="org-ol">
-<li><a id="org466cdbe"></a>Configuration message<br />
+<li><a id="org1df4274"></a>Configuration message<br />
 <div class="outline-text-5" id="text-3-2-2-1">
 <p>
 Print a message 
@@ -626,10 +668,10 @@ Print a message
 </div>
 </li>
 
-<li><a id="orgbf51232"></a><a id="ID-7102a2f8-70da-4fee-9bff-ae78e1c90be3"></a>Use <code>minted</code> for listings<br />
+<li><a id="org3dbe5fc"></a>Use <code>minted</code> for listings<br />
 <div class="outline-text-5" id="text-3-2-2-2">
 <p>
-See <a href="#orgaeaca50"><code>Setup()</code></a>
+See <a href="#org58e2a42"><code>Setup()</code></a>
 </p>
 
 <div class="org-src-container">
@@ -640,10 +682,10 @@ See <a href="#orgaeaca50"><code>Setup()</code></a>
 </div>
 </li>
 
-<li><a id="orgbd8f5be"></a><a id="ID-3179dc59-bf96-4c38-ab21-6de2d0dcb8a8"></a>Load <code>library-of-babel.org</code><br />
+<li><a id="org69836fb"></a>Load <code>library-of-babel.org</code><br />
 <div class="outline-text-5" id="text-3-2-2-3">
 <p>
-<span class="timestamp-wrapper"><span class="timestamp">&lt;Sat May 23 2020 12:23&gt;</span></span> &lt;- <a href="#org863be77"><code>setup/library-of-babel.org</code></a>
+<span class="timestamp-wrapper"><span class="timestamp">&lt;Sat May 23 2020 12:23&gt;</span></span> &lt;- <a href="#org9180d88"><code>setup/library-of-babel.org</code></a>
 </p>
 
 <div class="org-src-container">
@@ -653,12 +695,12 @@ See <a href="#orgaeaca50"><code>Setup()</code></a>
 </div>
 
 <p>
-See: <a href="#org863be77"><code>library-of-babel.org</code></a>
+See: <a href="#org9180d88"><code>library-of-babel.org</code></a>
 </p>
 </div>
 </li>
 
-<li><a id="org7bfa5cc"></a><code>org-publish-project-alist</code> definition<br />
+<li><a id="orgbc2cf88"></a><code>org-publish-project-alist</code> definition<br />
 <div class="outline-text-5" id="text-3-2-2-4">
 <p>
 The first task is to define how to publish the project:
@@ -689,7 +731,7 @@ The first task is to define how to publish the project:
          <span style="color: #cd6600;">:sitemap-function</span> my-org-publish-sitemap
          <span style="color: #cd6600;">:htmlize-source</span> t
          <span style="color: #cd6600;">:sitemap-sort-files</span> anti-chronologically
-         <span style="color: #cd6600;">:exclude</span> <span style="color: #8b7355;">"setup/*</span><span style="color: #8b7355; font-weight: bold;">\\</span><span style="color: #8b7355; font-weight: bold;">|</span><span style="color: #8b7355;">docs/*"</span>
+         <span style="color: #cd6600;">:exclude</span> <span style="color: #8b7355;">"setup/*</span><span style="color: #8b7355; font-weight: bold;">\\</span><span style="color: #8b7355; font-weight: bold;">|</span><span style="color: #8b7355;">docs/*</span><span style="color: #8b7355; font-weight: bold;">\\</span><span style="color: #8b7355; font-weight: bold;">|</span><span style="color: #8b7355;">subprojects/*"</span>
          <span style="color: #7f7f7f;">;; </span><span style="color: #7f7f7f;">Generates theindex.org + inc files</span>
          <span style="color: #cd6600;">:makeindex</span> t
          <span style="color: #7f7f7f;">;; </span><span style="color: #7f7f7f;">Creates index.org, calls my-org-publish-sitemap to fill it</span>
@@ -703,7 +745,7 @@ The first task is to define how to publish the project:
          <span style="color: #cd6600;">:recursive</span> t
          <span style="color: #cd6600;">:publishing-directory</span> ,my-publish-dir
          <span style="color: #cd6600;">:publishing-function</span> org-publish-attachment
-         <span style="color: #cd6600;">:exclude</span> <span style="color: #8b7355;">".*bazel-.*"</span>
+         <span style="color: #cd6600;">:exclude</span> <span style="color: #8b7355;">"setup/*</span><span style="color: #8b7355; font-weight: bold;">\\</span><span style="color: #8b7355; font-weight: bold;">|</span><span style="color: #8b7355;">docs/*</span><span style="color: #8b7355; font-weight: bold;">\\</span><span style="color: #8b7355; font-weight: bold;">|</span><span style="color: #8b7355;">subprojects/*"</span>
          )
 
         <span style="color: #7f7f7f;">;; </span><span style="color: #7f7f7f;">Main</span>
@@ -717,23 +759,24 @@ The first task is to define how to publish the project:
 </div>
 </li>
 
-<li><a id="org875c13f"></a>Feed <code>org-agenda-files</code> with org files<br />
+<li><a id="org0b7471a"></a>Feed <code>org-agenda-files</code> with org files<br />
 <div class="outline-text-5" id="text-3-2-2-5">
 <p>
 Then we use the <code>find</code> command to feed the <code>org-agenda-files</code> variable:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(<span style="color: #1c86ee;">setq</span> org-agenda-files
+<pre class="src src-emacs-lisp">
+(<span style="color: #1c86ee;">setq</span> org-agenda-files
       (split-string
-       (shell-command-to-string (format <span style="color: #8b7355;">"cd %s; find -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'"</span> my-project-root))
-       ))
+       (shell-command-to-string (format <span style="color: #8b7355;">"find \"$(cd %s; pwd)\"  -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'"</span> my-project-root)
+                                )))
 </pre>
 </div>
 </div>
 </li>
 
-<li><a id="org77cef0a"></a>Some captures with their files<br />
+<li><a id="org32d18a9"></a>Some captures with their files<br />
 <div class="outline-text-5" id="text-3-2-2-6">
 <p>
 <b>CAVEAT:</b> these files, "www_links.org", "journal.org", "todo.org" must exist.
@@ -812,7 +855,7 @@ Then we use the <code>find</code> command to feed the <code>org-agenda-files</co
 </div>
 </li>
 
-<li><a id="org6577600"></a>org-ref configuration<br />
+<li><a id="org5bc9bf7"></a>org-ref configuration<br />
 <div class="outline-text-5" id="text-3-2-2-7">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="color: #1c86ee;">setq</span> my-bibtex-filename 
@@ -837,7 +880,7 @@ Then we use the <code>find</code> command to feed the <code>org-agenda-files</co
 </div>
 </li>
 
-<li><a id="org06da1bc"></a>PDF generation<br />
+<li><a id="orgcf3fbc4"></a>PDF generation<br />
 <div class="outline-text-5" id="text-3-2-2-8">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="color: #7f7f7f;">;; </span><span style="color: #7f7f7f;">defines how to generate the pdf file using lualatex + biber</span>
@@ -853,8 +896,8 @@ Then we use the <code>find</code> command to feed the <code>org-agenda-files</co
 </ol>
 </div>
 
-<div id="outline-container-orge3a05f0" class="outline-4">
-<h4 id="orge3a05f0"><span class="section-number-4">3.2.3</span> <code>setup/index_preamble.org</code></h4>
+<div id="outline-container-orgaa05a73" class="outline-4">
+<h4 id="orgaa05a73"><span class="section-number-4">3.2.3</span> <code>setup/index_preamble.org</code></h4>
 <div class="outline-text-4" id="text-3-2-3">
 <p>
 This is file included in sitemap.org. Note: no need for <code>Setup()</code>,
@@ -871,16 +914,16 @@ it is already declared in the template.
 </div>
 </div>
 
-<div id="outline-container-org6271b99" class="outline-3">
-<h3 id="org6271b99"><span class="section-number-3">3.3</span> <code>bibliography/</code></h3>
+<div id="outline-container-org622adfa" class="outline-3">
+<h3 id="org622adfa"><span class="section-number-3">3.3</span> <code>bibliography/</code></h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
-This directory contains the <a href="#org2d08368"><code>bibliography.bib</code></a> file. 
+This directory contains the <a href="#orgcec379c"><code>bibliography.bib</code></a> file. 
 </p>
 </div>
 
-<div id="outline-container-org2d08368" class="outline-4">
-<h4 id="org2d08368"><a id="ID-377d8ec4-3d02-4ddf-8fca-6c816afe2b15"></a><span class="section-number-4">3.3.1</span> <code>bibliography.bib</code></h4>
+<div id="outline-container-orgcec379c" class="outline-4">
+<h4 id="orgcec379c"><span class="section-number-4">3.3.1</span> <code>bibliography.bib</code></h4>
 <div class="outline-text-4" id="text-3-3-1">
 <p>
 To be used as example here is our <code>bibliography.bib</code> example file. I
@@ -912,13 +955,13 @@ found convenient to provide a directory and not only the
 </div>
 </div>
 
-<div id="outline-container-org09da935" class="outline-3">
-<h3 id="org09da935"><span class="section-number-3">3.4</span> <code>example/</code></h3>
+<div id="outline-container-orgd6582ac" class="outline-3">
+<h3 id="orgd6582ac"><span class="section-number-3">3.4</span> <code>example/</code></h3>
 <div class="outline-text-3" id="text-3-4">
 </div>
 
-<div id="outline-container-orgc15bfc6" class="outline-4">
-<h4 id="orgc15bfc6"><span class="section-number-4">3.4.1</span> <code>example/example.org</code></h4>
+<div id="outline-container-org98123ef" class="outline-4">
+<h4 id="org98123ef"><span class="section-number-4">3.4.1</span> <code>example/example.org</code></h4>
 <div class="outline-text-4" id="text-3-4-1">
 <p>
 This is a page demo to check it works.
@@ -926,7 +969,7 @@ This is a page demo to check it works.
 </div>
 
 <ol class="org-ol">
-<li><a id="orgc5bdc40"></a>File header<br />
+<li><a id="org029e84c"></a>File header<br />
 <div class="outline-text-5" id="text-3-4-1-1">
 <p>
 To be properly configured the org mode file can begin as follows:
@@ -935,8 +978,7 @@ To be properly configured the org mode file can begin as follows:
 <div class="org-src-container">
 <pre class="src src-org"><span style="color: #7f7f7f;">#+CALL: Setup()</span>
 <span style="color: #7f7f7f;">#+TITLE:</span> <span style="color: #191970; font-weight: bold;">One example file</span>
-<span style="color: #7f7f7f;">#+HTML_LINK_UP: ../index.html</span>
-<span style="color: #7f7f7f;">#+HTML_LINK_HOME: ../index.html</span>
+<span style="color: #7f7f7f;">#+CALL: HomeUp()</span>
 </pre>
 </div>
 
@@ -951,7 +993,7 @@ For explanations:
 </div>
 </li>
 
-<li><a id="org9bdc66c"></a>Equation example<br />
+<li><a id="orgc8ecad3"></a>Equation example<br />
 <div class="outline-text-5" id="text-3-4-1-2">
 <p>
 Check if equations are processed with mathjax
@@ -968,24 +1010,19 @@ Check if equations are processed with mathjax
 </div>
 </div>
 </li>
-</ol>
-</div>
-</div>
-</div>
 
-<div id="outline-container-orgff943f4" class="outline-2">
-<h2 id="orgff943f4"><span class="section-number-2">4</span> A figure example</h2>
-<div class="outline-text-2" id="text-4">
+<li><a id="orgb66f4b3"></a>A figure example<br />
+<div class="outline-text-5" id="text-3-4-1-3">
 <div class="org-src-container">
 <pre class="src src-org"><span style="color: #0000cd;">* A figure example</span>
   <span style="color: #3a5fcd; text-decoration: underline;"><a href="file:./figures/sg_d1.png">file:./figures/sg_d1.png</a></span>
 </pre>
 </div>
 </div>
+</li>
 
-<ol class="org-ol">
-<li><a id="org049803c"></a>Code block example<br />
-<div class="outline-text-5" id="text-4-0-0-1">
+<li><a id="org4297108"></a>Code block example<br />
+<div class="outline-text-5" id="text-3-4-1-4">
 <p>
 We then add a code block to see that background is gray colored
 </p>
@@ -1007,8 +1044,8 @@ We then add a code block to see that background is gray colored
 </li>
 
 
-<li><a id="orgdf4999f"></a>Bibliographic reference example<br />
-<div class="outline-text-5" id="text-4-0-0-2">
+<li><a id="orgea652d2"></a>Bibliographic reference example<br />
+<div class="outline-text-5" id="text-3-4-1-5">
 <div class="org-src-container">
 <pre class="src src-org"><span style="color: #0000cd;">* A bibliographic reference</span>
   Test bibliography: <span style="color: #228b22; text-decoration: underline;"><a href="cite:lewis00_gnu_emacs_lisp">cite:lewis00_gnu_emacs_lisp</a></span>
@@ -1023,9 +1060,11 @@ We then add a code block to see that background is gray colored
 </ol>
 </div>
 </div>
+</div>
+</div>
 <div id="postamble" class="status">
 <p class="author">Author: picaud</p>
-<p class="date">Created: 2020-05-24 Sun 08:32</p>
+<p class="date">Created: 2020-05-25 Mon 12:55</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

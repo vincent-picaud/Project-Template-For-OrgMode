@@ -34,3 +34,25 @@
 	"bibliography:" my-project-root "bibliography/bibliography.bib\n"
 	"#+BEGIN_EXPORT latex\n\\end{comment}\n#+END_EXPORT\n")
 #+END_SRC
+#+NAME: HomeUp
+#+BEGIN_SRC emacs-lisp :results drawer
+(let* ((my-project-root
+	(expand-file-name (car (project-roots (project-current)))))
+       (my-buffer-dir
+	(expand-file-name (file-name-directory buffer-file-name)))
+       (my-up
+	(expand-file-name (concat my-buffer-dir "../index.org")))
+       (my-home
+	(expand-file-name (concat my-project-root "index.org")))
+       (my-has-up (string< my-project-root my-buffer-dir))
+       )
+  (concat
+   (if (file-exists-p my-home)
+       ;; why relative path?
+       (format "[[file:%s][*HOME*]] " (file-relative-name my-home my-buffer-dir)))
+   (if (and my-has-up (file-exists-p my-up))
+       ;; why relative path?
+       (format "[[file:%s][*UP*]] " (file-relative-name my-up my-buffer-dir)))
+   )
+  )
+#+END_SRC
