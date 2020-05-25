@@ -393,8 +393,8 @@ firefox  MyProject/index.html
 
 (setq org-agenda-files
       (split-string
-       (shell-command-to-string (format "cd %s; find -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root))
-       ))
+       (shell-command-to-string (format "find \"$(cd %s; pwd)\"  -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root)
+       )))
      #+END_SRC
 
 **** Some captures with their files

@@ -57,8 +57,8 @@
       
       (setq org-agenda-files
             (split-string
-             (shell-command-to-string (format "cd %s; find -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root))
-             ))
+             (shell-command-to-string (format "find \"$(cd %s; pwd)\"  -name '*.org' ! -name 'index.org'  ! -name 'agenda.org'  ! -name '.#*' ! -path './setup/*'" my-project-root)
+             )))
       (setq my-www-links-filename (concat my-project-root "www_links.org"))
       (setq my-journal-filename (concat my-project-root "journal.org"))
       (setq my-todo-filename (concat my-project-root "todo.org"))
