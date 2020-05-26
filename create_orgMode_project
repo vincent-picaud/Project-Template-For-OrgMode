@@ -266,15 +266,15 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 	(expand-file-name (concat my-buffer-dir "../index.org")))
        (my-home
 	(expand-file-name (concat my-project-root "index.org")))
-       (my-has-up (string< my-project-root my-buffer-dir))
+       (my-can-go-up (string< my-project-root my-buffer-dir))
        )
   (concat
+   "#+begin_export latex\n\\begin{comment}\n#+end_export\n"
    (if (file-exists-p my-home)
-       ;; why relative path?
        (format "[[file:%s][*HOME*]] " (file-relative-name my-home my-buffer-dir)))
-   (if (and my-has-up (file-exists-p my-up))
-       ;; why relative path?
+   (if (and my-can-go-up (file-exists-p my-up))
        (format "[[file:%s][*UP*]] " (file-relative-name my-up my-buffer-dir)))
+   "\n#+begin_export latex\n\\end{comment}\n#+end_export\n"
    )
   )
 #+END_SRC
