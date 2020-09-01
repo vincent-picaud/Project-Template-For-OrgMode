@@ -1,8 +1,6 @@
 (if my-project-root
     ;; Configuration
     (progn
-      ;; Configuration message
-      (message (format "Configuring %s" my-project-root))
       ;; use =minted= for listings
       (setq org-latex-listings 'minted)
       ;; Load =library-of-babel.org=
@@ -149,5 +147,7 @@
       	"biber %b"
       	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
       	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+      ;; Configuration message
+      (message (format "Configuring %s" my-project-root))
       )
   )

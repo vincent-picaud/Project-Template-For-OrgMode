@@ -55,8 +55,6 @@ current_file="$project_dir/setup/setup.el"
 if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
     echo "Creates file      $current_file" 
     more > "$current_file" <<'//MY_CODE_STREAM' 
-;; Configuration message
-(message (format "Configuring %s" my-project-root))
 ;; use =minted= for listings
 (setq org-latex-listings 'minted)
 ;; Load =library-of-babel.org=
@@ -203,6 +201,8 @@ if [ "$force" -eq 1 ] || [ ! -f "$current_file" ]; then
 	"biber %b"
 	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
 	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+;; Configuration message
+(message (format "Configuring %s" my-project-root))
 //MY_CODE_STREAM
     #
     # replace project name 

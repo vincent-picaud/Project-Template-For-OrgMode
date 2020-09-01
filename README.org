@@ -22,7 +22,6 @@
       - [[#the-bibliography-command][The =Bibliography()= command]]
       - [[#automatic-homeup][Automatic Home/Up]]
     - [[#setupsetupel][=setup/setup.el=]]
-      - [[#configuration-message][Configuration message]]
       - [[#use-minted-for-listings][Use =minted= for listings]]
       - [[#load-library-of-babelorg][Load =library-of-babel.org=]]
       - [[#org-publish-project-alist-definition][=org-publish-project-alist= definition]]
@@ -30,6 +29,7 @@
       - [[#some-captures-with-their-files][Some captures with their files]]
       - [[#org-ref-configuration][org-ref configuration]]
       - [[#pdf-generation][PDF generation]]
+      - [[#configuration-message][Configuration message]]
     - [[#setupindex_preambleorg][=setup/index_preamble.org=]]
   - [[#bibliography][=bibliography/=]]
     - [[#bibliographybib][=bibliography.bib=]]
@@ -318,15 +318,6 @@ firefox  MyProject/index.html
     function. At this point there is only one variable =my-project-root=
     containing the project root.
 
-**** Configuration message
-
-     Print a message 
-     #+HEADER: :noweb-ref setup/setup.el
-     #+BEGIN_SRC emacs-lisp
-;; Configuration message
-(message (format "Configuring %s" my-project-root))
-     #+END_SRC
-
 **** Use =minted= for listings
      :PROPERTIES:
      :ID:       7102a2f8-70da-4fee-9bff-ae78e1c90be3
@@ -532,6 +523,15 @@ firefox  MyProject/index.html
 	"biber %b"
 	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"
 	"lualatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+     #+END_SRC
+
+**** Configuration message
+
+     Print a message 
+     #+HEADER: :noweb-ref setup/setup.el
+     #+BEGIN_SRC emacs-lisp
+;; Configuration message
+(message (format "Configuring %s" my-project-root))
      #+END_SRC
 
 **** Export complete file                                          :noexport:
